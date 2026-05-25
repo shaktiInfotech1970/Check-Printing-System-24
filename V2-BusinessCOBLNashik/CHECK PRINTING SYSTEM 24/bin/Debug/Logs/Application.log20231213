@@ -1,0 +1,61 @@
+2023-12-13 13:25:24,727 [5] WARN  OptaneShellExt [(null)] - Icon overlay construction!
+2023-12-13 13:25:24,836 [7] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 13:25:24,836 [6] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 13:25:24,836 [5] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 13:25:24,836 [9] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 13:25:24,836 [8] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 13:27:26,819 [7] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 14:11:41,238 [4] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 14:18:51,191 [15] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 15:16:36,258 [6] WARN  OptaneShellExt [(null)] - Icon overlay construction!
+2023-12-13 15:16:36,345 [8] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 15:16:36,345 [6] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 15:16:36,345 [7] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 15:16:36,345 [9] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 15:16:36,345 [10] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 15:17:59,242 [8] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 16:45:41,615 [6] WARN  OptaneShellExt [(null)] - Icon overlay construction!
+2023-12-13 16:45:41,693 [6] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 16:45:41,693 [7] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-12-13 17:42:02,779 [1] ERROR CPS.App [(null)] - System.Drawing.Printing.InvalidPrinterException: Settings to access printer 'HP LaserJet Pro M402-M403 PCL 6' are not valid.
+   at System.Drawing.Printing.PrinterSettings.GetHdevmodeInternal(String printer)
+   at System.Drawing.Printing.PrinterSettings.GetHdevmode(PageSettings pageSettings)
+   at System.Drawing.Printing.PrintController.OnStartPrint(PrintDocument document, PrintEventArgs e)
+   at System.Windows.Forms.PrintControllerWithStatusDialog.OnStartPrint(PrintDocument document, PrintEventArgs e)
+   at System.Drawing.Printing.PrintController.Print(PrintDocument document)
+   at System.Drawing.Printing.PrintDocument.Print()
+   at CPS.Business.PrintJob.SendToPrinter(PrinterPreference printerPreference, PrinterJob printerJob, PrintType printType)
+   at CPS.Business.PrintJob.RePrintSinglePage(IEnumerable`1 requests, Int32 from, Int32 to)
+   at CPS.Views.Process.RePrintSinglePage.btnSave_Click(Object sender, RoutedEventArgs e)
+   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   at System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   at System.Windows.Controls.Primitives.ButtonBase.OnClick()
+   at System.Windows.Controls.Button.OnClick()
+   at System.Windows.Controls.Primitives.ButtonBase.OnMouseLeftButtonUp(MouseButtonEventArgs e)
+   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   at System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   at System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+   at System.Windows.UIElement.OnMouseUpThunk(Object sender, MouseButtonEventArgs e)
+   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   at System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   at System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   at System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+   at System.Windows.Input.InputManager.ProcessStagingArea()
+   at System.Windows.Input.InputManager.ProcessInput(InputEventArgs input)
+   at System.Windows.Input.InputProviderSite.ReportInput(InputReport inputReport)
+   at System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+   at System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   at System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+   at MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+   at MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG& msg)
+   at System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)
+   at System.Windows.Application.RunDispatcher(Object ignore)
+   at System.Windows.Application.RunInternal(Window window)
+   at CPS.App.Main()

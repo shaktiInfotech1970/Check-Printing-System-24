@@ -1,0 +1,61 @@
+﻿<Window x:Class="CPS.mainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cheque Printing System" WindowState="Maximized"
+        Icon="Content/Logo.ico">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="500*" />
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0">
+                <Menu Name="MainMenu" VerticalAlignment="Top" DockPanel.Dock="Top">
+                    <MenuItem Name="menuMaster" Header="Master">
+                        <MenuItem Name="subMenuBankMaster" Header="Bank Master" Click="subMenuBankMaster_Click" />
+                        <MenuItem Name="subMenuBranchMaster" Header="Branch Master" Click="subMenuBranchMaster_Click" />
+                        <MenuItem Name="subMenuAccountType" Header="Account Type" Click="subMenuAccountType_Click" />
+                        <MenuItem Name="subMenuChequeBookSeries" Header="Cheque Book Series" Click="subMenuChequeBookSeries_Click" />
+                    </MenuItem>
+                    <MenuItem Name="menuProcess" Header="Process">
+                        <MenuItem Name="subMenuRequestDataEntry" Header="Request Data Entry" Click="subMenuRequestDataEntry_Click" />
+                        <MenuItem Name="subMenuDataImport" Header="Data Import" Click="subMenuDataImport_Click" />
+                        <MenuItem Name="subMenuPrintChequeBook" Header="Print Cheque Book" Click="subMenuPrintChequeBook_Click" />
+                        <MenuItem Name="subMenuReprintChequeBook" Header="Re-Print Cheque Book" Click="subMenuReprintChequeBook_Click" />
+                        <MenuItem Name="subMenuReprintRequest" Header="Re-Print Request" Click="subMenuReprintRequest_Click" />
+                        <MenuItem Name="subMenuReprintSinglePage" Header="Re-Print Single Page" Click="subMenuReprintSinglePage_Click" />
+                        <MenuItem Name="subMenuDataExport" Header="Data Export" Click="subMenuDataExport_Click" />
+                    </MenuItem>
+                    <MenuItem Name="menuReport" Header="Reports">
+                        <MenuItem Name="subMenuDaywiseChequePrint" Header="Daywise Cheque Print" Click="subMenuDaywiseChequePrint_Click" />
+                        <MenuItem Name="subMenuPrintedChequePrintFile" Header="Printed Cheque (Print File)" Click="subMenuPrintedChequePrintFile_Click" />
+                        <MenuItem Name="subMenuReprintedCheque" Header="Re-Printed Cheque" Click="subMenuReprintedCheque_Click" />
+                        <MenuItem Name="subMenuReprintedChequeSinglePage" Header="Re-Printed Cheque (Single Page)" Click="subMenuReprintedChequeSinglePage_Click" />
+                        <MenuItem Name="subMenuPendingChequeRequest" Header="Pending Cheque Print" Click="subMenuPendingChequePrint_Click" />
+                        <MenuItem Name="subMenuTotalPrintCheque" Header="Total Print Cheque" Click="subMenuTotalPrintCheque_Click" />
+                        <MenuItem Name="subMenuTotalReprintCheque" Header="Total Re-Print Cheque" Click="subMenuTotalReprintCheque_Click" />
+                        <MenuItem Name="subMenuPrintedChequeSeries" Header="Print Cheque Series" Click="subMenuPrintedChequeSeries_Click" />
+                        <MenuItem Name="subMenuPrintedCheque" Header="Printed Cheque" Click="subMenuPrintedCheque_Click" />
+                    </MenuItem>
+                    <MenuItem Name="menuSecurity" Header="Security">
+                        <MenuItem Name="subMenuChangePassword" Header="Change Password" Click="subMenuChangePassword_Click" />
+                        <MenuItem Name="subMenuUserMaster" Header="User Master" Click="subMenuUserMaster_Click" />
+                        <MenuItem Name="subMenuPermission" Header="Permission" Click="subMenuPermission_Click" />
+                    </MenuItem>
+                    <MenuItem Name="menuPreferences" Header="Preferences">
+                        <MenuItem Name="subMenuPreferences" Header="Printer" Click="subMenuPreferences_Click" />
+                        <MenuItem Name="subMenuDatabaseBackup" Header="Database Backup" Click="subMenuDatabaseBackup_Click" />
+                        <MenuItem Name="subMenuRequestLayoutPreference" Header="Request Layout" Click="subMenuRequestLayoutPreference_Click" />
+                        <MenuItem Name="subMenuChequeLayoutPreference" Header="Cheque Layout" Click="subMenuChequeLayoutPreference_Click" />
+                    </MenuItem>
+                    <MenuItem Name="menuExit" Header="Exit" Click="menuExit_Click"></MenuItem>
+                </Menu>
+            </DockPanel>
+            <TextBlock Background="Gray" FontSize="20" Name="SubTitle" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" Padding="15" Foreground="LightGray" />
+            <StackPanel Name="ucContainer" Margin="10,15,10,10" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Image Grid.Row="2" Source="/Content/background.png" MaxHeight="600" />
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window>

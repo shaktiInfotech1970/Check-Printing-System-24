@@ -1,0 +1,5 @@
+﻿Build started...
+1>------ Build started: Project: CPS, Configuration: Debug Any CPU ------
+1>CSC : error CS2001: Source file 'F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CPS\Migrations\202505191103232_ModelUpdate.cs' could not be found.
+1>CSC : error CS2001: Source file 'F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CPS\Migrations\202505191103232_ModelUpdate.Designer.cs' could not be found.
+========== Build: 0 succeeded, 1 failed, 0 up-to-date, 0 skipped ==========

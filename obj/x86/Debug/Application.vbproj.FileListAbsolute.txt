@@ -1,0 +1,2 @@
+E:\CHECK PRINTING SYSTEM 24\obj\x86\Debug\Application.vbproj.AssemblyReference.cache
+E:\CHECK PRINTING SYSTEM 24\obj\x86\Debug\Application.vbproj.CoreCompileInputs.cache

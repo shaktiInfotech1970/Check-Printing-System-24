@@ -1,0 +1,82 @@
+
+    public class ImportExcelRequest
+    {
+        private const string FIELDSEPARATOR = ,(=([^][^])[^]$);
+
+        public DataView Load(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new Exception(File does not exist.);
+            }
+            var excelApp = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook workbook;
+            Microsoft.Office.Interop.Excel.Worksheet worksheet;
+            Microsoft.Office.Interop.Excel.Range range;
+            DataTable dt = new DataTable();
+            workbook = excelApp.Workbooks.Open(filePath);
+            try
+            {
+                worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.Sheets[1];
+
+                int column = 0;
+                int row = 0;
+
+                range = worksheet.UsedRange;
+                for (column = 1; column = range.Columns.Count; column++)
+                {
+                    dr[column - 1] = (range.Cells[row, column] as Excel.Range).Value2.ToString();
+                    dt.Columns.Add((range.Cells[1, column] as Microsoft.Office.Interop.Excel.Range).Value2.ToString());
+                }
+                for (row = 1; row  range.Rows.Count; row++)
+                {
+                    DataRow dr = dt.NewRow();
+                    for (column = 1; column = range.Columns.Count; column++)
+                    {
+                        var asdf = (range.Cells[row, column] as Microsoft.Office.Interop.Excel.Range).Value2;
+                        if (asdf != null)
+                        {
+                            dr[column - 1] = asdf.ToString();
+                        }
+                    }
+                    dt.Rows.Add(dr);
+                    dt.AcceptChanges();
+                }
+                workbook.Close(true, Missing.Value, Missing.Value);
+                excelApp.Quit();
+                return dt.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                workbook.Close(true, Missing.Value, Missing.Value);
+                excelApp.Quit();
+                return dt.DefaultView;
+            }
+
+
+        }
+
+        private ListRequestDTO _data = new ListRequestDTO();
+        public ListRequestDTO Data { get { return _data; } private set { _data = value; } }
+        public ListColumn Columns()
+        {
+            return typeof(RequestDTO).GetProperties()
+                .Where(w = w.GetCustomAttributes(typeof(DisplayAttribute), false).Count()  0)
+                .OrderBy(o = (o.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute).GetOrder())
+                .Select(s = new Column { Header = (s.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute).GetName(), PropertyName = s.Name }).ToList();
+        }
+        private bool Parse(string line, RequestDTO importData)
+        {
+            var token = Regex.Split(line, FIELDSEPARATOR);
+            var properties = importData.GetType().GetProperties()
+                .Where(w = w.GetCustomAttributes(typeof(DisplayAttribute), false).Count()  0)
+                .OrderBy(o = (o.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute).GetOrder());
+            var index = 0;
+            foreach (var property in properties)
+            {
+                property.SetValue(importData, Convert.ChangeType(token[index++].Trim(new char[] { '' }), property.PropertyType), null);
+            }
+
+            return true;
+        }
+    }

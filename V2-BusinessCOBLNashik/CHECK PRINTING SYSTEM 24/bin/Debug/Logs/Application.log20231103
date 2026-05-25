@@ -1,0 +1,16 @@
+2023-11-03 10:12:03,450 [5] WARN  OptaneShellExt [(null)] - Icon overlay construction!
+2023-11-03 10:12:03,559 [5] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 10:12:03,559 [6] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 11:20:50,034 [6] WARN  OptaneShellExt [(null)] - Icon overlay construction!
+2023-11-03 11:20:50,128 [8] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 11:20:50,128 [6] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 11:20:50,128 [9] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 11:20:50,128 [7] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 11:20:50,128 [10] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 11:22:08,046 [8] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 11:25:17,062 [10] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 11:44:15,524 [11] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 16:33:36,200 [10] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 16:39:49,319 [10] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 17:28:18,020 [12] INFO  OptaneShellExt [(null)] - Checked pinning state: False
+2023-11-03 17:40:12,003 [9] INFO  OptaneShellExt [(null)] - Checked pinning state: False

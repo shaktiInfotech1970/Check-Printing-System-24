@@ -1,0 +1,20 @@
+﻿CPS
+
+
+winexe
+C#
+.cs
+F:\CHECK PRINTING SYSTEM 24\SaraswatiSahakariOzar\CHECK PRINTING SYSTEM 24\obj\Debug\
+CPS
+none
+false
+DEBUG;TRACE
+F:\CHECK PRINTING SYSTEM 24\SaraswatiSahakariOzar\CHECK PRINTING SYSTEM 24\App.xaml
+35-1155841519
+1-1027521
+87-583514623
+27-1594921226
+Login.xaml;mainWindow.xaml;Themes\Metro\Metro.MSControls.Core.Implicit.xaml;Themes\Metro\Metro.MSControls.Toolkit.Implicit.xaml;Themes\Metro\Styles.Shared.xaml;Themes\Metro\Styles.WPF.xaml;Themes\Metro\Theme.Colors.xaml;Views\Master\AccountType.xaml;Views\Master\BankMaster.xaml;Views\Master\BranchMaster.xaml;Views\Master\ChequeBookSeries.xaml;Views\Preferences\Backup.xaml;Views\Preferences\ChequeLayoutPreference.xaml;Views\Preferences\RequestLayoutPreference.xaml;Views\Preferences\Preferences.xaml;Views\Process\DataImport.xaml;Views\Process\DataExport.xaml;Views\Process\RePrintRequest.xaml;Views\Process\RePrintSinglePage.xaml;Views\Process\RePrintChequeBook.xaml;Views\Process\PrintChequeBook.xaml;Views\Process\RequestEntry.xaml;Views\Reports\DaywiseChequePrint.xaml;Views\Reports\PendingChequePrintReport.xaml;Views\Reports\PrintedCheque.xaml;Views\Reports\PrintedChequePrintFile.xaml;Views\Reports\PrintedChequeSeries.xaml;Views\Reports\ReprintedChequeSinglePage.xaml;Views\Reports\ReprintedCheque.xaml;Views\Reports\TotalChequePrintReport.xaml;Views\Reports\TotalReprintedChequeReport.xaml;Views\Security\ChangePassword.xaml;Views\Security\Permission_Complex.xaml;Views\Security\Permissions.xaml;Views\Security\UserMaster.xaml;
+content\splash.png
+False
+

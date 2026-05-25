@@ -1,0 +1,5 @@
+2026-04-27 10:36:59,033 [1] ERROR CPS.Views.Process.DataImport [(null)] - Import error: 
+System.InvalidOperationException: The 'Microsoft.ACE.OLEDB.12.0' provider is not registered on the local machine.
+   at CPS.Business.ImportRequest.getExcelSheetList(String filename) in F:\CHECK PRINTING SYSTEM 24\V2-Uma2\CPS\Business\Request.cs:line 377
+   at CPS.Business.ImportRequest.Load(String filePath) in F:\CHECK PRINTING SYSTEM 24\V2-Uma2\CPS\Business\Request.cs:line 333
+   at CPS.Views.Process.DataImport.btnShowColumns_Click(Object sender, RoutedEventArgs e) in F:\CHECK PRINTING SYSTEM 24\V2-Uma2\CPS\Views\Process\DataImport.xaml.cs:line 71

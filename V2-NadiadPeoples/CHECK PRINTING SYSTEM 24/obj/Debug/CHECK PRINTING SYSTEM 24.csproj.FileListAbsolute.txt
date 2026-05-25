@@ -1,0 +1,9 @@
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\CPS.exe
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.dll
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.SqlServer.dll
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.SqlServerCompact.dll
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\log4net.dll
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\System.Windows.Controls.Layout.Toolkit.dll
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\WPFToolkit.dll
+E:\CHECK PRINTING SYSTEM 24\V2-NadiadPeoples\CHECK PRINTING SYSTEM 24\bin\Debug\Zen.Barcode.Core.dll

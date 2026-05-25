@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TotalReprintedChequeReportDataSet" targetNamespace="http://tempuri.org/TotalReprintedChequeReportDataSet.xsd" xmlns:mstns="http://tempuri.org/TotalReprintedChequeReportDataSet.xsd" xmlns="http://tempuri.org/TotalReprintedChequeReportDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TotalReprintedChequeReportDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TotalReprintedChequeReportDataSet" msprop:Generator_UserDSName="TotalReprintedChequeReportDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TotalReprintedChequeReportDataSet" msprop:Generator_TableClassName="TotalReprintedChequeReportDataSetDataTable" msprop:Generator_TableVarName="tableTotalReprintedChequeReportDataSet" msprop:Generator_TablePropName="_TotalReprintedChequeReportDataSet" msprop:Generator_RowDeletingName="TotalReprintedChequeReportDataSetRowDeleting" msprop:Generator_RowChangingName="TotalReprintedChequeReportDataSetRowChanging" msprop:Generator_RowEvHandlerName="TotalReprintedChequeReportDataSetRowChangeEventHandler" msprop:Generator_RowDeletedName="TotalReprintedChequeReportDataSetRowDeleted" msprop:Generator_UserTableName="TotalReprintedChequeReportDataSet" msprop:Generator_RowChangedName="TotalReprintedChequeReportDataSetRowChanged" msprop:Generator_RowEvArgName="TotalReprintedChequeReportDataSetRowChangeEvent" msprop:Generator_RowClassName="TotalReprintedChequeReportDataSetRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="BranchCode" msprop:Generator_ColumnVarNameInTable="columnBranchCode" msprop:Generator_ColumnPropNameInRow="BranchCode" msprop:Generator_ColumnPropNameInTable="BranchCodeColumn" msprop:Generator_UserColumnName="BranchCode" type="xs:int" minOccurs="0" />
+              <xs:element name="TransactionCode" msprop:Generator_ColumnVarNameInTable="columnTransactionCode" msprop:Generator_ColumnPropNameInRow="TransactionCode" msprop:Generator_ColumnPropNameInTable="TransactionCodeColumn" msprop:Generator_UserColumnName="TransactionCode" type="xs:int" minOccurs="0" />
+              <xs:element name="BranchName" msprop:Generator_ColumnVarNameInTable="columnBranchName" msprop:Generator_ColumnPropNameInRow="BranchName" msprop:Generator_ColumnPropNameInTable="BranchNameColumn" msprop:Generator_UserColumnName="BranchName" type="xs:string" minOccurs="0" />
+              <xs:element name="BranchId" msprop:Generator_ColumnVarNameInTable="columnBranchId" msprop:Generator_ColumnPropNameInRow="BranchId" msprop:Generator_ColumnPropNameInTable="BranchIdColumn" msprop:Generator_UserColumnName="BranchId" type="xs:int" minOccurs="0" />
+              <xs:element name="BookSize" msprop:Generator_ColumnVarNameInTable="columnBookSize" msprop:Generator_ColumnPropNameInRow="BookSize" msprop:Generator_ColumnPropNameInTable="BookSizeColumn" msprop:Generator_UserColumnName="BookSize" type="xs:long" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
