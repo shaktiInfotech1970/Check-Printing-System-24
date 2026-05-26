@@ -25,7 +25,7 @@ namespace CPS.Business
         {
             using (var context = new CPSDbContext())
             {
-                var value = context.Set<ChequeSeries>().Where(w => w.SAN == SAN).DefaultIfEmpty().Max(m => m == null ? 120000 : m.LastChequePrint);
+                var value = context.Set<ChequeSeries>().Where(w => w.SAN == SAN).DefaultIfEmpty().Max(m => m == null ? 200000 : m.LastChequePrint);
                 var chequeSeries = new ChequeSeries { SAN = SAN, LastChequePrint = value + (bookSize * noOfChequeBook) };
                 context.ChequeSeries.AddOrUpdate(k => k.SAN, chequeSeries);
                 context.SaveChanges();
