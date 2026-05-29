@@ -909,7 +909,7 @@ namespace CPS.Business
                 stringFormat.LineAlignment = StringAlignment.Far;
 
                 // Draw the text and the surrounding rectangle.
-                e.Graphics.DrawString(GetStamp(section.PrintRequest.Request), font8, brush, stampRect, stringFormat);
+                e.Graphics.DrawString(GetStamp(section.PrintRequest.Request), font8Bold, brush, stampRect, stringFormat);
             }
 
             if (BatchInPrinting.ChequeLayout.micrVisble)

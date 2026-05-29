@@ -246,6 +246,10 @@
     <Compile Include="Migrations\202301180449058_Request_Change1.Designer.cs">
       <DependentUpon>202301180449058_Request_Change1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202605290630481_validationchequeremoved.cs" />
+    <Compile Include="Migrations\202605290630481_validationchequeremoved.Designer.cs">
+      <DependentUpon>202605290630481_validationchequeremoved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Views\Preferences\Backup.xaml.cs">
@@ -490,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202301180449058_Request_Change1.resx">
       <DependentUpon>202301180449058_Request_Change1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202605290630481_validationchequeremoved.resx">
+      <DependentUpon>202605290630481_validationchequeremoved.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

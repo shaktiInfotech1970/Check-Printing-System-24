@@ -130,12 +130,10 @@ namespace CPS.Business
         [Parse(5)]
         public string VPIS { get; set; }
 
-        [Required]
         [Display(Name = "Cheque From", Order = 23)]
         [Parse(23)]
         public int ChequeFrom { get; set; }
 
-        [Required]
         [Display(Name = "Cheque To", Order = 24)]
         [Parse(24)]
         public int ChequeTo { get; set; }       
@@ -344,12 +342,22 @@ namespace CPS.Business
                     break;
                 default:
                     string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
+
                     for (int i = 0; i < lines.Count(); i++)
                     {
-                        // Skip header
-                        // if (i == 0) continue; 
+                        // SKIP EMPTY LINES
+                        if (string.IsNullOrWhiteSpace(lines[i]))
+                            continue;
+
+                        // SKIP INVALID LINES
+                        if (!lines[i].Contains("|"))
+                            continue;
+
+                        // Skip header if needed
+                        // if (i == 0) continue;
 
                         var obj = new RequestDTO();
+
                         if (Parse(lines[i].Replace("\"", ""), obj))
                             _data.Add(obj);
                     }
@@ -448,18 +456,66 @@ namespace CPS.Business
         }
         private bool Parse(string line, RequestDTO importData)
         {
-            var token = Regex.Split(line, FIELDSEPARATOR);
+            var token = Regex.Split(line.Trim(), FIELDSEPARATOR);
+
             var properties = importData.GetType().GetProperties()
                 .Where(w => w.GetCustomAttributes(typeof(ParseAttribute), false).Count() > 0)
-                .OrderBy(o => (o.GetCustomAttributes(typeof(ParseAttribute), false).FirstOrDefault() as ParseAttribute).Order);
+                .OrderBy(o => (o.GetCustomAttributes(typeof(ParseAttribute), false)
+                    .FirstOrDefault() as ParseAttribute).Order);
+
             foreach (var property in properties)
             {
-                var parseAttribute = (property.GetCustomAttributes(typeof(ParseAttribute), false)[0] as ParseAttribute);
+                var parseAttribute =
+                    (property.GetCustomAttributes(typeof(ParseAttribute), false)[0]
+                    as ParseAttribute);
+
                 var order = parseAttribute.Order - 1;
+
+                // SAFETY CHECK FOR MISSING COLUMN
+                if (order >= token.Length)
+                {
+                    throw new Exception(
+                        $"Missing column at position {order + 1} for property '{property.Name}'");
+                }
+
                 var value = token[order].Trim().Trim(new char[] { '"' });
-                if (property.PropertyType == typeof(int) && string.IsNullOrWhiteSpace(value))
+
+                // HANDLE EMPTY INT/LONG VALUES
+                if ((property.PropertyType == typeof(int)
+                    || property.PropertyType == typeof(long))
+                    && string.IsNullOrWhiteSpace(value))
+                {
                     value = "0";
-                property.SetValue(importData, Convert.ChangeType(value, property.PropertyType), null);
+                }
+
+                try
+                {
+                    property.SetValue(
+                        importData,
+                        Convert.ChangeType(value, property.PropertyType),
+                        null);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(
+                        $"Import Parse Error\n\n" +
+                        $"Column Order : {order + 1}\n" +
+                        $"Property     : {property.Name}\n" +
+                        $"Value        : '{value}'\n\n" +
+                        $"Error        : {ex.Message}");
+                }
+            }
+
+            // SHOW DEFAULT SERIES BUT DO NOT CONSUME SERIES DURING IMPORT
+            if (importData.ChequeFrom <= 0 || importData.ChequeTo <= 0)
+            {
+                const int defaultStart = 200001;
+
+                importData.ChequeFrom = defaultStart;
+
+                importData.ChequeTo =
+                    defaultStart +
+                    (importData.NoOfChequeBook * importData.NoOfCheque) - 1;
             }
 
             return true;
