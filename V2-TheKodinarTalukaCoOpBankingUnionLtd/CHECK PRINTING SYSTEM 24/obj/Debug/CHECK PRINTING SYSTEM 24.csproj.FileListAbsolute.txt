@@ -197,6 +197,7 @@ F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTIN
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.BankMaster_Change1.resources
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.ChequeSeries_Added.resources
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.Request_Change1.resources
+F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.validationchequeremoved.resources
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Properties.Resources.resources
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CHECK PRINTING SYSTEM 24.csproj.GenerateResource.cache
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\RdlCompile.cache
@@ -205,4 +206,3 @@ F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTIN
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CHECK PRINTING SYSTEM 24.csproj.CopyComplete
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.exe
 F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.pdb
-F:\CHECK PRINTING SYSTEM 24\V2-TheKodinarTalukaCoOpBankingUnionLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CHECK PRINTING SYSTEM 24.csproj.AssemblyReference.cache

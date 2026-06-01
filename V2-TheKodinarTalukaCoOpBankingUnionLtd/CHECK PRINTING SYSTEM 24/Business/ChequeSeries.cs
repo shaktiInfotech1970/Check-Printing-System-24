@@ -21,6 +21,18 @@ namespace CPS.Business
         [Required]
         public int LastChequePrint { get; set; }
 
+        public static int GetLastChequePrint(string SAN)
+        {
+            using (var context = new CPSDbContext())
+            {
+                return context.Set<ChequeSeries>()
+                    .Where(w => w.SAN == SAN)
+                    .Select(s => s.LastChequePrint)
+                    .DefaultIfEmpty(200000)
+                    .Max();
+            }
+        }
+
         public static ChequeSeries NextValue(int noOfChequeBook, int bookSize, string SAN)
         {
             using (var context = new CPSDbContext())

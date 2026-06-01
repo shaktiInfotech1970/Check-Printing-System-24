@@ -56,12 +56,12 @@ namespace CPS
                                     UserPermission LoggedInUserPermission = new UserPermission();
                                     LoggedInUserPermission.Permissions = repository.GetAll().Where(o => o.UserId == user.Id).ToList();
                                     mainWindow window = new mainWindow(LoggedInUserPermission);
-                                    window.Title = string.Format("Cheque Printing Software            LoginDateTime: {0}            UserId: {1}            User Name: {2}            Support:- Hemant Pawar: {3}            Technical Support:- Dhwanil Pawar: {4}",
+                                    window.Title = string.Format("Cheque Printing Software            LoginDateTime: {0}            UserId: {1}            User Name: {2}            Support:- Hemant Pawar: {3}            Technical Support:- Samarth Patil: {4}",
                                                                    System.DateTime.Now,
                                                                    user.UserId,
                                                                    user.Name,
                                                                    "+91-9825605331",
-                                                                   "+91-8141620099");
+                                                                   "+91-6354802360");
                                     window.SubTitle.Text = "Technical Support:- Samarth Patil: +91-6354802360, Amit Bane: +91-8200403694   Support:- Hemant Pawar: +91-9825605331";
 
                                     window.Show();

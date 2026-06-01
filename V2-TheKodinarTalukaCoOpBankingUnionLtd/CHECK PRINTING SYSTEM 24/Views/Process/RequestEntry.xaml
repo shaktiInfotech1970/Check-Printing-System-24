@@ -88,7 +88,6 @@
         <Grid Grid.Row="1" Grid.ColumnSpan="4" Margin="15">
             <Button Content="Add" Name="btnSave" Margin="0,0,80,0" HorizontalAlignment="Center" Click="btnSave_Click" />
             <Button Content="Clear" Name="btnClear" Margin="80,0,0,0" HorizontalAlignment="Center" Click="btnClear_Click" />
-            <Button Content="Delete" Name="btnDelete" Margin="240,0,0,0" HorizontalAlignment="Center" Click="btnDelete_Click" Visibility="Hidden" />
         </Grid>
         <DataGrid x:Name="dgRequestEntry" AutoGenerateColumns="False" Grid.Row="2" Grid.ColumnSpan="4" IsReadOnly="True" SelectionChanged="dgRequestEntry_SelectionChanged"
                   ScrollViewer.CanContentScroll="True" 

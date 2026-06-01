@@ -72,8 +72,25 @@ namespace CPS.Views.Process
                     var dataGridTextColumn = new DataGridTextColumn { Header = column.Header, Binding = new Binding(column.PropertyName) };
                     dgImport.Columns.Add(dataGridTextColumn);
                 }
+                var seriesTracker = new Dictionary<string, int>();
+
                 foreach (var data in import.Data)
                 {
+                    int lastCheque;
+
+                    if (!seriesTracker.TryGetValue(data.AccountNoFull, out lastCheque))
+                    {
+                        lastCheque = ChequeSeries.GetLastChequePrint(data.AccountNoFull);
+                    }
+
+                    data.ChequeFrom = lastCheque + 1;
+
+                    int totalCheques = data.NoOfChequeBook * data.NoOfCheque;
+
+                    data.ChequeTo = lastCheque + totalCheques;
+
+                    seriesTracker[data.AccountNoFull] = data.ChequeTo;
+
                     data.CityCode = int.Parse(data.MapperMICRCode.Substring(0, 3));
                     data.BankCode = int.Parse(data.MapperMICRCode.Substring(3, 3));
                     data.BranchCode = int.Parse(data.MapperMICRCode.Substring(6, 3));

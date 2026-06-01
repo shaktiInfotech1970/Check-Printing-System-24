@@ -143,27 +143,7 @@ namespace CPS.Views.Process
             }
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            if (btnSave.Tag != null)
-            {
-                MessageBoxResult result = MessageBox.Show("Are you sure you want to remove record for account no : " + ((RequestDTO)btnSave.Tag).AccountNoFull + " ?", "Delete Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                switch (result)
-                {
-                    case MessageBoxResult.Yes:
-                        DeleteRequestEntry();
-                        break;
-                    case MessageBoxResult.No:
-                        SetDatagridRowSelected((int)btnDelete.Tag);
-                        break;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select record to remove", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
-        }
+        
         private void BindDataGrid()
         {
             using (var context = new CPSDbContext())
@@ -185,8 +165,8 @@ namespace CPS.Views.Process
                 var request = (RequestDTO)((System.Windows.Controls.DataGrid)(sender)).CurrentItem;
                 btnSave.Tag = request;
                 btnSave.Content = "Save";
-                btnDelete.Visibility = Visibility.Visible;
-                btnDelete.Tag = dgRequestEntry.SelectedIndex;
+                //btnDelete.Visibility = Visibility.Visible;
+                //btnDelete.Tag = dgRequestEntry.SelectedIndex;
 
                 cbBrach.SelectedValue = request.BranchId;
                 txtRequestNo.Text = request.RequestNo.ToString();
@@ -216,8 +196,8 @@ namespace CPS.Views.Process
             }
             else
             {
-                btnDelete.Tag = -1;
-                btnDelete.Visibility = Visibility.Hidden;
+               // btnDelete.Tag = -1;
+                //btnDelete.Visibility = Visibility.Hidden;
             }
         }
 
@@ -242,8 +222,8 @@ namespace CPS.Views.Process
                     BindDataGrid();
                     btnSave.Tag = null;
                     btnSave.Content = "Add";
-                    btnDelete.Tag = -1;
-                    btnDelete.Visibility = Visibility.Hidden;
+                   // btnDelete.Tag = -1;
+                    //btnDelete.Visibility = Visibility.Hidden;
                     MessageBox.Show("Selected record removed successfully.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else

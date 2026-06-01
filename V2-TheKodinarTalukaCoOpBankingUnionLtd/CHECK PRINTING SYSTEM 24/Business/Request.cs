@@ -509,13 +509,8 @@ namespace CPS.Business
             // SHOW DEFAULT SERIES BUT DO NOT CONSUME SERIES DURING IMPORT
             if (importData.ChequeFrom <= 0 || importData.ChequeTo <= 0)
             {
-                const int defaultStart = 200001;
-
-                importData.ChequeFrom = defaultStart;
-
-                importData.ChequeTo =
-                    defaultStart +
-                    (importData.NoOfChequeBook * importData.NoOfCheque) - 1;
+                importData.ChequeFrom = 0;
+                importData.ChequeTo = 0;
             }
 
             return true;
