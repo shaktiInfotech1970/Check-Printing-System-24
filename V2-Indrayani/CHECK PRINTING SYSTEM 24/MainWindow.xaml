@@ -37,6 +37,7 @@
                         <MenuItem Name="subMenuTotalReprintCheque" Header="Total Re-Print Cheque" Click="subMenuTotalReprintCheque_Click" />
                         <MenuItem Name="subMenuPrintedChequeSeries" Header="Print Cheque Series" Click="subMenuPrintedChequeSeries_Click" />
                         <MenuItem Name="subMenuPrintedCheque" Header="Printed Cheque" Click="subMenuPrintedCheque_Click" />
+                        <MenuItem Name="subMenuSearchReport" Header="Search" Click="subMenuSearch_Click" />
                     </MenuItem>
                     <MenuItem Name="menuSecurity" Header="Security">
                         <MenuItem Name="subMenuChangePassword" Header="Change Password" Click="subMenuChangePassword_Click" />

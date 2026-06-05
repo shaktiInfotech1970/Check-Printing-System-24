@@ -143,7 +143,10 @@
     <Compile Include="Business\UserMaster.cs" />
     <Compile Include="Common\CPSEnums.cs" />
     <Compile Include="Common\DataGridToPDF.cs" />
+    <Compile Include="Common\EnumBindingSourceExtension.cs" />
+    <Compile Include="Common\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Common\Helper.cs" />
+    <Compile Include="Common\ReportCSV.cs" />
     <Compile Include="Common\ReportPDF.cs" />
     <Compile Include="Common\TextBoxMaskBehavior.cs" />
     <Compile Include="CPSDbContext.cs" />
@@ -264,6 +267,9 @@
     </Compile>
     <Compile Include="Views\Reports\ReprintedCheque.xaml.cs">
       <DependentUpon>ReprintedCheque.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\TotalChequePrintReport.xaml.cs">
       <DependentUpon>TotalChequePrintReport.xaml</DependentUpon>
@@ -510,6 +516,10 @@
     <Page Include="Views\Reports\ReprintedCheque.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\Search.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Reports\TotalChequePrintReport.xaml">
       <SubType>Designer</SubType>

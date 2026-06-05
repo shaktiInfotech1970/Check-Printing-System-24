@@ -214,6 +214,13 @@ namespace CPS
             ucContainer.Children.Add(new PrintedCheque());
         }
 
+        private void subMenuSearch_Click(object sender, RoutedEventArgs e)
+        {
+            ucContainer.Children.Clear();
+            SubTitle.Text = "Search Report";
+            ucContainer.Children.Add(new Search());
+        }
+
         private void subMenuPreferences_Click(object sender, RoutedEventArgs e)
         {
             ucContainer.Children.Clear();
