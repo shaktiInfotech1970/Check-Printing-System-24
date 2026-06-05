@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -32,7 +33,9 @@ namespace CPS.Common
         Preferences,
         DatabaseBackup,
         RequestLayoutPreference,
-        ChequeLayoutPreference
+        ChequeLayoutPreference,
+        SearchReport,
+        RemoveRequestData
     }
 
     [Flags]
@@ -44,4 +47,25 @@ namespace CPS.Common
         Print = 4,
         All = Read | Write | Print
     }
+
+    [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+    public enum enumCheckBookSize
+    {
+        //[Description("03")]
+        //Pages03 = 03,
+        //[Description("06")]
+        //Pages06 = 06,
+        //[Description("09")]
+        //Pages09 = 09,
+        [Description("15")]
+        Pages15 = 15,
+        [Description("30")]
+        Pages30 = 30,
+        [Description("45")]
+        Pages45 = 45,
+        [Description("60")]
+        Pages60 = 60,
+        [Description("90")]
+        Pages90 = 90
+    }   
 }

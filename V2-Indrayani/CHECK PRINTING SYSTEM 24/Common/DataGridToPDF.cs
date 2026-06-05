@@ -36,8 +36,9 @@ namespace CPS.Common
                 cell.BorderWidthTop = 0;
                 cell.BorderWidthLeft = 0;
                 cell.BorderWidthRight = 0;
-                cell.BorderWidthBottom = 1f;
-                cell.BorderColorBottom = BaseColor.BLACK;
+                cell.BorderWidthBottom = 0.1f;
+                cell.HorizontalAlignment = PdfPCell.ALIGN_MIDDLE;
+                cell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
                 table.AddCell(cell);
             }
             table.HeaderRows = 1;
@@ -45,7 +46,16 @@ namespace CPS.Common
             {
                 for (int j = 0; j < table.NumberOfColumns; j++)
                 {
-                    table.AddCell(new Phrase(((System.Windows.Controls.TextBlock)(GetCell(i, j).Content)).Text, fontNormal));
+
+                    var cell = new PdfPCell(new Phrase(((System.Windows.Controls.TextBlock)(GetCell(i, j).Content)).Text, fontNormal));
+                    cell.BorderWidthTop = 0f;
+                    cell.BorderWidthLeft = 0f;
+                    cell.BorderWidthRight = 0f;
+                    cell.BorderWidthBottom = 0.1f;
+                    cell.HorizontalAlignment = PdfPCell.ALIGN_MIDDLE;
+                    cell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+                    cell.FixedHeight = 25f;
+                    table.AddCell(cell);
                 }
             }
             return table;
@@ -57,12 +67,11 @@ namespace CPS.Common
 
             if (rowContainer != null)
             {
+                _DataGrid.ScrollIntoView(rowContainer, _DataGrid.Columns[column]);
                 DataGridCellsPresenter presenter = GetVisualChild<DataGridCellsPresenter>(rowContainer);
-
                 DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
                 if (cell == null)
                 {
-                    _DataGrid.ScrollIntoView(rowContainer, _DataGrid.Columns[column]);
                     cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
                 }
                 return cell;
