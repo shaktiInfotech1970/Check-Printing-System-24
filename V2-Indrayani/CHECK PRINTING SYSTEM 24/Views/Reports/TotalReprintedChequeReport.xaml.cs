@@ -55,9 +55,9 @@ namespace CPS.Views.Reports
 
                 var groupedQuery = (from o in query
                                     group o by new { o.r.BranchId, o.b.Name, o.r.TransactionCode, o.BookSize } into g
-                                    select new TotalPrintReport { BranchName = g.Key.Name, TransactionCode = g.Key.TransactionCode.ToString(), BookSize = g.Key.BookSize, TotalPrint = g.Count(), TotalLeaves = g.Sum(a => a.BookSize * a.r.NoOfChequeBook) });
+                                    select new TotalPrintReport { BranchName = g.Key.Name, TransactionCode = g.Key.TransactionCode.ToString(), BookSize = g.Key.BookSize, TotalPrint = g.Count(), TotalLeaves = g.Sum(a => a.BookSize) });
 
-                var response = groupedQuery.OrderBy(o => o.BranchName).ToList();
+                var response = groupedQuery.Where(o => o.BookSize > 0).OrderBy(o => o.BranchName).ToList();
 
                 var resultDataSource = new List<TotalPrintReport>();
                 if (response.Count > 0)
@@ -87,9 +87,11 @@ namespace CPS.Views.Reports
                 dgTotalReprintedCheque.ItemsSource = resultDataSource;
 
                 btnPrint.IsEnabled = true;
+                btnExportCsv.IsEnabled = true;
                 if (response.Count == 0)
                 {
                     btnPrint.IsEnabled = false;
+                    btnExportCsv.IsEnabled = false;
                     MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
@@ -102,6 +104,19 @@ namespace CPS.Views.Reports
 
             ReportPDF report = new ReportPDF(dgTotalReprintedCheque, new float[] { 200, 75, 75, 75, 75 });
             report.Generate("TotalReprintedCheque", title);
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "CSV file (*.csv)|*.csv";
+            dlg.FileName = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+            if (dlg.ShowDialog() == true)
+            {
+                ReportCSV report = new ReportCSV(dgTotalReprintedCheque);
+                report.Generate(dlg.FileName);
+            }
         }
     }
 }

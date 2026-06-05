@@ -62,13 +62,13 @@ namespace CPS.Views.Reports
                              join ph in repositoryPrintHistory.GetAll() on r.Id equals ph.RequestId
                              where (branchId == 0 || (branchId != 0 && r.BranchId == branchId))
                              && (accountType == 0 || (accountType != 0 && r.TransactionCode == accountType))
-                             && DbFunctions.TruncateTime(ph.CreatedOn) >= transactionfromDate.Date && DbFunctions.TruncateTime(ph.CreatedOn) <= transactiontoDate.Date 
+                             && DbFunctions.TruncateTime(ph.CreatedOn) >= transactionfromDate.Date && DbFunctions.TruncateTime(ph.CreatedOn) <= transactiontoDate.Date
                              && ph.PrintType == PrintType.ChequeBook
                              select new { r, b, at, ph, BookSize = ph.ChequeNoTo - ph.ChequeNoFrom + 1 });
 
                 var groupedQuery = (from o in query
                                     group o by new { o.r.BranchId, o.b.Name, o.r.TransactionCode, o.BookSize } into g
-                                    select new TotalPrintReport { BranchName = g.Key.Name, TransactionCode = g.Key.TransactionCode.ToString(), BookSize = g.Key.BookSize, TotalPrint = g.Count(), TotalLeaves = g.Sum(a => a.BookSize * a.r.NoOfChequeBook) });
+                                    select new TotalPrintReport { BranchName = g.Key.Name, TransactionCode = g.Key.TransactionCode.ToString(), BookSize = g.Key.BookSize, TotalPrint = g.Count(), TotalLeaves = g.Sum(a => a.BookSize) });
 
                 var response = groupedQuery.OrderBy(o => o.BranchName).ToList();
 
@@ -100,10 +100,12 @@ namespace CPS.Views.Reports
                 dgPrintedCheque.ItemsSource = resultDataSource;
 
                 btnPrint.IsEnabled = true;
+                btnExportCsv.IsEnabled = true;
                 if (response.Count == 0)
                 {
                     btnPrint.IsEnabled = false;
-                    MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    btnExportCsv.IsEnabled = false;
+                   MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
         }
@@ -115,6 +117,19 @@ namespace CPS.Views.Reports
 
             ReportPDF report = new ReportPDF(dgPrintedCheque, new float[] { 200, 75, 75, 75, 75 });
             report.Generate("PrintedCheque", title);
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "CSV file (*.csv)|*.csv";
+            dlg.FileName = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+            if (dlg.ShowDialog() == true)
+            {
+                ReportCSV report = new ReportCSV(dgPrintedCheque);
+                report.Generate(dlg.FileName);
+            }
         }
     }
 }

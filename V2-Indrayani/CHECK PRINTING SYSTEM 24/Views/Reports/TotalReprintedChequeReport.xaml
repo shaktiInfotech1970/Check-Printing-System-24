@@ -13,7 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0">
             <Label Content="Print From Date" Target="{Binding ElementName=dtPrintDateFrom}" />
@@ -30,8 +30,11 @@
         <Grid Grid.Row="1" Grid.ColumnSpan="4" Margin="15">
             <Button Content="Show Columns" Name="btnShowColumns" Click="btnShowColumns_Click" Margin="0,0,150,0" HorizontalAlignment="Center" />
             <Button Content="Print" Name="btnPrint" Click="btnPrint_Click" Margin="150,0,0,0" HorizontalAlignment="Center" />
+            <Button Content="Export to CSV" Name="btnExportCsv" Click="btnExport_Click" Margin="450,0,0,0" HorizontalAlignment="Center" IsEnabled="False" />
         </Grid>
-        <DataGrid x:Name="dgTotalReprintedCheque" AutoGenerateColumns="False" Grid.Row="2" Grid.ColumnSpan="3" IsReadOnly="True">
+        <DataGrid x:Name="dgTotalReprintedCheque" AutoGenerateColumns="False" Grid.Row="2" Grid.ColumnSpan="3" IsReadOnly="True" ScrollViewer.CanContentScroll="True" 
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"                           
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Branch Name" Binding="{Binding BranchName}" />
                 <DataGridTextColumn Header="Tr. Code" Binding="{Binding TransactionCode}" />

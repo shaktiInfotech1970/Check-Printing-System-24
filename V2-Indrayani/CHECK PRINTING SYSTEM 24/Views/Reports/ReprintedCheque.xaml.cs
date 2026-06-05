@@ -54,14 +54,16 @@ namespace CPS.Views.Reports
                              && (accountType == 0 || (accountType != 0 && r.TransactionCode == accountType))
                              && DbFunctions.TruncateTime(ph.CreatedOn) >= transactionfromDate.Date && DbFunctions.TruncateTime(ph.CreatedOn) <= transactiontoDate.Date
                              && ph.PrintType == PrintType.RePrintChequeBook
-                             select new PrintRequest { Request = r, AccountType = at, Branch = b });
+                             select new { Request = r, AccountType = at, Branch = b, PrintHistory = ph });
 
                 var response = query.ToList();
                 dgReprintedCheque.ItemsSource = response;
                 btnPrint.IsEnabled = true;
+                btnExportCsv.IsEnabled = true;
                 if (response.Count == 0)
                 {
                     btnPrint.IsEnabled = false;
+                    btnExportCsv.IsEnabled = false;
                     MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
@@ -73,8 +75,21 @@ namespace CPS.Views.Reports
             Paragraph title = new Paragraph(string.Format("Re-Printed Cheque:- From:{0}  - To:{1}", (dtPrintDateFrom.SelectedDate ?? DateTime.Now.Date).ToString("dd MMM yyyy"), (dtPrintDateTo.SelectedDate ?? DateTime.Now.Date).ToString("dd MMM yyyy")), new Font(Font.FontFamily.HELVETICA, 15));
             title.Alignment = Element.ALIGN_CENTER;
 
-            ReportPDF report = new ReportPDF(dgReprintedCheque, new float[] { 40, 90, 180, 50, 30, 55, 50, 45, 30, 110, 50, 50 });
+            ReportPDF report = new ReportPDF(dgReprintedCheque, new float[] { 40, 90, 180, 50, 30, 55, 50, 30, 110, 50, 95 });
             report.Generate("ReprintedCheque", title);
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "CSV file (*.csv)|*.csv";
+            dlg.FileName = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+            if (dlg.ShowDialog() == true)
+            {
+                ReportCSV report = new ReportCSV(dgReprintedCheque);
+                report.Generate(dlg.FileName);
+            }
         }
     }
 }

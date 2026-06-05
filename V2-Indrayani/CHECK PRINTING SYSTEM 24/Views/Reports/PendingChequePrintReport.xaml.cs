@@ -47,6 +47,7 @@ namespace CPS.Views.Reports
                              join at in repositoryAccountType.GetAll() on r.TransactionCode equals at.Code
                              where (branchId == 0 || (branchId != 0 && r.BranchId == branchId))
                              && (accountType == 0 || (accountType != 0 && r.TransactionCode == accountType))
+                             && r.IsPrinted == false
                              orderby r.CreatedOn descending
                              select new { Request = r, AccountType = at, Branch = b });
 
@@ -54,10 +55,12 @@ namespace CPS.Views.Reports
                 dgPendingChequePrintReport.ItemsSource = response;
 
                 btnPrint.IsEnabled = true;
+                btnExportCsv.IsEnabled = true;
                 if (response.Count == 0)
                 {
                     btnPrint.IsEnabled = false;
-                    MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    btnExportCsv.IsEnabled = false;
+                  MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
         }
@@ -67,8 +70,21 @@ namespace CPS.Views.Reports
             Paragraph title = new Paragraph("Pending Cheque Print Report", new Font(Font.FontFamily.HELVETICA, 15));
             title.Alignment = Element.ALIGN_CENTER;
 
-            ReportPDF report = new ReportPDF(dgPendingChequePrintReport, new float[] { 40, 90, 180, 50, 30, 55, 50, 45, 30, 110, 50, 50 });
+            ReportPDF report = new ReportPDF(dgPendingChequePrintReport, new float[] { 50, 120, 250, 60, 40, 65, 60, 55, 70 });
             report.Generate("PendingChequePrint", title);
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "CSV file (*.csv)|*.csv";
+            dlg.FileName = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+            if (dlg.ShowDialog() == true)
+            {
+                ReportCSV report = new ReportCSV(dgPendingChequePrintReport);
+                report.Generate(dlg.FileName);
+            }
         }
     }
 }

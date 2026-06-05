@@ -57,12 +57,14 @@ namespace CPS.Views.Reports
                              && ph.PrintType == PrintType.ChequeBook
                              select new { Request = r, AccountType = at, Branch = b, PrintHistory = ph });
 
-                var response = query.ToList();
+                var response = query.ToList(); 
                 dgDaywiseChequePrint.ItemsSource = response;
                 btnPrint.IsEnabled = true;
+                btnExportCsv.IsEnabled = true;
                 if (response.Count == 0)
                 {
                     btnPrint.IsEnabled = false;
+                    btnExportCsv.IsEnabled = false;
                     MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
@@ -73,8 +75,21 @@ namespace CPS.Views.Reports
             Paragraph title = new Paragraph(string.Format("Daywise Cheque Print:- Transaction Date: {0}", (dtTransactionDate.SelectedDate ?? DateTime.Now.Date).ToString("dd MMM yyyy")), new Font(Font.FontFamily.HELVETICA, 15));
             title.Alignment = Element.ALIGN_CENTER;
 
-            ReportPDF report = new ReportPDF(dgDaywiseChequePrint, new float[] { 40, 90, 180, 50, 30, 55, 50, 45, 30, 110, 50, 50 });
+            ReportPDF report = new ReportPDF(dgDaywiseChequePrint, new float[] { 40, 90, 180, 50, 30, 55, 50, 30, 110, 50, 95 });
             report.Generate("DaywiseChequePrint", title);
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "CSV file (*.csv)|*.csv";
+            dlg.FileName = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+            if (dlg.ShowDialog() == true)
+            {
+                ReportCSV report = new ReportCSV(dgDaywiseChequePrint);
+                report.Generate(dlg.FileName);
+            }
         }
     }
 }
