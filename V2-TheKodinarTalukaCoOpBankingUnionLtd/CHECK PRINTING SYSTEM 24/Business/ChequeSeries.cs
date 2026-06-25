@@ -25,11 +25,16 @@ namespace CPS.Business
         {
             using (var context = new CPSDbContext())
             {
-                return context.Set<ChequeSeries>()
+                var value = context.Set<ChequeSeries>()
                     .Where(w => w.SAN == SAN)
                     .Select(s => s.LastChequePrint)
                     .DefaultIfEmpty(200000)
                     .Max();
+
+                if (value >= 120000 && value < 200000)
+                    return 200000;
+
+                return value;
             }
         }
 
@@ -37,14 +42,29 @@ namespace CPS.Business
         {
             using (var context = new CPSDbContext())
             {
-                var value = context.Set<ChequeSeries>().Where(w => w.SAN == SAN).DefaultIfEmpty().Max(m => m == null ? 200000 : m.LastChequePrint);
-                var chequeSeries = new ChequeSeries { SAN = SAN, LastChequePrint = value + (bookSize * noOfChequeBook) };
+                var value = context.Set<ChequeSeries>()
+                    .Where(w => w.SAN == SAN)
+                    .Select(s => s.LastChequePrint)
+                    .DefaultIfEmpty(200000)
+                    .Max();
+
+                // Migrate old 120xxx series to 200000 series
+                if (value >= 120000 && value < 200000)
+                    value = 200000;
+
+                var chequeSeries = new ChequeSeries
+                {
+                    SAN = SAN,
+                    LastChequePrint = value + (bookSize * noOfChequeBook)
+                };
+
                 context.ChequeSeries.AddOrUpdate(k => k.SAN, chequeSeries);
                 context.SaveChanges();
 
                 return chequeSeries;
             }
         }
+
 
         public static bool Save(ChequeSeries chequeSeries)
         {
