@@ -683,7 +683,8 @@ namespace CPS.Business
             Font font9 = new Font("Verdana", 9);
             Font font9Bold = new Font("Verdana", 9, FontStyle.Bold);
             Font font5 = new Font("Verdana", 5);
-
+            Font font7 = new Font("Verdana", 7);
+            Font font7Bold = new Font("Verdana",7,FontStyle.Bold);
             var section = printPage.Sections.ToList()[sectionNo - 1];
             var x = (GetDPI(PageWidth) - GetDPI(SectionWidth));
             var y = (GetDPI(SectionHeight) * (sectionNo - 1));
@@ -695,32 +696,32 @@ namespace CPS.Business
             //    e.Graphics.DrawString(GetBranchAddress(section.PrintRequest.Branch), font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress2X), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress2Y));
 
             if (BatchInPrinting.RequestLayout.branchAddress1Visble)
-                e.Graphics.DrawString(section.PrintRequest.Branch.Name, font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress1X), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress1Y));
+                e.Graphics.DrawString(section.PrintRequest.Branch.Name, font7, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress1X), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress1Y));
 
             if (BatchInPrinting.RequestLayout.branchAddress2Visble)
-                e.Graphics.DrawString(section.PrintRequest.Branch.Name, font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress2X), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress2Y));
+                e.Graphics.DrawString(section.PrintRequest.Branch.Name, font7, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress2X), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress2Y));
 
             if (BatchInPrinting.RequestLayout.nameAddress1Visble)
             {
                 e.Graphics.DrawString(
                     string.Format("Mobile No: {0}", section.PrintRequest.Request.mob),
-                    font9Bold,
+                    font7Bold,
                     brush,
                     x + GetDPI(BatchInPrinting.RequestLayout.nameAddress1X),
                     y + GetDPI(BatchInPrinting.RequestLayout.nameAddress1Y + 3f)
                 );
             }
             if (BatchInPrinting.RequestLayout.chequeFrom1Visble)
-                e.Graphics.DrawString(section.PrintRequest.Request.ChequeFrom.ToString("000000"), font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeFrom1X), y + GetDPI(BatchInPrinting.RequestLayout.chequeFrom1Y));
+                e.Graphics.DrawString(section.PrintRequest.Request.ChequeFrom.ToString("000000"), font7, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeFrom1X), y + GetDPI(BatchInPrinting.RequestLayout.chequeFrom1Y));
 
             if (BatchInPrinting.RequestLayout.chequeTo1Visble)
-                e.Graphics.DrawString(section.PrintRequest.Request.ChequeTo.ToString("000000"), font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeTo1X), y + GetDPI(BatchInPrinting.RequestLayout.chequeTo1Y));
+                e.Graphics.DrawString(section.PrintRequest.Request.ChequeTo.ToString("000000"), font7, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeTo1X), y + GetDPI(BatchInPrinting.RequestLayout.chequeTo1Y));
 
             if (BatchInPrinting.RequestLayout.chequeFrom2Visble)
-                e.Graphics.DrawString(section.PrintRequest.Request.ChequeFrom.ToString("000000"), font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeFrom2X), y + GetDPI(BatchInPrinting.RequestLayout.chequeFrom2Y));
+                e.Graphics.DrawString(section.PrintRequest.Request.ChequeFrom.ToString("000000"), font7, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeFrom2X), y + GetDPI(BatchInPrinting.RequestLayout.chequeFrom2Y));
 
             if (BatchInPrinting.RequestLayout.chequeTo2Visble)
-                e.Graphics.DrawString(section.PrintRequest.Request.ChequeTo.ToString("000000"), font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeTo2X), y + GetDPI(BatchInPrinting.RequestLayout.chequeTo2Y));
+                e.Graphics.DrawString(section.PrintRequest.Request.ChequeTo.ToString("000000"), font7, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeTo2X), y + GetDPI(BatchInPrinting.RequestLayout.chequeTo2Y));
 
             if (BatchInPrinting.RequestLayout.nameAddress1Visble)
                 PrintNameAddress(e, section.PrintRequest.Request, x + GetDPI(BatchInPrinting.RequestLayout.nameAddress1X), y + GetDPI(BatchInPrinting.RequestLayout.nameAddress1Y), 300, 110);
@@ -729,12 +730,12 @@ namespace CPS.Business
                 PrintNameAddress(e, section.PrintRequest.Request, x + GetDPI(BatchInPrinting.RequestLayout.nameAddress2X), y + GetDPI(BatchInPrinting.RequestLayout.nameAddress2Y), 400, 110);
 
             if (BatchInPrinting.RequestLayout.accountNo1Visble)
-                e.Graphics.DrawString(string.Format("{0}: {1}", section.PrintRequest.AccountType.Name, section.PrintRequest.Request.AccountNoFull), font9Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.accountNo1X), y + GetDPI(BatchInPrinting.RequestLayout.accountNo1Y));
+                e.Graphics.DrawString(string.Format("{0}: {1}", section.PrintRequest.AccountType.Name, section.PrintRequest.Request.AccountNoFull), font7Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.accountNo1X), y + GetDPI(BatchInPrinting.RequestLayout.accountNo1Y));
 
             if (BatchInPrinting.RequestLayout.accountNo2Visble)
-                e.Graphics.DrawString(string.Format("{0}: {1}", section.PrintRequest.AccountType.Name, section.PrintRequest.Request.AccountNoFull), font9Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.accountNo2X), y + GetDPI(BatchInPrinting.RequestLayout.accountNo2Y));
+                e.Graphics.DrawString(string.Format("{0}: {1}", section.PrintRequest.AccountType.Name, section.PrintRequest.Request.AccountNoFull), font7Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.accountNo2X), y + GetDPI(BatchInPrinting.RequestLayout.accountNo2Y));
 
-            e.Graphics.DrawString(string.Format("Mobile No: {0}", section.PrintRequest.Request.mob), font9Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.nameAddress2X), y + GetDPI(BatchInPrinting.RequestLayout.nameAddress2Y + 3f));
+            e.Graphics.DrawString(string.Format("Mobile No: {0}", section.PrintRequest.Request.mob), font7Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.nameAddress2X), y + GetDPI(BatchInPrinting.RequestLayout.nameAddress2Y + 3f));
 
             var barcode = GetBarcode(section.PrintRequest.Request.AccountNoFull, 15, System.Drawing.RotateFlipType.RotateNoneFlipNone);
             if (BatchInPrinting.RequestLayout.barcode1Visble)
