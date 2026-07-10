@@ -146,6 +146,7 @@
     <Compile Include="Business\BankMaster.cs" />
     <Compile Include="Business\BranchMaster.cs" />
     <Compile Include="Business\ChequeBookSeries.cs" />
+    <Compile Include="Business\ChequeSeries.cs" />
     <Compile Include="Business\Counter.cs" />
     <Compile Include="Business\DatabaseBackup.cs" />
     <Compile Include="Business\Permission.cs" />
@@ -236,6 +237,10 @@
     <Compile Include="Migrations\201907191053191_BankMaster_Change1.cs" />
     <Compile Include="Migrations\201907191053191_BankMaster_Change1.Designer.cs">
       <DependentUpon>201907191053191_BankMaster_Change1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202607100845276_chequeOptional.cs" />
+    <Compile Include="Migrations\202607100845276_chequeOptional.Designer.cs">
+      <DependentUpon>202607100845276_chequeOptional.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
@@ -475,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907191053191_BankMaster_Change1.resx">
       <DependentUpon>201907191053191_BankMaster_Change1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607100845276_chequeOptional.resx">
+      <DependentUpon>202607100845276_chequeOptional.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

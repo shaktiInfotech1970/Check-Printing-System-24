@@ -15,6 +15,8 @@ namespace CPS
         // connection string in the application configuration file.
         public CPSDbContext(): base("name=CPSdbConnection")
         {
+            Database.SetInitializer<CPSDbContext>(null);
+
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
@@ -33,6 +35,8 @@ namespace CPS
         public virtual DbSet<DatabaseBackup> DatabaseBackup { get; set; }
         public virtual DbSet<ChequeLayout> ChequeLayout { get; set; }
         public virtual DbSet<RequestLayout> RequestLayout { get; set; }
+
+        public virtual DbSet<ChequeSeries> ChequeSeries { get; set; }
     }
 
     //public class MyEntity

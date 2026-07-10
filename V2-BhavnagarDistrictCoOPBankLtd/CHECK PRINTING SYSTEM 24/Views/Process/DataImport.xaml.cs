@@ -75,9 +75,13 @@ namespace CPS.Views.Process
 
                 dgImport.ItemsSource = import.Data;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Import error", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    ex.ToString(),
+                    "Import Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
 
         }
@@ -150,9 +154,13 @@ namespace CPS.Views.Process
                     MessageBox.Show("Please select branch", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Save error", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    ex.ToString(),
+                    "Save Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
 

@@ -164,12 +164,10 @@ namespace CPS.Business
         [Parse(29)]
         public string prcode { get; set; }
 
-        [Required]
         [Display(Name = "Cheque From", Order = 30)]
         [Parse(30)]
         public int ChequeFrom { get; set; }
 
-        [Required]
         [Display(Name = "Cheque To", Order = 31)]
         [Parse(31)]
         public int ChequeTo { get; set; }
@@ -257,11 +255,17 @@ namespace CPS.Business
                     //    errorMsg += string.IsNullOrEmpty(this.AccountNoFull) ? "." : string.Format(" for account no {0}.", this.AccountNoFull);
                     //    results.Add(new ValidationResult(errorMsg));
                     //}
-                    if ((this.NoOfChequeBook * this.NoOfCheque) != (this.ChequeTo - this.ChequeFrom) + 1)
+                    if (this.ChequeFrom != 0 && this.ChequeTo != 0)
                     {
-                        errorMsg = string.Format("[{0}-{1}] Invalid cheque series", this.ChequeFrom, this.ChequeTo);
-                        errorMsg += string.IsNullOrEmpty(this.AccountNoFull) ? "." : string.Format(" for account no {0}.", this.AccountNoFull);
-                        results.Add(new ValidationResult(errorMsg));
+                        if ((this.NoOfChequeBook * this.NoOfCheque) != (this.ChequeTo - this.ChequeFrom) + 1)
+                        {
+                            errorMsg = string.Format("[{0}-{1}] Invalid cheque series", this.ChequeFrom, this.ChequeTo);
+                            errorMsg += string.IsNullOrEmpty(this.AccountNoFull)
+                                ? "."
+                                : string.Format(" for account no {0}.", this.AccountNoFull);
+
+                            results.Add(new ValidationResult(errorMsg));
+                        }
                     }
                     if (!((int[])Enum.GetValues(typeof(enumCheckBookSize))).Contains(this.NoOfCheque))
                     {
@@ -434,19 +438,94 @@ namespace CPS.Business
         }
         private bool Parse(string line, RequestDTO importData)
         {
-            var token = Regex.Split(line, FIELDSEPARATOR);
-            var properties = importData.GetType().GetProperties()
-                .Where(w => w.GetCustomAttributes(typeof(ParseAttribute), false).Count() > 0)
-                .OrderBy(o => (o.GetCustomAttributes(typeof(ParseAttribute), false).FirstOrDefault() as ParseAttribute).Order);
-            foreach (var property in properties)
+            try
             {
-                var parseAttribute = (property.GetCustomAttributes(typeof(ParseAttribute), false)[0] as ParseAttribute);
-                var order = parseAttribute.Order - 1;
+                var token = line.Split('|');
 
-                property.SetValue(importData, Convert.ChangeType(token[order].Trim().Trim(new char[] { '"' }), property.PropertyType), null);
+                importData.SerialNo = Convert.ToInt64(token[0]);
+
+                importData.AccountNo = token[1].Trim();
+                importData.AccountNoFull = token[2].Trim();
+                importData.Name = token[3].Trim();
+
+                importData.NoOfChequeBook = string.IsNullOrWhiteSpace(token[4]) ? 0 : Convert.ToInt32(token[4]);
+
+                importData.Address1 = token[5].Trim();
+                importData.Address2 = token[6].Trim();
+                importData.Address3 = token[7].Trim();
+
+                importData.City = token[8].Trim();
+
+                // If you have State/Country properties, assign them here.
+                // importData.State = token[9].Trim();
+                // importData.Country = token[11].Trim();
+
+                importData.PostalCode = token[10].Trim();
+
+                importData.telr = token[12].Trim();
+                importData.mob = token[13].Trim();
+                importData.telo = token[14].Trim();
+
+                importData.additional_f1 = token[15].Trim();
+
+                importData.NoOfCheque = string.IsNullOrWhiteSpace(token[16]) ? 0 : Convert.ToInt32(token[16]);
+
+                importData.BearerOrder = token[17].Trim();
+
+                importData.prcode = token[18].Trim();
+
+                importData.JointName1 = token[19].Trim();
+                importData.JointName2 = token[20].Trim();
+
+                importData.additional_f2 = token[21].Trim();
+                importData.additional_f3 = token[22].Trim();
+                importData.additional_f4 = token[23].Trim();
+
+                importData.TransactionCode = string.IsNullOrWhiteSpace(token[24]) ? 0 : Convert.ToInt32(token[24]);
+
+                importData.brsid = token[25].Trim();
+
+                // MICR Code (CCCBBBXXX)
+                if (!string.IsNullOrWhiteSpace(token[26]) && token[26].Length >= 9)
+                {
+                    importData.CityCode = Convert.ToInt32(token[26].Substring(0, 3));
+                    importData.BankCode = Convert.ToInt32(token[26].Substring(3, 3));
+                    importData.BranchCode = Convert.ToInt32(token[26].Substring(6, 3));
+                }
+
+                importData.Address4 = token[27].Trim();
+                importData.Address5 = token[28].Trim();
+
+                importData.additional_f5 = token[29].Trim();
+                importData.additional_f6 = token[30].Trim();
+                importData.additional_f7 = token[31].Trim();
+
+                // Second last column (IFSC)
+                if (token.Length >= 2)
+                    importData.additional_f9 = token[token.Length - 2].Trim();
+
+                // Last column (R / N)
+                if (token.Length >= 1)
+                    importData.AtPar = token[token.Length - 1].Trim();
+
+                var chequeSeries = ChequeSeries.NextValue(
+                     importData.NoOfChequeBook,
+                     importData.NoOfCheque,
+                      "DEFAULT");
+
+                importData.ChequeTo = chequeSeries.LastChequePrint;
+
+                importData.ChequeFrom = chequeSeries.LastChequePrint -
+                                        (importData.NoOfChequeBook * importData.NoOfCheque) + 1;
+
+                return true;
             }
-
-            return true;
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    "Error parsing line:\n\n" + line +
+                    "\n\n" + ex.Message, ex);
+            }
         }
     }
 

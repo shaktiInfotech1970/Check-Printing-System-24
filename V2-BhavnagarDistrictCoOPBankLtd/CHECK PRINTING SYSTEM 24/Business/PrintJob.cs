@@ -311,14 +311,49 @@ namespace CPS.Business
         {
             var printJobNo = Counter.NextValue(Counters.PrintJob);
             var assingPrintJobRequests = requests.ToList();
-            assingPrintJobRequests.ForEach(each => each.Request.PrintJobNo = printJobNo);
+
+            foreach (var each in assingPrintJobRequests)
+            {
+                each.Request.PrintJobNo = printJobNo;
+
+                // Generate cheque series
+                var chequeSeries = ChequeSeries.NextValue(
+                    each.Request.NoOfChequeBook,
+                    each.Request.NoOfCheque,
+                    "DEFAULT");
+
+                // Assign cheque range
+                each.Request.ChequeTo = chequeSeries.LastChequePrint;
+                each.Request.ChequeFrom = chequeSeries.LastChequePrint -
+                                          (each.Request.NoOfChequeBook * each.Request.NoOfCheque) + 1;
+            }
+
+            // Save PrintJobNo and cheque range into database
+            using (var context = new CPSDbContext())
+            {
+                foreach (var item in assingPrintJobRequests)
+                {
+                    var request = context.Set<RequestDTO>()
+                                         .First(r => r.Id == item.Request.Id);
+
+                    request.PrintJobNo = printJobNo;
+                    request.ChequeFrom = item.Request.ChequeFrom;
+                    request.ChequeTo = item.Request.ChequeTo;
+                }
+
+                context.SaveChanges();
+            }
 
             var printerPreference = GetPrinter();
-            var requestGroups = GroupedRequest(requests).Select(s => SplitRequestGroup(s)).ToList();
+
+            var requestGroups = GroupedRequest(assingPrintJobRequests)
+                .Select(s => SplitRequestGroup(s))
+                .ToList();
+
             var printerJob = GetPrinterJob(requestGroups, 1, int.MaxValue);
+
             return SendToPrinter(printerPreference, printerJob, PrintType.ChequeBook);
         }
-
         public static bool RePrint(IEnumerable<PrintRequest> requests)
         {
             var printerPreference = GetPrinter();
@@ -936,7 +971,14 @@ namespace CPS.Business
             }
 
             //var imgBarcode = GetBarcode(string.Format("{0}{1}{2}{3}", (section.PrintRequest.Request.ChequeFrom + (section.SequenceNo - 1)).ToString("000000"), section.PrintRequest.Request.MICRCode, Convert.ToInt32(section.PrintRequest.Request.AccountNo.Substring(Math.Max(0, section.PrintRequest.Request.AccountNo.Length - 6))).ToString("000000"), section.PrintRequest.Request.TransactionCode), 6, System.Drawing.RotateFlipType.Rotate270FlipNone);
-            var imgBarcode = GetBarcode(string.Format("{0}{1}{2}{3}", (section.PrintRequest.Request.ChequeFrom + (section.SequenceNo - 1)).ToString("000000"), section.PrintRequest.Request.MICRCode, Convert.ToInt32(section.PrintRequest.Request.AccountNo).ToString("000000"), section.PrintRequest.Request.TransactionCode), 12, System.Drawing.RotateFlipType.Rotate270FlipNone);
+            var imgBarcode = GetBarcode(
+                string.Format("{0}{1}{2}{3}",
+                (section.PrintRequest.Request.ChequeFrom + (section.SequenceNo - 1)).ToString("000000"),
+                 section.PrintRequest.Request.MICRCode,
+                  section.PrintRequest.Request.AccountNo,
+                   section.PrintRequest.Request.TransactionCode),
+                     12,
+                     System.Drawing.RotateFlipType.Rotate270FlipNone);
 
 
             if (BatchInPrinting.ChequeLayout.barcodeVisble)
