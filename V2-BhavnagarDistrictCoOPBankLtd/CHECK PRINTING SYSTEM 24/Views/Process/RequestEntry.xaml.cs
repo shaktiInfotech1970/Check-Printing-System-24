@@ -114,9 +114,18 @@ namespace CPS.Views.Process
                 request.NoOfCheque = (int)cbBookSize.SelectedValue;
             if (btnSave.Tag == null)
             {
-                var chequeSeries = ChequeSeries.NextValue(request.NoOfChequeBook, request.NoOfCheque, request.AccountNoFull);
-                request.ChequeFrom = (chequeSeries.LastChequePrint - (request.NoOfCheque * request.NoOfChequeBook)) + 1;
-                request.ChequeTo = chequeSeries.LastChequePrint;
+                // Only generate if not already generated
+                if (request.ChequeFrom == 0 && request.ChequeTo == 0)
+                {
+                    var chequeSeries = ChequeSeries.NextValue(
+                        request.NoOfChequeBook,
+                        request.NoOfCheque,
+                        request.AccountNoFull);
+
+                    request.ChequeFrom = (chequeSeries.LastChequePrint -
+                                         (request.NoOfCheque * request.NoOfChequeBook)) + 1;
+                    request.ChequeTo = chequeSeries.LastChequePrint;
+                }
             }
             if (cbBearerOrOrder.SelectedValue != null)
                 request.BearerOrder = (string)cbBearerOrOrder.SelectedValue;

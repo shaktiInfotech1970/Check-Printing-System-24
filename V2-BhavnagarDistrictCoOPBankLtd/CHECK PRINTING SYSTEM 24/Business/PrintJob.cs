@@ -312,20 +312,22 @@ namespace CPS.Business
             var printJobNo = Counter.NextValue(Counters.PrintJob);
             var assingPrintJobRequests = requests.ToList();
 
-            foreach (var each in assingPrintJobRequests)
-            {
+            foreach(var each in assingPrintJobRequests)
+{
                 each.Request.PrintJobNo = printJobNo;
 
-                // Generate cheque series
-                var chequeSeries = ChequeSeries.NextValue(
-                    each.Request.NoOfChequeBook,
-                    each.Request.NoOfCheque,
-                    each.Request.AccountNoFull);
+                // Generate cheque series only if not already assigned
+                if (each.Request.ChequeFrom == 0 && each.Request.ChequeTo == 0)
+                {
+                    var chequeSeries = ChequeSeries.NextValue(
+                        each.Request.NoOfChequeBook,
+                        each.Request.NoOfCheque,
+                        each.Request.AccountNoFull);
 
-                // Assign cheque range
-                each.Request.ChequeTo = chequeSeries.LastChequePrint;
-                each.Request.ChequeFrom = chequeSeries.LastChequePrint -
-                                          (each.Request.NoOfChequeBook * each.Request.NoOfCheque) + 1;
+                    each.Request.ChequeTo = chequeSeries.LastChequePrint;
+                    each.Request.ChequeFrom = chequeSeries.LastChequePrint -
+                                              (each.Request.NoOfChequeBook * each.Request.NoOfCheque) + 1;
+                }
             }
 
             // Save PrintJobNo and cheque range into database

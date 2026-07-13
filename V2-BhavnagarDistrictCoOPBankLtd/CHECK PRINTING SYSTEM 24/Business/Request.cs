@@ -470,7 +470,10 @@ namespace CPS.Business
 
                 importData.NoOfCheque = string.IsNullOrWhiteSpace(token[16]) ? 0 : Convert.ToInt32(token[16]);
 
-                importData.BearerOrder = token[17].Trim();
+                importData.TransactionCode = string.IsNullOrWhiteSpace(token[24])
+                    ? 0
+                    : Convert.ToInt32(token[24]);
+                importData.BearerOrder = (importData.TransactionCode == 12) ? "Order" : "Bearer";
 
                 importData.prcode = token[18].Trim();
 
@@ -508,15 +511,13 @@ namespace CPS.Business
                 if (token.Length >= 1)
                     importData.AtPar = token[token.Length - 1].Trim();
 
-                var chequeSeries = ChequeSeries.NextValue(
-                     importData.NoOfChequeBook,
-                     importData.NoOfCheque,
-                      importData.AccountNoFull);
+                var lastChequePrint = ChequeSeries.GetLastChequePrint(importData.AccountNoFull);
 
-               importData.ChequeTo = chequeSeries.LastChequePrint;
+                importData.ChequeFrom = lastChequePrint + 1;
 
-                importData.ChequeFrom = chequeSeries.LastChequePrint -
-                                        (importData.NoOfChequeBook * importData.NoOfCheque) + 1;
+                importData.ChequeTo = lastChequePrint +
+                                      (importData.NoOfChequeBook * importData.NoOfCheque);
+
 
                 return true;
             }
