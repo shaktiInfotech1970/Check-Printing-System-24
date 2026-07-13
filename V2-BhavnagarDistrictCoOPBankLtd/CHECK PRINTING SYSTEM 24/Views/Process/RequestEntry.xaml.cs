@@ -112,8 +112,12 @@ namespace CPS.Views.Process
             request.NoOfChequeBook = Convert.ToInt32(string.IsNullOrWhiteSpace(txtNoofBook.Text) ? "0" : txtNoofBook.Text);
             if (cbBookSize.SelectedValue != null)
                 request.NoOfCheque = (int)cbBookSize.SelectedValue;
-            request.ChequeFrom = Convert.ToInt32(string.IsNullOrWhiteSpace(txtChequeNoFrom.Text) ? "0" : txtChequeNoFrom.Text);
-            request.ChequeTo = Convert.ToInt32(string.IsNullOrWhiteSpace(txtChequeNoTo.Text) ? "0" : txtChequeNoTo.Text);
+            if (btnSave.Tag == null)
+            {
+                var chequeSeries = ChequeSeries.NextValue(request.NoOfChequeBook, request.NoOfCheque, request.AccountNoFull);
+                request.ChequeFrom = (chequeSeries.LastChequePrint - (request.NoOfCheque * request.NoOfChequeBook)) + 1;
+                request.ChequeTo = chequeSeries.LastChequePrint;
+            }
             if (cbBearerOrOrder.SelectedValue != null)
                 request.BearerOrder = (string)cbBearerOrOrder.SelectedValue;
             if (cbAtPar.SelectedValue != null)

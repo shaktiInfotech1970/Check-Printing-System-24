@@ -26,17 +26,17 @@ namespace CPS.Business
         {
             using (var context = new CPSDbContext())
             {
-                var value = context.Set<ChequeSeries>()
-                    .Where(w => w.SAN == SAN)
-                    .Select(s => s.LastChequePrint)
-                    .DefaultIfEmpty(400000)
-                    .Max();
+                var chequeSeries = context.ChequeSeries
+                    .FirstOrDefault(x => x.SAN == SAN);
 
-                // Migrate old series to 400000 series
-                if (value >= 0 && value < 400000)
+                if (chequeSeries == null)
                     return 400000;
 
-                return value;
+                if (chequeSeries.LastChequePrint >= 0 &&
+                    chequeSeries.LastChequePrint < 400000)
+                    return 400000;
+
+                return chequeSeries.LastChequePrint;
             }
         }
 

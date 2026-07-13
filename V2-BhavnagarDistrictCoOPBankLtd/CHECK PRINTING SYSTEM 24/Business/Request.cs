@@ -511,9 +511,9 @@ namespace CPS.Business
                 var chequeSeries = ChequeSeries.NextValue(
                      importData.NoOfChequeBook,
                      importData.NoOfCheque,
-                      "DEFAULT");
+                      importData.AccountNoFull);
 
-                importData.ChequeTo = chequeSeries.LastChequePrint;
+               importData.ChequeTo = chequeSeries.LastChequePrint;
 
                 importData.ChequeFrom = chequeSeries.LastChequePrint -
                                         (importData.NoOfChequeBook * importData.NoOfCheque) + 1;

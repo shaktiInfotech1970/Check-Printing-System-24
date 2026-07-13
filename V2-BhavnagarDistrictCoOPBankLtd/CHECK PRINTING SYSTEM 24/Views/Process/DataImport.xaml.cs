@@ -121,7 +121,9 @@ namespace CPS.Views.Process
                         foreach (RequestDTO request in dgImport.ItemsSource)
                         {
                             totalRecords++;
-
+                            var chequeSeries = ChequeSeries.NextValue(request.NoOfChequeBook, request.NoOfCheque, request.AccountNoFull);
+                            request.ChequeFrom = (chequeSeries.LastChequePrint - (request.NoOfCheque * request.NoOfChequeBook)) + 1;
+                            request.ChequeTo = chequeSeries.LastChequePrint;
                             //request.Id = ObjectId.GenerateNewId();
                             request.RequestNo = requestNo;
                             //request.BranchId = (int)cbBrach.SelectedValue;

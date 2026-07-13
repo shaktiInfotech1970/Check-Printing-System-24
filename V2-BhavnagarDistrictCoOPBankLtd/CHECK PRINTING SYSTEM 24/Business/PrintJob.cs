@@ -320,7 +320,7 @@ namespace CPS.Business
                 var chequeSeries = ChequeSeries.NextValue(
                     each.Request.NoOfChequeBook,
                     each.Request.NoOfCheque,
-                    "DEFAULT");
+                    each.Request.AccountNoFull);
 
                 // Assign cheque range
                 each.Request.ChequeTo = chequeSeries.LastChequePrint;
