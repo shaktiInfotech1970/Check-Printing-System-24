@@ -584,4 +584,9 @@ namespace CPS.Business
 
         public IEnumerable<PrintRequest> Requests { get; set; }
     }
+    [Serializable]
+    public class ExportRequest : PrintRequest
+    {
+        public PrintHistoryDTO PrintHistory { get; set; }
+    }
 }
