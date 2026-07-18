@@ -725,7 +725,7 @@ namespace CPS.Business
                 e.Graphics.DrawString(string.Format("{0} BR.", section.PrintRequest.Branch.Name) , font9Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress1X), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress1Y));
 
             if (BatchInPrinting.RequestLayout.branchAddress2Visble)
-                e.Graphics.DrawString(string.Format("{0} BR.", section.PrintRequest.Branch.Name), font9Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress2X + 1.65f), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress2Y - 1.45f));
+                e.Graphics.DrawString(string.Format("{0} BR.", section.PrintRequest.Branch.Name), font9Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress2X + 2f), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress2Y - 1.5f));
 
             if (BatchInPrinting.RequestLayout.chequeFrom1Visble)
                 e.Graphics.DrawString(section.PrintRequest.Request.ChequeFrom.ToString("000000"), font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.chequeFrom1X), y + GetDPI(BatchInPrinting.RequestLayout.chequeFrom1Y));
