@@ -31,16 +31,15 @@ namespace CPS.Views.Reports
             cbAccountType.DisplayMemberPath = "Value";
             cbAccountType.SelectedValuePath = "Key";
         }
-        public int? ToIntNullable(string s, int? defaultValue = null) => int.TryParse(s, out var v) ? v : defaultValue;
+
         private void btnShowColumns_Click(object sender, RoutedEventArgs e)
         {
             var branchId = cbBrach.SelectedValue == null ? 0 : (int)cbBrach.SelectedValue;
             var accountType = cbAccountType.SelectedValue == null ? 0 : (int)cbAccountType.SelectedValue;
             string customerName = string.IsNullOrWhiteSpace(dtCustomerName.Text) ? "" : dtCustomerName.Text;
             string accountNo = string.IsNullOrWhiteSpace(dtAccountNo.Text) ? "" : dtAccountNo.Text;
-            int? printJobNo = ToIntNullable(dtJobNo.Text, null);
 
-            if (branchId == 0 && accountType == 0 && string.IsNullOrWhiteSpace(customerName) && string.IsNullOrWhiteSpace(accountNo) && (!printJobNo.HasValue))
+            if (branchId == 0 && accountType == 0 && string.IsNullOrWhiteSpace(customerName) && string.IsNullOrWhiteSpace(accountNo))
             {
                 MessageBox.Show("Please use any of the criteria for search!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
@@ -62,8 +61,7 @@ namespace CPS.Views.Reports
                              && (accountType == 0 || (accountType != 0 && r.TransactionCode == accountType))
                              && (customerName.Length <= 0 || r.Name.Contains(customerName))
                              && (accountNo.Length <= 0 || r.AccountNoFull.Contains(accountNo))
-                             && ((!printJobNo.HasValue) || (printJobNo.HasValue && r.PrintJobNo == printJobNo))
-                             )
+                             )                             
                              select new { Request = r, AccountType = at, Branch = b, PrintHistory = ph });
                 var response = query.ToList();
                 dgDaywiseChequePrint.ItemsSource = response;

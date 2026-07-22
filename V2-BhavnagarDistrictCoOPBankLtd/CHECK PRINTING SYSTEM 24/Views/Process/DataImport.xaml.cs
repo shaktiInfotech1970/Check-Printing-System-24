@@ -1,4 +1,5 @@
 ﻿using CPS.Business;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace CPS.Views.Process
     {
         // Create OpenFileDialog
         Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+        ILog Log = LogManager.GetLogger(typeof(DataImport));
 
         public DataImport()
         {
@@ -42,8 +44,8 @@ namespace CPS.Views.Process
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             // Set filter for file extension and default file extension
-            dlg.DefaultExt = ".txt";
-            dlg.Filter = "Normal Text File (*.txt)|*.txt|ASCII text (*.asc)|*.asc|Commma Separated File(*.csv)|*.csv|Excel Files (*.xls)|*.xls;*.xlsx";
+            dlg.DefaultExt = ".xls";
+            dlg.Filter = "Excel Files (*.xls)|*.xls;*.xlsx|ASCII text (*.asc)|*.asc|Normal Text File (*.txt)|*.txt|Commma Separated File(*.csv)|*.csv";
 
             // Display OpenFileDialog by calling ShowDialog method
             Nullable<bool> result = dlg.ShowDialog();
@@ -72,20 +74,42 @@ namespace CPS.Views.Process
                     var dataGridTextColumn = new DataGridTextColumn { Header = column.Header, Binding = new Binding(column.PropertyName) };
                     dgImport.Columns.Add(dataGridTextColumn);
                 }
-
                 dgImport.ItemsSource = import.Data;
+                foreach (RequestDTO request in dgImport.ItemsSource)
+                {
+                    if(IsAdvanceCheque(request.TransactionCode))
+                    {
+                        request.AccountNo = "000000";
+                        request.AccountNoFull = "000000";
+                        request.Name = "Adv. Cheque";
+                    }
+                    else if (IsPayOrder(request.TransactionCode))
+                    {
+                        if (string.IsNullOrWhiteSpace(request.AccountNo) && !string.IsNullOrWhiteSpace(request.AccountNoFull))
+                        {
+                            request.AccountNo = request.AccountNoFull.Length > 6 ?
+                                                request.AccountNoFull.Substring(request.AccountNoFull.Length - 6) : string.Empty;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    ex.ToString(),
-                    "Import Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                Log.Error("Import error: ", ex);
+                MessageBox.Show($"Import error: {ex.Message}", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+
             }
 
         }
-
+        private static bool IsPayOrder(int TransactionCode)
+        {
+            return (TransactionCode == 12);
+        }
+        private static bool IsAdvanceCheque(int TransactionCode)
+        {
+            return (TransactionCode == 14);
+        }
+        
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -99,6 +123,8 @@ namespace CPS.Views.Process
                     using (var context = new CPSDbContext())
                     {
                         var repository = new PersistenceBase<RequestDTO>(context);
+
+
 
                         #region check if records found in the file belongs to the selected branch. If yes, updated the branchid else show message.
                         foreach (RequestDTO request in dgImport.ItemsSource)
@@ -121,9 +147,7 @@ namespace CPS.Views.Process
                         foreach (RequestDTO request in dgImport.ItemsSource)
                         {
                             totalRecords++;
-                            var chequeSeries = ChequeSeries.NextValue(request.NoOfChequeBook, request.NoOfCheque, request.AccountNoFull);
-                            request.ChequeFrom = (chequeSeries.LastChequePrint - (request.NoOfCheque * request.NoOfChequeBook)) + 1;
-                            request.ChequeTo = chequeSeries.LastChequePrint;
+
                             //request.Id = ObjectId.GenerateNewId();
                             request.RequestNo = requestNo;
                             //request.BranchId = (int)cbBrach.SelectedValue;
@@ -156,13 +180,9 @@ namespace CPS.Views.Process
                     MessageBox.Show("Please select branch", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(
-                    ex.ToString(),
-                    "Save Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                MessageBox.Show("Save error", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

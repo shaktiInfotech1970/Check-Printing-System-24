@@ -112,21 +112,8 @@ namespace CPS.Views.Process
             request.NoOfChequeBook = Convert.ToInt32(string.IsNullOrWhiteSpace(txtNoofBook.Text) ? "0" : txtNoofBook.Text);
             if (cbBookSize.SelectedValue != null)
                 request.NoOfCheque = (int)cbBookSize.SelectedValue;
-            if (btnSave.Tag == null)
-            {
-                // Only generate if not already generated
-                if (request.ChequeFrom == 0 && request.ChequeTo == 0)
-                {
-                    var chequeSeries = ChequeSeries.NextValue(
-                        request.NoOfChequeBook,
-                        request.NoOfCheque,
-                        request.AccountNoFull);
-
-                    request.ChequeFrom = (chequeSeries.LastChequePrint -
-                                         (request.NoOfCheque * request.NoOfChequeBook)) + 1;
-                    request.ChequeTo = chequeSeries.LastChequePrint;
-                }
-            }
+            request.ChequeFrom = Convert.ToInt32(string.IsNullOrWhiteSpace(txtChequeNoFrom.Text) ? "0" : txtChequeNoFrom.Text);
+            request.ChequeTo = Convert.ToInt32(string.IsNullOrWhiteSpace(txtChequeNoTo.Text) ? "0" : txtChequeNoTo.Text);
             if (cbBearerOrOrder.SelectedValue != null)
                 request.BearerOrder = (string)cbBearerOrOrder.SelectedValue;
             if (cbAtPar.SelectedValue != null)
@@ -152,27 +139,6 @@ namespace CPS.Views.Process
             }
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            if(btnSave.Tag != null)
-            {
-                MessageBoxResult result = MessageBox.Show("Are you sure you want to remove record for account no : "+ ((RequestDTO)btnSave.Tag).AccountNoFull + " ?", "Delete Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                switch (result)
-                {
-                    case MessageBoxResult.Yes:
-                        DeleteRequestEntry();
-                        break;
-                    case MessageBoxResult.No:
-                        SetDatagridRowSelected((int)btnDelete.Tag);
-                        break;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select record to remove", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-          
-        }
         private void BindDataGrid()
         {
             using (var context = new CPSDbContext())
@@ -190,12 +156,9 @@ namespace CPS.Views.Process
         {
             if (e.AddedItems.Count > 0)
             {
-                
                 var request = (RequestDTO)((System.Windows.Controls.DataGrid)(sender)).CurrentItem;
                 btnSave.Tag = request;
                 btnSave.Content = "Save";
-                btnDelete.Visibility = Visibility.Visible;
-                btnDelete.Tag = dgRequestEntry.SelectedIndex;
 
                 cbBrach.SelectedValue = request.BranchId;
                 txtRequestNo.Text = request.RequestNo.ToString();
@@ -223,43 +186,6 @@ namespace CPS.Views.Process
                 cbBearerOrOrder.SelectedValue = request.BearerOrder;
                 cbAtPar.SelectedValue = request.AtPar;
             }
-            else
-            {
-                btnDelete.Tag = -1;
-                btnDelete.Visibility = Visibility.Hidden;
-            }
-        }
-
-        private void SetDatagridRowSelected(int selectedRowNo)
-        {
-            dgRequestEntry.SelectedIndex = selectedRowNo;
-            DataGridRow row = (DataGridRow)dgRequestEntry.ItemContainerGenerator.ContainerFromIndex(selectedRowNo);
-            row.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-        }
-
-        private void DeleteRequestEntry()
-        {
-               var request = (RequestDTO)btnSave.Tag;
-                using (var context = new CPSDbContext())
-                {
-                    var repository = new PersistenceBase<RequestDTO>(context);
-                    var errors = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
-                    if (repository.SoftDelete(request))
-                    {
-                        context.SaveChanges();
-                        CPS.Common.Helper.ClearFormData(this);
-                        BindDataGrid();
-                        btnSave.Tag = null;
-                        btnSave.Content = "Add";
-                        btnDelete.Tag = -1;
-                        btnDelete.Visibility = Visibility.Hidden;
-                        MessageBox.Show("Selected record removed successfully.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                    else
-                    {
-                        MessageBox.Show(string.Join(Environment.NewLine, errors.Select(o => o.ErrorMessage)), "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                }
         }
     }
 }

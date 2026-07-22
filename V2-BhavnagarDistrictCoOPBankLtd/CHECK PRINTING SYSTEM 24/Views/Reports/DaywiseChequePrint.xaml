@@ -30,7 +30,6 @@
         <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="15">
             <Button Content="Show Columns" Name="btnShowColumns" Click="btnShowColumns_Click" Margin="0,0,150,0" HorizontalAlignment="Center" />
             <Button Content="Print" Name="btnPrint" Click="btnPrint_Click" Margin="150,0,0,0" HorizontalAlignment="Center" />
-            <Button Content="Export to CSV" Name="btnExportCsv" Click="btnExport_Click" Margin="450,0,0,0" HorizontalAlignment="Center" IsEnabled="False" />
         </Grid>
         <DataGrid x:Name="dgDaywiseChequePrint" AutoGenerateColumns="False" Grid.Row="2" Grid.ColumnSpan="3" IsReadOnly="True" ScrollViewer.CanContentScroll="True" 
                     ScrollViewer.VerticalScrollBarVisibility="Auto"                           
@@ -43,7 +42,7 @@
                 <DataGridTextColumn Header="Tr. Code" Binding="{Binding Request.TransactionCode}" />
                 <DataGridTextColumn Header="Chq. From" Binding="{Binding PrintHistory.ChequeNoFrom}"/>
                 <DataGridTextColumn Header="Chq. To" Binding="{Binding PrintHistory.ChequeNoTo}" />
-                <!--<DataGridTextColumn Header="#Books" Binding="{Binding Request.NoOfChequeBook}" />-->
+                <DataGridTextColumn Header="# Books" Binding="{Binding Request.NoOfChequeBook}" />
                 <DataGridTextColumn Header="Book Size" Binding="{Binding Request.NoOfCheque}"/>
                 <DataGridTextColumn Header="Print Date Time" Binding="{Binding PrintHistory.CreatedOn}"/>
                 <DataGridTextColumn Header="Print By" Binding="{Binding PrintHistory.CreatedBy}"/>

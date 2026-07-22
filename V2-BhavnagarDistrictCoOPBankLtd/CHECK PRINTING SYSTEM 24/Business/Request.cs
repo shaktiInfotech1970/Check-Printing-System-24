@@ -448,7 +448,7 @@ namespace CPS.Business
                 importData.AccountNoFull = token[2].Trim();
                 importData.Name = token[3].Trim();
 
-                importData.NoOfChequeBook = string.IsNullOrWhiteSpace(token[4]) ? 0 : Convert.ToInt32(token[4]);
+               // importData.NoOfChequeBook = string.IsNullOrWhiteSpace(token[4]) ? 0 : Convert.ToInt32(token[4]);
 
                 importData.Address1 = token[5].Trim();
                 importData.Address2 = token[6].Trim();
@@ -466,9 +466,13 @@ namespace CPS.Business
                 importData.mob = token[13].Trim();
                 importData.telo = token[14].Trim();
 
-                importData.additional_f1 = token[15].Trim();
+                importData.NoOfChequeBook = string.IsNullOrWhiteSpace(token[15])
+                    ? 0
+                    : Convert.ToInt32(token[15]);
 
-                importData.NoOfCheque = string.IsNullOrWhiteSpace(token[16]) ? 0 : Convert.ToInt32(token[16]);
+                importData.NoOfCheque = string.IsNullOrWhiteSpace(token[16])
+                    ? 0
+                    : Convert.ToInt32(token[16]);
 
                 importData.TransactionCode = string.IsNullOrWhiteSpace(token[24])
                     ? 0

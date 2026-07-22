@@ -55,12 +55,10 @@ namespace CPS.Views.Reports
                 dgPendingChequePrintReport.ItemsSource = response;
 
                 btnPrint.IsEnabled = true;
-                btnExportCsv.IsEnabled = true;
                 if (response.Count == 0)
                 {
                     btnPrint.IsEnabled = false;
-                    btnExportCsv.IsEnabled = false;
-                  MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
         }
@@ -72,19 +70,6 @@ namespace CPS.Views.Reports
 
             ReportPDF report = new ReportPDF(dgPendingChequePrintReport, new float[] { 50, 120, 250, 60, 40, 65, 60, 55, 70 });
             report.Generate("PendingChequePrint", title);
-        }
-
-        private void btnExport_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.DefaultExt = ".csv";
-            dlg.Filter = "CSV file (*.csv)|*.csv";
-            dlg.FileName = DateTime.Now.ToString("ddMMyyyy_HHmmss");
-            if (dlg.ShowDialog() == true)
-            {
-                ReportCSV report = new ReportCSV(dgPendingChequePrintReport);
-                report.Generate(dlg.FileName);
-            }
         }
     }
 }

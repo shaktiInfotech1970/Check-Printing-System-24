@@ -33,9 +33,7 @@ namespace CPS.Views.Process
 
         private void BindComboBox()
         {
-            var result = BranchMasterDTO.GetLookups();
-            result.Insert(0, new LookupItem<int, string> { Key = 0, Value = "Select All" });
-            cbBrach.ItemsSource = result;
+            cbBrach.ItemsSource = BranchMasterDTO.GetLookups();
             cbBrach.DisplayMemberPath = "Value";
             cbBrach.SelectedValuePath = "Key";
         }
@@ -64,51 +62,9 @@ namespace CPS.Views.Process
                              join b in branchRepository.GetAll() on r.BranchId equals b.Id
                              join at in accountTypeRepository.GetAll() on r.TransactionCode equals at.Code
                              where (branchId == 0 || (branchId != 0 && r.BranchId == branchId)) && r.IsPrinted == true
-                             && p.PrintType == PrintType.ChequeBook
-                             select new ExportRequest { Request = r, AccountType = at, Branch = b, PrintHistory = p });
-                var newDataset = query.ToList().Select(x => new ExportRequest
-                {
-                    Request = new RequestDTO
-                    {
-                        IsSelected = false,
-                        Id = x.Request.Id,
-                        RequestNo = x.Request.RequestNo,
-                        SerialNo = x.Request.SerialNo,
-                        AccountNoFull = x.Request.AccountNoFull,
-                        AccountNo = x.Request.AccountNo,
-                        TransactionCode = x.Request.TransactionCode,
-                        Name = x.Request.Name,
-                        BranchCode = x.Request.BranchCode,
-                        JointName1 = x.Request.JointName1,
-                        JointName2 = x.Request.JointName2,
-                        Signatory1 = x.Request.Signatory1,
-                        Signatory2 = x.Request.Signatory2,
-                        Signatory3 = x.Request.Signatory3,
-                        Address1 = x.Request.Address1,
-                        Address2 = x.Request.Address2,
-                        Address3 = x.Request.Address3,
-                        City = x.Request.City,
-                        PostalCode = x.Request.PostalCode,
-                        NoOfChequeBook = x.Request.NoOfChequeBook,
-                        NoOfCheque = x.Request.NoOfCheque,
-                        ChequeFrom = x.Request.ChequeFrom,
-                        ChequeTo = x.Request.ChequeTo,
-                        BearerOrder = x.Request.BearerOrder,
-                        AtPar = x.Request.AtPar,
-                        additional_f6 = x.Request.additional_f6,
-                        PrintJobNo = x.Request.PrintJobNo
-                    },
+                             select new PrintRequest { Request = r, AccountType = at, Branch = b });
 
-                    PrintHistory = new PrintHistoryDTO
-                    {
-
-                        Id = x.PrintHistory.Id,
-                        ChequeNoFrom = x.PrintHistory.ChequeNoFrom,
-                        ChequeNoTo = x.PrintHistory.ChequeNoTo
-                    }
-                }).ToList();
-                dgRequestEntry.ItemsSource = newDataset;
-                //dgRequestEntry.ItemsSource = query.Distinct().ToList();
+                dgRequestEntry.ItemsSource = query.Distinct().ToList();
             }
         }
 
@@ -116,7 +72,7 @@ namespace CPS.Views.Process
         {
             if (dgRequestEntry.ItemsSource != null)
             {
-                var requests = dgRequestEntry.ItemsSource.Cast<ExportRequest>().Where(w => w.Request.IsSelected);
+                var requests = dgRequestEntry.ItemsSource.Cast<PrintRequest>().Where(w => w.Request.IsSelected);
                 if (requests.Count() <= 0)
                 {
                     MessageBox.Show("Nothing to export", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -126,7 +82,7 @@ namespace CPS.Views.Process
                     // Set filter for file extension and default file extension
                     dlg.DefaultExt = ".txt";
                     dlg.Filter = "Normal Text File (*.txt)|*.txt";
-                    dlg.FileName = string.Format("CHQ_{0}", DateTime.Now.ToString("ddMMyyyy_HHmmss"));
+                    dlg.FileName = DateTime.Now.ToString("ddMMyyyy_HHmmss");
                     dlg.ShowDialog();
                 }
             }
@@ -134,49 +90,23 @@ namespace CPS.Views.Process
 
         void dlg_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var requests = dgRequestEntry.ItemsSource.Cast<ExportRequest>().Where(w => w.Request.IsSelected);
+            var requests = dgRequestEntry.ItemsSource.Cast<PrintRequest>().Where(w => w.Request.IsSelected);
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(dlg.FileName))
             {
                 foreach (var request in requests)
                 {
-                    var vips = "01";
-                    var prefix = "B";
-                    switch (request.Request.TransactionCode)
-                    {
-                        case 10:
-                            vips = "02";
-                            prefix = "A";
-                            break;
-                        case 11:
-                            vips = "01";
-                            prefix = "B";
-                            break;
-                        case 13:
-                            vips = "03";
-                            prefix = "C";
-                            break;
-                        default:
-                            break;
-                    }
-                    var accountNoFull = string.Format("00000000000000000{0}", request.Request.AccountNoFull);
-                    var branchCodeAsPerImport = string.Format("00000{0}", request.Request.additional_f6);
-                    var sequenceNo = 10000 + request.PrintHistory.Id;
-                    file.WriteLine(string.Format("{0}{1:00000}{2}{3}{4:000000000}{5}{6}{7:00000000}{8}{9:00000}{10}"
-                        , accountNoFull.Substring(accountNoFull.Length - 17)
-                        , branchCodeAsPerImport.Substring(branchCodeAsPerImport.Length - 5)
-                        , "S"
-                        , prefix
-                        , sequenceNo
-                        , vips
-                        , "01"
-                        , request.PrintHistory.ChequeNoFrom
-                        , "Cheque Book Issued XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                    file.WriteLine(string.Format("{0:000000}        {1:00000}{2:000}{3}          {4:00}       {5}      {6:000000}  {7:000000}      {8:00000000}{9:000000}"
+                        , request.Request.BranchCode
+                        , request.Request.BankCode, request.Request.BranchCode, request.Request.CreatedOn.ToString("yyyyMMdd")
                         , request.Request.NoOfCheque
-                        , "N"
+                        , request.Request.NoOfChequeBook
+                        , request.Request.ChequeFrom
+                        , request.Request.ChequeTo
+                        , request.Request.SerialNo, request.Request.BranchCode
                         ));
-
                 }
             }
+
             MessageBox.Show("File exported successfully", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
@@ -206,16 +136,7 @@ namespace CPS.Views.Process
 
         private void ToggleDGCheckbox(object sender, RoutedEventArgs e)
         {
-            //Common.Helper.ToggleDGCheckbox(sender, dgRequestEntry);
-
-            var printRequest = dgRequestEntry.Items.OfType<ExportRequest>();
-            var IsChecked = ((CheckBox)sender).IsChecked ?? false;
-            foreach (var item in printRequest)
-            {
-                item.Request.IsSelected = IsChecked;
-            }
-            dgRequestEntry.ItemsSource = printRequest;
-            dgRequestEntry.Items.Refresh();
+            Common.Helper.ToggleDGCheckbox(sender, dgRequestEntry);
         }
     }
 }

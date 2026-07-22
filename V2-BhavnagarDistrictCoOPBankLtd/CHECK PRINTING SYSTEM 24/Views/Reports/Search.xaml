@@ -29,16 +29,10 @@
             <Label Content="Select Branch" Target="{Binding ElementName=cbBrach}" />
             <ComboBox Name="cbBrach"></ComboBox>
         </StackPanel>
-
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <Label Content="Job No" Target="{Binding ElementName=dtJobNo}" />
-            <TextBox Name="dtJobNo"  />
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10,0,0,0">
+        <StackPanel Grid.Row="1" Grid.Column="0" >
             <Label Content="Select Account Type" Target="{Binding ElementName=cbAccountType}" />
             <ComboBox Name="cbAccountType"></ComboBox>
         </StackPanel>
-        
         <Grid Grid.Row="2" Grid.ColumnSpan="3" Margin="15">
             <Button Content="Show Columns" Name="btnShowColumns" Click="btnShowColumns_Click" Margin="0,0,0,0" HorizontalAlignment="Center" />
         </Grid>
