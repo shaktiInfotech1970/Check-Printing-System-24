@@ -255,6 +255,19 @@ namespace CPS.Business
                     //    errorMsg += string.IsNullOrEmpty(this.AccountNoFull) ? "." : string.Format(" for account no {0}.", this.AccountNoFull);
                     //    results.Add(new ValidationResult(errorMsg));
                     //}
+                    if (repository.FilterBy(w =>
+                         w.Id != this.Id &&
+                         w.BranchId == this.BranchId &&
+                         w.SerialNo == this.SerialNo &&
+                         w.AccountNo == this.AccountNo).Any())
+                    {
+                        errorMsg = string.Format(
+                            "Serial No. {0} for Account No. {1} has already been imported.",
+                            this.SerialNo,
+                            this.AccountNo);
+
+                        results.Add(new ValidationResult(errorMsg));
+                    }
                     if (this.ChequeFrom != 0 && this.ChequeTo != 0)
                     {
                         if ((this.NoOfChequeBook * this.NoOfCheque) != (this.ChequeTo - this.ChequeFrom) + 1)
