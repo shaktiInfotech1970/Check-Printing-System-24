@@ -129,24 +129,24 @@ namespace CPS.Views.Process
                         #region check if records found in the file belongs to the selected branch. If yes, updated the branchid else show message.
                         foreach (RequestDTO request in dgImport.ItemsSource)
                         {
-                            bool exists = context.Set<RequestDTO>().Any(r =>
-                                 r.BranchId == request.BranchId &&
-                                 r.SerialNo == request.SerialNo &&
-                                 r.AccountNo == request.AccountNo);
+                           // bool exists = context.Set<RequestDTO>().Any(r =>
+                                // r.BranchId == request.BranchId &&
+                               //  r.SerialNo == request.SerialNo &&
+                                // r.AccountNo == request.AccountNo);
 
-                            if (exists)
-                            {
-                                MessageBox.Show(
-                                    string.Format(
-                                        "Duplicate request found.\n\nSerial No : {0}\nAccount No : {1}",
-                                        request.SerialNo,
-                                        request.AccountNo),
-                                    "Duplicate Import",
-                                    MessageBoxButton.OK,
-                                    MessageBoxImage.Warning);
+                           // if (exists)
+                          //  {
+                               // MessageBox.Show(
+                                   // string.Format(
+                                       // "Duplicate request found.\n\nSerial No : {0}\nAccount No : {1}",
+                                       // request.SerialNo,
+                                       // request.AccountNo),
+                                 //   "Duplicate Import",
+                                  //  MessageBoxButton.OK,
+                                  //  MessageBoxImage.Warning);
 
-                                return;
-                            }
+                             //   return;
+                           // }
                             var repositoryBranch = new PersistenceBase<BranchMasterDTO>(context);
                             var requestBranchCode = request.BranchCode.ToString("000").Trim();
                             var branch = repositoryBranch.FindBy(f => (branchId == 0 && f.Code == requestBranchCode) || (branchId != 0 && f.Id == branchId)).FirstOrDefault();
@@ -165,7 +165,10 @@ namespace CPS.Views.Process
                         foreach (RequestDTO request in dgImport.ItemsSource)
                         {
                             totalRecords++;
-
+                            
+                            var chequeSeries = ChequeSeries.NextValue(request.NoOfChequeBook, request.NoOfCheque, request.AccountNoFull);
+                            request.ChequeFrom = (chequeSeries.LastChequePrint - (request.NoOfCheque * request.NoOfChequeBook)) + 1;
+                            request.ChequeTo = chequeSeries.LastChequePrint;
                             //request.Id = ObjectId.GenerateNewId();
                             request.RequestNo = requestNo;
                             //request.BranchId = (int)cbBrach.SelectedValue;
