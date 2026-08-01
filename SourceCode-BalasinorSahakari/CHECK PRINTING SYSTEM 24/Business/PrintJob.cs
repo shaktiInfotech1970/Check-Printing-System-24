@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Zen.Barcode;
 
 namespace CPS.Business
@@ -285,6 +286,16 @@ namespace CPS.Business
             var printJobNo = Counter.NextValue(Counters.PrintJob);
             var assingPrintJobRequests = requests.ToList();
             assingPrintJobRequests.ForEach(each => each.Request.PrintJobNo = printJobNo);
+
+            MessageBox.Show("Assigned Print Job No : " + printJobNo);
+
+            foreach (var r in assingPrintJobRequests)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    string.Format("Before SendToPrinter -> Id={0}, PrintJobNo={1}",
+                    r.Request.Id,
+                    r.Request.PrintJobNo));
+            }
 
             var printerPreference = GetPrinter();
             var requestGroups = GroupedRequest(requests).Select(s => SplitRequestGroup(s)).ToList();
@@ -585,6 +596,22 @@ namespace CPS.Business
 
             if (BatchInPrinting.RequestLayout.nameAddress2Visble)
                 PrintNameAddress(e, section.PrintRequest.Request, x + GetDPI(BatchInPrinting.RequestLayout.nameAddress2X), y + GetDPI(BatchInPrinting.RequestLayout.nameAddress2Y));
+
+            e.Graphics.DrawString(
+                string.Format("Contact No : {0}", section.PrintRequest.Request.tele_r_no ?? ""),
+                font9,
+                brush,
+                x + GetDPI(BatchInPrinting.RequestLayout.nameAddress1X),
+                y + GetDPI(BatchInPrinting.RequestLayout.accountNo1Y-0.75f )
+            );
+
+            e.Graphics.DrawString(
+                string.Format("Contact No : {0}", section.PrintRequest.Request.tele_r_no ?? ""),
+                font9,
+                brush,
+                x + GetDPI(BatchInPrinting.RequestLayout.nameAddress2X),
+                y + GetDPI(BatchInPrinting.RequestLayout.accountNo2Y-0.75f )
+            );
 
             if (BatchInPrinting.RequestLayout.accountNo1Visble)
                 e.Graphics.DrawString(string.Format("{0}: {1}", section.PrintRequest.AccountType.Name, section.PrintRequest.Request.AccountNoFull), font9Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.accountNo1X), y + GetDPI(BatchInPrinting.RequestLayout.accountNo1Y));
