@@ -473,8 +473,8 @@ namespace CPS.Business
                 // importData.State = token[9].Trim();
                 // importData.Country = token[11].Trim();
 
-                importData.PostalCode = token[10].Trim();
-
+              //  importData.PostalCode = token[10].Trim();
+                
                 importData.telr = token[12].Trim();
                 importData.mob = token[13].Trim();
                 importData.telo = token[14].Trim();
@@ -518,7 +518,7 @@ namespace CPS.Business
 
                 importData.additional_f5 = token[29].Trim();
                 importData.additional_f6 = token[30].Trim();
-                importData.additional_f7 = token[31].Trim();
+                importData.PostalCode = token[31].Trim();
 
                 // Second last column (IFSC)
                 if (token.Length >= 2)
