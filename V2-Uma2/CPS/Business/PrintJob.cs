@@ -591,7 +591,7 @@ namespace CPS.Business
         private static Image GetAccountPayeeImage()
         {
             System.Windows.Media.ImageSourceConverter c = new System.Windows.Media.ImageSourceConverter();
-            return (Image)CPS.Properties.Resources.ACPayeeOnly;
+            return (Image)CPS.Properties.Resources.ACPayee;
         }
 
         #endregion
