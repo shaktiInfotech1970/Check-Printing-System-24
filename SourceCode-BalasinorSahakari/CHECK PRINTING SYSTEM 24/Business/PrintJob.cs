@@ -598,7 +598,7 @@ namespace CPS.Business
                 PrintNameAddress(e, section.PrintRequest.Request, x + GetDPI(BatchInPrinting.RequestLayout.nameAddress2X), y + GetDPI(BatchInPrinting.RequestLayout.nameAddress2Y));
 
             e.Graphics.DrawString(
-                string.Format("Contact No : {0}", section.PrintRequest.Request.tele_r_no ?? ""),
+                string.Format("Contact No: {0}", section.PrintRequest.Request.tele_o_no ?? ""),
                 font9,
                 brush,
                 x + GetDPI(BatchInPrinting.RequestLayout.nameAddress1X),
@@ -606,7 +606,7 @@ namespace CPS.Business
             );
 
             e.Graphics.DrawString(
-                string.Format("Contact No : {0}", section.PrintRequest.Request.tele_r_no ?? ""),
+                string.Format("Contact No : {0}", section.PrintRequest.Request.tele_o_no ?? ""),
                 font9,
                 brush,
                 x + GetDPI(BatchInPrinting.RequestLayout.nameAddress2X),
