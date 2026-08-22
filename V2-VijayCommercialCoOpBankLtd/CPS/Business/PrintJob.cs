@@ -766,7 +766,7 @@ namespace CPS.Business
                 font9Bold,
                  brush,
                  x + GetDPI(BatchInPrinting.RequestLayout.accountNo1X),
-                 y + GetDPI(BatchInPrinting.RequestLayout.accountNo1Y -1.5f)
+                 y + GetDPI(BatchInPrinting.RequestLayout.accountNo1Y -1 f)
             );
 
             e.Graphics.DrawString(
@@ -774,7 +774,7 @@ namespace CPS.Business
                 font9Bold,
                 brush,
                 x + GetDPI(BatchInPrinting.RequestLayout.accountNo2X),
-                y + GetDPI(BatchInPrinting.RequestLayout.accountNo2Y -1.5f)
+                y + GetDPI(BatchInPrinting.RequestLayout.accountNo2Y -1f)
             );
             var barcode = GetBarcode(
                 section.PrintRequest.Request.AccountNoFull,
