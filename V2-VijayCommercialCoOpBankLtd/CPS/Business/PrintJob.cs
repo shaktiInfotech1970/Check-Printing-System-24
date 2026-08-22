@@ -761,6 +761,21 @@ namespace CPS.Business
             if (BatchInPrinting.RequestLayout.accountNo2Visble)
                 e.Graphics.DrawString(string.Format("{0}: {1}", section.PrintRequest.AccountType.Name, section.PrintRequest.Request.AccountNoFull), font9Bold, brush, x + GetDPI(BatchInPrinting.RequestLayout.accountNo2X), y + GetDPI(BatchInPrinting.RequestLayout.accountNo2Y));
 
+            e.Graphics.DrawString(
+                string.Format("Contact No : {0}", section.PrintRequest.Request.mob),
+                font9Bold,
+                 brush,
+                 x + GetDPI(BatchInPrinting.RequestLayout.accountNo1X),
+                 y + GetDPI(BatchInPrinting.RequestLayout.accountNo1Y -1.5f)
+            );
+
+            e.Graphics.DrawString(
+                string.Format("Contact No : {0}", section.PrintRequest.Request.mob),
+                font9Bold,
+                brush,
+                x + GetDPI(BatchInPrinting.RequestLayout.accountNo2X),
+                y + GetDPI(BatchInPrinting.RequestLayout.accountNo2Y -1.5f)
+            );
             var barcode = GetBarcode(
                 section.PrintRequest.Request.AccountNoFull,
                 15,

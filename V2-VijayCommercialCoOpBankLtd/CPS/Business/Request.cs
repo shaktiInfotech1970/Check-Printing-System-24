@@ -52,7 +52,7 @@ namespace CPS.Business
         [Parse(4)]
         public int BranchCode { get; set; }
 
-        [Display(Name = "brsid", Order = 5)]
+        [Display(Name = "MICR Code", Order = 5)]
         [Parse(5)]
         public string brsid { get; set; }
 
@@ -60,10 +60,12 @@ namespace CPS.Business
         public string MICRCode { get { return string.Format("{0}{1}{2}", CityCode.ToString("000"), BankCode.ToString("000"), BranchCode.ToString("000")); } }
 
         [Display(Name = "A/C No", Order = 6)]
+        [Required, RegularExpression(@"\d+")]
         [Parse(6)]
         public string AccountNo { get; set; }
 
         [Display(Name = "A/C BH", Order = 7)]
+        [Required, RegularExpression(@"\d+")]
         [Parse(7)]
         public string AccountNoFull { get; set; }
 
@@ -133,9 +135,6 @@ namespace CPS.Business
         // [Parse(23)]
         //public string telo { get; set; }
 
-        // [Display(Name = "mob", Order = 24)]
-        // [Parse(24)]
-        // public string mob { get; set; }
 
         [Display(Name = "No of ChqBook", Order = 20)]
         [Required]
@@ -147,15 +146,19 @@ namespace CPS.Business
         [Parse(21)]
         public int NoOfCheque { get; set; }
 
-        [Display(Name = "Bearer Order", Order = 22)]
-        [Required]
+        [Display(Name = "mob", Order = 22)]
         [Parse(22)]
+        public string mob { get; set; }
+
+        [Display(Name = "Bearer Order", Order = 23)]
+        [Required]
+        [Parse(23)]
         public string BearerOrder { get; set; }
 
         [Required]
-        [Display(Name = "AtPar", Order = 23)]
+        [Display(Name = "AtPar", Order = 24)]
         [MaxLength(1)]
-        [Parse(23)]
+        [Parse(24)]
         public string AtPar { get; set; }
 
         //[Display(Name = "prcode", Order = 24)]
@@ -163,54 +166,58 @@ namespace CPS.Business
         //public string prcode { get; set; }
 
         [Required]
-        [Display(Name = "Cheque From", Order = 24)]
-        [Parse(24)]
+        [Display(Name = "Cheque From", Order = 25)]
+        [Parse(25)]
         public int ChequeFrom { get; set; }
 
         [Required]
-        [Display(Name = "Cheque To", Order = 25)]
-        [Parse(25)]
+        [Display(Name = "Cheque To", Order = 26)]
+        [Parse(26)]
         public int ChequeTo { get; set; }
+
+        [Display(Name = "ECS Account If", Order = 27)]
+        [Parse(27)]
+        public string ECSAccountCode { get; set; }
 
         public bool IsManualEntry { get; set; }
 
         public bool IsPrinted { get; set; }
 
-        //[Display(Name = "additional_f1", Order = 32)]
-        //[Parse(32)]
-        //public string additional_f1 { get; set; }
+        [Display(Name = "additional_f1", Order = 32)]
+        [Parse(32)]
+        public string additional_f1 { get; set; }
 
-        // [Display(Name = "additional_f2", Order = 33)]
-        // [Parse(33)]
-        // public string additional_f2 { get; set; }
+        [Display(Name = "additional_f2", Order = 33)]
+        [Parse(33)]
+        public string additional_f2 { get; set; }
 
-        // [Display(Name = "additional_f3", Order = 34)]
-        //[Parse(34)]
-        //  public string additional_f3 { get; set; }
+        [Display(Name = "additional_f3", Order = 34)]
+        [Parse(34)]
+        public string additional_f3 { get; set; }
 
-        // [Display(Name = "additional_f4", Order = 35)]
-        //[Parse(35)]
-        //  public string additional_f4 { get; set; }
+        [Display(Name = "additional_f4", Order = 35)]
+        [Parse(35)]
+        public string additional_f4 { get; set; }
 
-        //[Display(Name = "additional_f5", Order = 36)]
-        // [Parse(36)]
-        // public string additional_f5 { get; set; }
+        [Display(Name = "additional_f5", Order = 36)]
+        [Parse(36)]
+        public string additional_f5 { get; set; }
 
-        // [Display(Name = "additional_f6", Order = 37)]
-        //[Parse(37)]
-        // public string additional_f6 { get; set; }
+        [Display(Name = "additional_f6", Order = 37)]
+        [Parse(37)]
+        public string additional_f6 { get; set; }
 
-        //[Display(Name = "additional_f7", Order = 38)]
-        //[Parse(38)]
-        //  public string additional_f7 { get; set; }
+        [Display(Name = "additional_f7", Order = 38)]
+        [Parse(38)]
+        public string additional_f7 { get; set; }
 
-        // [Display(Name = "additional_f8", Order = 39)]
-        // [Parse(39)]
-        // public string additional_f8 { get; set; }
+        [Display(Name = "additional_f8", Order = 39)]
+        [Parse(39)]
+        public string additional_f8 { get; set; }
 
-        // [Display(Name = "additional_f9", Order = 40)]
-        // [Parse(40)]
-        //public string additional_f9 { get; set; }
+        [Display(Name = "additional_f9", Order = 40)]
+        [Parse(40)]
+        public string additional_f9 { get; set; }
     }
 
     [Table("Request")]
@@ -225,7 +232,7 @@ namespace CPS.Business
                 return repository.GetAll().Where(o => o.PrintJobNo.HasValue).Select(s => new LookupItem<int, int> { Key = s.PrintJobNo.Value, Value = s.PrintJobNo.Value }).Distinct().OrderByDescending(o => o.Key).Take(100).ToList();
             }
         }
-
+        
         public override bool IsValid(IList<ValidationResult> results)
         {
             base.IsValid(results);
@@ -269,9 +276,13 @@ namespace CPS.Business
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                results.Add(new ValidationResult("Server Error"));
+                results.Add(new ValidationResult(
+                    ex.InnerException != null
+                        ? ex.Message + " | " + ex.InnerException.Message
+                        : ex.Message
+                ));
             }
 
             return results.Count == 0;
@@ -487,6 +498,27 @@ namespace CPS.Business
 
                 property.SetValue(importData, safeValue, null);
             }
+            importData.PostalCode = token.Length > 20 ? token[20].Trim() : "";
+
+            importData.mob = token.Length > 23 ? token[23].Trim() : "";
+
+            importData.NoOfChequeBook =
+                token.Length > 24 && int.TryParse(token[24], out var b) ? b : 0;
+
+            importData.NoOfCheque =
+                token.Length > 25 && int.TryParse(token[25], out var c) ? c : 0;
+
+            importData.BearerOrder = token.Length > 26 ? token[26].Trim() : "";
+
+            importData.AtPar = token.Length > 27 ? token[27].Trim() : "";
+
+            importData.ChequeFrom =
+                token.Length > 29 && int.TryParse(token[29], out var f) ? f : 0;
+
+            importData.ChequeTo =
+                token.Length > 30 && int.TryParse(token[30], out var t) ? t : 0;
+
+            importData.ECSAccountCode = token.Length > 31 ? token[31].Trim() : "";
 
             return true;
         }

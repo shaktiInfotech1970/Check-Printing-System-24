@@ -396,6 +396,7 @@ F:\CHECK PRINTING SYSTEM 24\V2\CPS\obj\Debug\CPS.exe
 F:\CHECK PRINTING SYSTEM 24\V2\CPS\obj\Debug\CPS.pdb
 F:\CHECK PRINTING SYSTEM 24\V2\CPS\obj\Debug\RdlCompile.cache
 F:\CHECK PRINTING SYSTEM 24\V2\CPS\obj\Debug\RdlCompile.compiled
+F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\CPS.csproj.AssemblyReference.cache
 F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\Login.baml
 F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\mainWindow.baml
 F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\Themes\Metro\Metro.MSControls.Core.Implicit.baml
@@ -601,4 +602,4 @@ F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\CPS.cspr
 F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\CPS.csproj.CopyComplete
 F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\CPS.exe
 F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\CPS.pdb
-F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\CPS.csproj.AssemblyReference.cache
+F:\CHECK PRINTING SYSTEM 24\V2-VijayCommercialCoOpBankLtd\CPS\obj\Debug\CPS.Migrations.ECSAccountCode.resources

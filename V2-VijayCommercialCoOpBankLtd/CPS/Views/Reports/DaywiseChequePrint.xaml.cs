@@ -97,8 +97,7 @@ namespace CPS.Views.Reports
                 // UNIQUE FILE PER BRANCH
                 report.Generate(
                     $"DaywiseChequePrint_{branchName.Replace(" ", "_")}",
-                    title,
-                    false
+                    title
                 );
             }
         }

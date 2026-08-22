@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201907191053191_BankMaster_Change1.Designer.cs">
       <DependentUpon>201907191053191_BankMaster_Change1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202608221059018_ECSAccountCode.cs" />
+    <Compile Include="Migrations\202608221059018_ECSAccountCode.Designer.cs">
+      <DependentUpon>202608221059018_ECSAccountCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Views\Preferences\Backup.xaml.cs">
@@ -469,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907191053191_BankMaster_Change1.resx">
       <DependentUpon>201907191053191_BankMaster_Change1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202608221059018_ECSAccountCode.resx">
+      <DependentUpon>202608221059018_ECSAccountCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
