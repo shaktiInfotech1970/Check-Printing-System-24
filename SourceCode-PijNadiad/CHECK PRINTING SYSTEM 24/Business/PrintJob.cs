@@ -164,6 +164,9 @@ namespace CPS.Business
                 {
                     each.RequestPage.Sections.ForEach(s =>
                     {
+                        if (s == null || s.PrintRequest == null || s.PrintRequest.Request == null)
+                            return;
+
                         s.PrintRequest.ChequeNoFrom = s.PrintRequest.Request.ChequeFrom;
                         s.PrintRequest.ChequeNoTo = s.PrintRequest.Request.ChequeTo;
                     });
@@ -175,13 +178,27 @@ namespace CPS.Business
                     {
                         each.StartPage = startPage;
                         each.ChequePages = each.ChequePages.Where(w => w.PageNo >= startPage);
-                        each.RequestPage.Sections.ForEach(s => { s.PrintRequest.ChequeNoFrom = s.PrintRequest.Request.ChequeFrom + startOffSet; });
+                        each.RequestPage.Sections.ForEach(s =>
+                        {
+                            if (s == null || s.PrintRequest == null || s.PrintRequest.Request == null)
+                                return;
+
+                            s.PrintRequest.ChequeNoFrom =
+                                s.PrintRequest.Request.ChequeFrom + startOffSet;
+                        });
                     }
                     if (each.EndPage > endPage)
                     {
                         each.EndPage = endPage;
                         each.ChequePages = each.ChequePages.Where(w => w.PageNo <= endPage);
-                        each.RequestPage.Sections.ForEach(s => { s.PrintRequest.ChequeNoTo = s.PrintRequest.Request.ChequeTo - endOffSet; });
+                        each.RequestPage.Sections.ForEach(s =>
+                        {
+                            if (s == null || s.PrintRequest == null || s.PrintRequest.Request == null)
+                                return;
+
+                            s.PrintRequest.ChequeNoTo =
+                                s.PrintRequest.Request.ChequeTo - endOffSet;
+                        });
                     }
                 });
 
@@ -191,34 +208,33 @@ namespace CPS.Business
             return printJob;
         }
 
-        private static IEnumerable<PrintBatch> GetPrintBatches(RequestGroup requestGroup, ref int pageNo)
+        private static IEnumerable<PrintBatch> GetPrintBatches(
+        RequestGroup requestGroup,
+        ref int pageNo)
         {
             var batches = new List<PrintBatch>();
 
             for (int i = 0; i < requestGroup.Requests.Count(); i += 3)
             {
-                var requests = requestGroup.Requests.Skip(i).Take(3);
-                if (requests.Count() < 3)
-                {
-                    foreach (var r in requests)
-                    {
-                        var batch = new PrintBatch { StartPage = pageNo + 1 };
-                        batch.RequestPage = GetRequestPage(r);
-                        batch.ChequePages = GetChequePages(r, requestGroup.BookSize, ref pageNo);
-                        batch.EndPage = pageNo;
+                var requests = requestGroup.Requests
+                    .Skip(i)
+                    .Take(3)
+                    .ToList();
 
-                        batches.Add(batch);
-                    }
-                }
-                else
+                var batch = new PrintBatch
                 {
-                    var batch = new PrintBatch { StartPage = pageNo + 1 };
-                    batch.RequestPage = GetRequestPage(requests);
-                    batch.ChequePages = GetChequePages(requests, requestGroup.BookSize, ref pageNo);
-                    batch.EndPage = pageNo;
+                    StartPage = pageNo + 1
+                };
 
-                    batches.Add(batch);
-                }
+                // 1, 2 or 3 requests all go into ONE request page
+                batch.RequestPage = GetRequestPage(requests);
+
+                batch.ChequePages =
+                    GetChequePages(requests, requestGroup.BookSize, ref pageNo);
+
+                batch.EndPage = pageNo;
+
+                batches.Add(batch);
             }
 
             return batches;
@@ -235,9 +251,17 @@ namespace CPS.Business
         private static PrintPage GetRequestPage(IEnumerable<PrintRequest> printRequests)
         {
             var printPage = new PrintPage { PageNo = 1 };
-            printPage.Sections.Add(new PrintSection { PrintRequest = printRequests.Take(1).FirstOrDefault() });
-            printPage.Sections.Add(new PrintSection { PrintRequest = printRequests.Skip(1).Take(1).FirstOrDefault() });
-            printPage.Sections.Add(new PrintSection { PrintRequest = printRequests.Skip(2).Take(1).FirstOrDefault() });
+
+            foreach (var request in printRequests.Take(3))
+            {
+                if (request != null)
+                {
+                    printPage.Sections.Add(new PrintSection
+                    {
+                        PrintRequest = request
+                    });
+                }
+            }
 
             return printPage;
         }
@@ -260,16 +284,35 @@ namespace CPS.Business
             return printPages;
         }
 
-        private static IEnumerable<PrintPage> GetChequePages(IEnumerable<PrintRequest> printRequests, int bookSize, ref int pageNo)
+        private static IEnumerable<PrintPage> GetChequePages(
+    IEnumerable<PrintRequest> printRequests,
+    int bookSize,
+    ref int pageNo)
         {
             var printPages = new List<PrintPage>();
+
+            var requests = printRequests
+                .Where(r => r != null)
+                .ToList();
+
             for (int i = 1; i <= bookSize; i++)
             {
                 pageNo++;
-                var printPage = new PrintPage { PageNo = pageNo };
-                printPage.Sections.Add(new PrintSection { PrintRequest = printRequests.Take(1).FirstOrDefault(), SequenceNo = i });
-                printPage.Sections.Add(new PrintSection { PrintRequest = printRequests.Skip(1).Take(1).FirstOrDefault(), SequenceNo = i });
-                printPage.Sections.Add(new PrintSection { PrintRequest = printRequests.Skip(2).Take(1).FirstOrDefault(), SequenceNo = i });
+
+                var printPage = new PrintPage
+                {
+                    PageNo = pageNo
+                };
+
+                foreach (var request in requests)
+                {
+                    printPage.Sections.Add(new PrintSection
+                    {
+                        PrintRequest = request,
+                        SequenceNo = i
+                    });
+                }
+
                 printPages.Add(printPage);
             }
 
@@ -565,8 +608,19 @@ namespace CPS.Business
             Font font5 = new Font("Verdana", 5);
 
             var section = printPage.Sections.ToList()[sectionNo - 1];
+
+            // Important for 1 or 2 requests
+            if (section == null ||
+                section.PrintRequest == null ||
+                section.PrintRequest.Request == null)
+                return;
+
             var x = (GetDPI(PageWidth) - GetDPI(SectionWidth));
             var y = (GetDPI(SectionHeight) * (sectionNo - 1));
+
+            //var section = printPage.Sections.ToList()[sectionNo - 1];
+            //var x = (GetDPI(PageWidth) - GetDPI(SectionWidth));
+            //var y = (GetDPI(SectionHeight) * (sectionNo - 1));
 
             if (BatchInPrinting.RequestLayout.branchAddress1Visble)
                 e.Graphics.DrawString(GetBranchAddress(section.PrintRequest.Branch), font9, brush, x + GetDPI(BatchInPrinting.RequestLayout.branchAddress1X), y + GetDPI(BatchInPrinting.RequestLayout.branchAddress1Y));
