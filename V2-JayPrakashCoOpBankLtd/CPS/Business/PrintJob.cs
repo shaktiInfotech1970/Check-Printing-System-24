@@ -516,7 +516,19 @@ namespace CPS.Business
         }
         private static string GetMICR(PrintRequest print, int currentChequeNo)
         {
-            return string.Format("C{0}C {1}A {2}C {3}", (print.Request.ChequeFrom + (currentChequeNo - 1)).ToString("000000"), print.Branch.MICR, Convert.ToInt32(print.Request.AccountNo.Substring(Math.Max(0, print.Request.AccountNo.Length - 6))).ToString("000000"), print.Request.TransactionCode);
+            string accountNo = print.Request.TransactionCode == 12
+                ? "      "
+                : Convert.ToInt32(
+                    print.Request.AccountNo.Substring(
+                        Math.Max(0, print.Request.AccountNo.Length - 6)))
+                    .ToString("000000");
+
+            return string.Format(
+                "C{0}C {1}A {2}C {3}",
+                (print.Request.ChequeFrom + (currentChequeNo - 1)).ToString("000000"),
+                print.Branch.MICR,
+                accountNo,
+                print.Request.TransactionCode);
         }
 
         private static string GetAuditText(RequestDTO request)
@@ -903,15 +915,22 @@ namespace CPS.Business
 
             if (BatchInPrinting.ChequeLayout.stampVisble)
             {
-                RectangleF stampRect = new RectangleF(x + GetDPI(BatchInPrinting.ChequeLayout.stampX), y + GetDPI(BatchInPrinting.ChequeLayout.stampY), 450, 110);
-                // Create a StringFormat object with the each line of text, and the block
-                // of text centered on the page.
+                RectangleF stampRect = new RectangleF(
+                    x + GetDPI(BatchInPrinting.ChequeLayout.stampX),
+                    y + GetDPI(BatchInPrinting.ChequeLayout.stampY) - GetDPI(1f),
+                    450,
+                    110);
+
                 StringFormat stringFormat = new StringFormat();
                 stringFormat.Alignment = StringAlignment.Far;
                 stringFormat.LineAlignment = StringAlignment.Far;
 
-                // Draw the text and the surrounding rectangle.
-                e.Graphics.DrawString(GetStamp(section.PrintRequest.Request), font8Bold, brush, stampRect, stringFormat);
+                e.Graphics.DrawString(
+                    GetStamp(section.PrintRequest.Request),
+                    font8Bold,
+                    brush,
+                    stampRect,
+                    stringFormat);
             }
 
             if (BatchInPrinting.ChequeLayout.micrVisble)
@@ -932,6 +951,74 @@ namespace CPS.Business
             {
                 var imgAccountPayee = GetAccountPayeeImage();
                 e.Graphics.DrawImage(imgAccountPayee, x + GetDPI(BatchInPrinting.ChequeLayout.accountPayeeX), y + GetDPI(BatchInPrinting.ChequeLayout.accountPayeeY));
+            }
+
+            // Pay Order printing for Transaction Code 12
+            if (section.PrintRequest.Request.TransactionCode == 12)
+            {
+                Font payOrderFont = new Font("Verdana", 9, FontStyle.Bold);
+                Font payOrderNormalFont = new Font("Verdana", 8, FontStyle.Regular);
+
+                float ifscX = x + GetDPI(BatchInPrinting.ChequeLayout.ifscX);
+                float ifscY = y + GetDPI(BatchInPrinting.ChequeLayout.ifscY);
+
+                // 1. PAY ORDER
+                // 2 inches ABOVE IFSC + 1.5 inches RIGHT
+                float payOrderX = ifscX + GetDPI(12f);
+                float payOrderY = ifscY - GetDPI(6.5f);
+
+                e.Graphics.DrawString(
+                    "PAY ORDER",
+                    payOrderFont,
+                    brush,
+                    payOrderX,
+                    payOrderY);
+
+                float payableX = ifscX + GetDPI(6f);
+                float payableY = ifscY - GetDPI(1f);
+
+                e.Graphics.DrawString(
+                    "Payable at :____________________",
+                    payOrderNormalFont,
+                    brush,
+                    payableX,
+                    payableY);
+
+                float notOverX = ifscX + GetDPI(6f);
+                float notOverY = payableY + GetDPI(0.95f);
+
+                e.Graphics.DrawString(
+                    "Not Over :_____________________",
+                    payOrderNormalFont,
+                    brush,
+                    notOverX,
+                    notOverY);
+
+
+                // 4. CODE NO. & AUTHORIZED SIGNATORY - FIRST
+                // 3 cm BELOW IFSC
+                float signatory1X = ifscX + GetDPI(21f);
+                float signatory1Y = ifscY + GetDPI(1.1811f);
+
+                e.Graphics.DrawString(
+                     "Code No.\nAuthorized signatory",
+                    payOrderNormalFont,
+                    brush,
+                    signatory1X,
+                    signatory1Y);
+
+
+                // 5. CODE NO. & AUTHORIZED SIGNATORY - SECOND
+                // 6 cm BELOW IFSC
+                float signatory2X = ifscX + GetDPI(14f);
+                float signatory2Y = ifscY + GetDPI(1.1811f);
+
+                e.Graphics.DrawString(
+                     "Code No.\nAuthorized signatory",
+                    payOrderNormalFont,
+                    brush,
+                    signatory2X,
+                    signatory2Y);
             }
 
             //var imgBarcode = GetBarcode(string.Format("{0}{1}{2}{3}", (section.PrintRequest.Request.ChequeFrom + (section.SequenceNo - 1)).ToString("000000"), section.PrintRequest.Request.MICRCode, Convert.ToInt32(section.PrintRequest.Request.AccountNo.Substring(Math.Max(0, section.PrintRequest.Request.AccountNo.Length - 6))).ToString("000000"), section.PrintRequest.Request.TransactionCode), 6, System.Drawing.RotateFlipType.Rotate270FlipNone);

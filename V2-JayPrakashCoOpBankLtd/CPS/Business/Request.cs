@@ -60,12 +60,12 @@ namespace CPS.Business
         public string MICRCode { get { return string.Format("{0}{1}{2}", CityCode.ToString("000"), BankCode.ToString("000"), BranchCode.ToString("000")); } }
 
         [Display(Name = "A/C No", Order = 6)]
-        [Required]
+       // [Required]
         [Parse(6)]
         public string AccountNo { get; set; }
 
         [Display(Name = "A/C BH", Order = 7)]
-        [Required]
+       // [Required]
         [Parse(7)]
         public string AccountNoFull { get; set; }
 
@@ -282,8 +282,8 @@ namespace CPS.Business
 
     public class ImportRequest
     {
-        private const string FIELDSEPARATOR = "~(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
-
+        //private const string FIELDSEPARATOR = "~(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+        private const string FIELDSEPARATOR = "~";
         //Extended Properties
         //---------------------
         //Excel 97 - 2003 Workbook(.xls)           "Excel 8.0"
@@ -335,7 +335,11 @@ namespace CPS.Business
                         // Skip header
                         // if (i == 0) continue; 
 
+                        if (string.IsNullOrWhiteSpace(lines[i]))
+                            continue;
+
                         var obj = new RequestDTO();
+
                         if (Parse(lines[i].Replace("\"", ""), obj))
                             _data.Add(obj);
                     }
@@ -435,15 +439,45 @@ namespace CPS.Business
         private bool Parse(string line, RequestDTO importData)
         {
             var token = Regex.Split(line, FIELDSEPARATOR);
+
             var properties = importData.GetType().GetProperties()
                 .Where(w => w.GetCustomAttributes(typeof(ParseAttribute), false).Count() > 0)
-                .OrderBy(o => (o.GetCustomAttributes(typeof(ParseAttribute), false).FirstOrDefault() as ParseAttribute).Order);
+                .OrderBy(o => (o.GetCustomAttributes(typeof(ParseAttribute), false)
+                    .FirstOrDefault() as ParseAttribute).Order);
+
             foreach (var property in properties)
             {
-                var parseAttribute = (property.GetCustomAttributes(typeof(ParseAttribute), false)[0] as ParseAttribute);
+                var parseAttribute =
+                    property.GetCustomAttributes(typeof(ParseAttribute), false)[0]
+                    as ParseAttribute;
+
                 var order = parseAttribute.Order - 1;
 
-                property.SetValue(importData, Convert.ChangeType(token[order].Trim().Trim(new char[] { '"' }), property.PropertyType), null);
+                string value = order < token.Length
+                    ? token[order].Trim().Trim('"')
+                    : "";
+
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(value))
+                    {
+                        property.SetValue(
+                            importData,
+                            Convert.ChangeType(value, property.PropertyType),
+                            null);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(
+                        string.Format(
+                            "Parse Error - Field: {0}, Property: {1}, Value: '{2}', Type: {3}",
+                            parseAttribute.Order,
+                            property.Name,
+                            value,
+                            property.PropertyType.Name),
+                        ex);
+                }
             }
 
             return true;

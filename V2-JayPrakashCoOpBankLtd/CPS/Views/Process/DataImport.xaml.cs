@@ -75,9 +75,13 @@ namespace CPS.Views.Process
 
                 dgImport.ItemsSource = import.Data;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Import error", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    ex.ToString(),
+                    "Import Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
 
         }
@@ -101,14 +105,22 @@ namespace CPS.Views.Process
                         {
                             var repositoryBranch = new PersistenceBase<BranchMasterDTO>(context);
                             var requestBranchCode = request.BranchCode.ToString("000").Trim();
-                            var branch = repositoryBranch.FindBy(f => (branchId == 0 && f.Code == requestBranchCode) || (branchId != 0 && f.Id == branchId)).FirstOrDefault();
-                            if (branch != null && Convert.ToInt32(branch.Code) == request.BranchCode)
+                            // var branch = repositoryBranch.FindBy(f => (branchId == 0 && f.Code == requestBranchCode) || (branchId != 0 && f.Id == branchId)).FirstOrDefault();
+                            var allBranches = repositoryBranch.GetAll().ToList();
+
+                            var branch = allBranches
+                                .FirstOrDefault(f => f.Code != null && f.Code.Trim() == requestBranchCode);
+                            if (branch != null)
                             {
                                 request.BranchId = branch.Id;
                             }
                             else
                             {
-                                MessageBox.Show("File you are trying to import has records from different branch.", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                MessageBox.Show(
+                                    "File you are trying to import has records from different branch.",
+                                    "Message",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Exclamation);
                                 return;
                             }
                         }
