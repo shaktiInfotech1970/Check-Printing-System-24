@@ -691,8 +691,16 @@ namespace CPS.Business
             stringFormat.LineAlignment = StringAlignment.Far;
 
             // Draw the text and the surrounding rectangle.
-            e.Graphics.DrawString(GetStamp1(section.PrintRequest.Request), font8Bold, brush, stampRect, stringFormat);
+            //e.Graphics.DrawString(GetStamp1(section.PrintRequest.Request), font8Bold, brush, stampRect, stringFormat);
+            string[] lines = GetStamp(section.PrintRequest.Request)
+                .Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
 
+            string stamp = lines[0] + Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine +
+                string.Join("          ", lines.Skip(1)
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Select(s => s.Trim()));
+
+            e.Graphics.DrawString(stamp, font8Bold, brush, stampRect, stringFormat);
             /* END Right Section*/
 
             /* START Audit Text */
@@ -754,7 +762,7 @@ namespace CPS.Business
                 e.Graphics.DrawString(string.Format("{0}: {1}", section.PrintRequest.AccountType.Name, section.PrintRequest.Request.AccountNoFull), font9Bold, brush, x + GetDPI(BatchInPrinting.ChequeLayout.accountNoX), y + GetDPI(BatchInPrinting.ChequeLayout.accountNoY));
 
             if (!string.IsNullOrEmpty(section.PrintRequest.Request.additional_f1))
-                e.Graphics.DrawString(section.PrintRequest.Request.additional_f1.Trim().ToUpper(), font9Bold, brush, x + GetDPI(BatchInPrinting.ChequeLayout.accountNoX + 10.5f), y + GetDPI(BatchInPrinting.ChequeLayout.accountNoY));
+                e.Graphics.DrawString(section.PrintRequest.Request.additional_f1.Trim().ToUpper(), font9Bold, brush, x + GetDPI(BatchInPrinting.ChequeLayout.accountNoX + 12.5f), y + GetDPI(BatchInPrinting.ChequeLayout.accountNoY -5f));
 
             if (BatchInPrinting.ChequeLayout.stampVisble)
             {
@@ -766,7 +774,15 @@ namespace CPS.Business
                 stringFormat.LineAlignment = StringAlignment.Far;
 
                 // Draw the text and the surrounding rectangle.
-                e.Graphics.DrawString(GetStamp(section.PrintRequest.Request), font8Bold, brush, stampRect, stringFormat);
+                string[] lines = GetStamp(section.PrintRequest.Request)
+                .Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
+
+                string stamp = lines[0] + Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine +
+                    string.Join("          ", lines.Skip(1)
+                        .Where(s => !string.IsNullOrWhiteSpace(s))
+                        .Select(s => s.Trim()));
+
+                e.Graphics.DrawString(stamp, font8Bold, brush, stampRect, stringFormat);
             }
 
             if (BatchInPrinting.ChequeLayout.micrVisble)
