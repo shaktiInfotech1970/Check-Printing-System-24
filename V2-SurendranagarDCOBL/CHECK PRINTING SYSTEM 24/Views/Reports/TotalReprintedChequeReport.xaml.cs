@@ -182,6 +182,14 @@ namespace CPS.Views.Reports
 
             PrintDialog printDialog = new PrintDialog();
 
+            // Set Landscape for this report only
+            var printTicket = printDialog.PrintTicket.Clone();
+
+            printTicket.PageOrientation =
+                System.Printing.PageOrientation.Landscape;
+
+            printDialog.PrintTicket = printTicket;
+
             if (printDialog.ShowDialog() != true)
                 return;
 
