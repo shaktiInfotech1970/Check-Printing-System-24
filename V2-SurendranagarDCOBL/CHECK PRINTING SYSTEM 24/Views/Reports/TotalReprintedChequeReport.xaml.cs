@@ -1,12 +1,15 @@
 ﻿using CPS.Business;
 using CPS.Common;
-using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Media;
+using System.Reflection;
 
 namespace CPS.Views.Reports
 {
@@ -25,7 +28,13 @@ namespace CPS.Views.Reports
         private void BindComboBox()
         {
             var source = BranchMasterDTO.GetLookups();
-            source.Insert(0, new LookupItem<int, string> { Key = 0, Value = "ALL" });
+
+            source.Insert(0, new LookupItem<int, string>
+            {
+                Key = 0,
+                Value = "ALL"
+            });
+
             cbBrach.ItemsSource = source;
             cbBrach.DisplayMemberPath = "Value";
             cbBrach.SelectedValuePath = "Key";
@@ -40,68 +49,331 @@ namespace CPS.Views.Reports
                 var repositoryAccountType = new PersistenceBase<AccountTypeDTO>(context);
                 var repositoryPrintHistory = new PersistenceBase<PrintHistoryDTO>(context);
 
-                var branchId = cbBrach.SelectedValue == null ? 0 : (int)cbBrach.SelectedValue;
-                var transactionfromDate = string.IsNullOrWhiteSpace(dtPrintDateFrom.Text) ? System.DateTime.Now.Date : System.Convert.ToDateTime(dtPrintDateFrom.Text);
-                var transactiontoDate = string.IsNullOrWhiteSpace(dtPrintDateTo.Text) ? System.DateTime.Now.Date : System.Convert.ToDateTime(dtPrintDateTo.Text);
+                var branchId = cbBrach.SelectedValue == null
+                    ? 0
+                    : (int)cbBrach.SelectedValue;
 
-                var query = (from r in repositoryRequest.GetAll()
-                             join b in repositoryBranch.GetAll() on r.BranchId equals b.Id
-                             join at in repositoryAccountType.GetAll() on r.TransactionCode equals at.Code
-                             join ph in repositoryPrintHistory.GetAll() on r.Id equals ph.RequestId
-                             where (branchId == 0 || (branchId != 0 && r.BranchId == branchId))
-                             && DbFunctions.TruncateTime(ph.CreatedOn) >= transactionfromDate.Date && DbFunctions.TruncateTime(ph.CreatedOn) <= transactiontoDate.Date
-                             && (ph.PrintType == PrintType.RePrintCheque || ph.PrintType == PrintType.RePrintChequeBook)
-                             select new { r, b, at, ph, BookSize = ph.ChequeNoTo - ph.ChequeNoFrom + 1 });
+                var transactionfromDate =
+                    string.IsNullOrWhiteSpace(dtPrintDateFrom.Text)
+                    ? DateTime.Now.Date
+                    : Convert.ToDateTime(dtPrintDateFrom.Text);
 
-                var groupedQuery = (from o in query
-                                    group o by new { o.r.BranchId, o.b.Name, o.r.TransactionCode, o.BookSize } into g
-                                    select new TotalPrintReport { BranchName = g.Key.Name, TransactionCode = g.Key.TransactionCode.ToString(), BookSize = g.Key.BookSize, TotalPrint = g.Count(), TotalLeaves = g.Sum(a => a.BookSize) });
+                var transactiontoDate =
+                    string.IsNullOrWhiteSpace(dtPrintDateTo.Text)
+                    ? DateTime.Now.Date
+                    : Convert.ToDateTime(dtPrintDateTo.Text);
 
-                var response = groupedQuery.Where(o => o.BookSize > 0).OrderBy(o => o.BranchName).ToList();
+                var query =
+                    from r in repositoryRequest.GetAll()
+                    join b in repositoryBranch.GetAll()
+                        on r.BranchId equals b.Id
+                    join at in repositoryAccountType.GetAll()
+                        on r.TransactionCode equals at.Code
+                    join ph in repositoryPrintHistory.GetAll()
+                        on r.Id equals ph.RequestId
+                    where
+                        (branchId == 0 || r.BranchId == branchId)
+                        && DbFunctions.TruncateTime(ph.CreatedOn) >= transactionfromDate.Date
+                        && DbFunctions.TruncateTime(ph.CreatedOn) <= transactiontoDate.Date
+                        && (ph.PrintType == PrintType.RePrintCheque
+                            || ph.PrintType == PrintType.RePrintChequeBook)
+                    select new
+                    {
+                        r,
+                        b,
+                        at,
+                        ph,
+                        BookSize = ph.ChequeNoTo - ph.ChequeNoFrom + 1
+                    };
+
+                var groupedQuery =
+                    from o in query
+                    group o by new
+                    {
+                        o.r.BranchId,
+                        o.b.Name,
+                        o.r.TransactionCode,
+                        o.BookSize
+                    }
+                    into g
+                    select new TotalPrintReport
+                    {
+                        BranchName = g.Key.Name,
+                        TransactionCode = g.Key.TransactionCode.ToString(),
+                        BookSize = g.Key.BookSize,
+                        TotalPrint = g.Count(),
+                        TotalLeaves = g.Sum(a => a.BookSize)
+                    };
+
+                var response = groupedQuery
+                    .Where(o => o.BookSize > 0)
+                    .OrderBy(o => o.BranchName)
+                    .ToList();
 
                 var resultDataSource = new List<TotalPrintReport>();
+
                 if (response.Count > 0)
                 {
-                    //Get Distinct BranchName
-                    var olDistinctBranch = response.Select(o => o.BranchName).Distinct().ToList();
+                    var distinctBranches = response
+                        .Select(o => o.BranchName)
+                        .Distinct()
+                        .ToList();
 
-                    var oGrandTotalPrint = new TotalPrintReport();
-                    oGrandTotalPrint.BranchName = "";
-                    oGrandTotalPrint.TransactionCode = "Grand Total";
-                    oGrandTotalPrint.TotalPrint = response.Sum(o => o.TotalPrint);
-                    oGrandTotalPrint.TotalLeaves = response.Sum(o => o.TotalLeaves);
-
-                    foreach (var branch in olDistinctBranch)
+                    var grandTotalPrint = new TotalPrintReport
                     {
-                        resultDataSource.AddRange(response.Where(o => o.BranchName == branch));
-                        var oTotalPrint = new TotalPrintReport();
-                        oTotalPrint.BranchName = branch;
-                        oTotalPrint.TransactionCode = "Sub Total";
-                        oTotalPrint.TotalPrint = response.Where(o => o.BranchName == branch).Sum(o => o.TotalPrint);
-                        oTotalPrint.TotalLeaves = response.Where(o => o.BranchName == branch).Sum(o => o.TotalLeaves);
-                        resultDataSource.Add(oTotalPrint);
+                        BranchName = "",
+                        TransactionCode = "Grand Total",
+                        TotalPrint = response.Sum(o => o.TotalPrint),
+                        TotalLeaves = response.Sum(o => o.TotalLeaves)
+                    };
+
+                    foreach (var branch in distinctBranches)
+                    {
+                        resultDataSource.AddRange(
+                            response.Where(o => o.BranchName == branch));
+
+                        var totalPrint = new TotalPrintReport
+                        {
+                            BranchName = branch,
+                            TransactionCode = "Sub Total",
+                            TotalPrint = response
+                                .Where(o => o.BranchName == branch)
+                                .Sum(o => o.TotalPrint),
+                            TotalLeaves = response
+                                .Where(o => o.BranchName == branch)
+                                .Sum(o => o.TotalLeaves)
+                        };
+
+                        resultDataSource.Add(totalPrint);
                     }
-                    resultDataSource.Add(oGrandTotalPrint);
+
+                    resultDataSource.Add(grandTotalPrint);
                 }
 
                 dgTotalReprintedCheque.ItemsSource = resultDataSource;
 
-                btnPrint.IsEnabled = true;
+                btnPrint.IsEnabled = resultDataSource.Count > 0;
+
                 if (response.Count == 0)
                 {
                     btnPrint.IsEnabled = false;
-                    MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+                    MessageBox.Show(
+                        "No records found!",
+                        "Message",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Exclamation);
                 }
             }
         }
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            Paragraph title = new Paragraph(string.Format("Total Re-Printed Cheque:- From:{0}  - To:{1}", (dtPrintDateFrom.SelectedDate ?? DateTime.Now.Date).ToString("dd MMM yyyy"), (dtPrintDateTo.SelectedDate ?? DateTime.Now.Date).ToString("dd MMM yyyy")), new Font(Font.FontFamily.HELVETICA, 15));
-            title.Alignment = Element.ALIGN_CENTER;
+            if (dgTotalReprintedCheque.Items.Count == 0)
+            {
+                MessageBox.Show(
+                    "No records available to print!",
+                    "Message",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
 
-            ReportPDF report = new ReportPDF(dgTotalReprintedCheque, new float[] { 200, 75, 75, 75, 75 });
-            report.Generate("TotalReprintedCheque", title);
+                return;
+            }
+
+            PrintDialog printDialog = new PrintDialog();
+
+            if (printDialog.ShowDialog() != true)
+                return;
+
+            FlowDocument document = new FlowDocument();
+
+            document.PageWidth = printDialog.PrintableAreaWidth;
+            document.PageHeight = printDialog.PrintableAreaHeight;
+            document.PagePadding = new Thickness(5);
+            document.ColumnGap = 0;
+            document.ColumnWidth = double.PositiveInfinity;
+
+            document.FontFamily = new FontFamily("Arial");
+            document.FontSize = 11;
+            document.FontWeight = FontWeights.Normal;
+
+            // Report title
+            System.Windows.Documents.Paragraph title =
+                new System.Windows.Documents.Paragraph(
+                    new Run(string.Format(
+                        "Total Re-Printed Cheque - From: {0}  To: {1}",
+                        (dtPrintDateFrom.SelectedDate ?? DateTime.Now.Date)
+                            .ToString("dd MMM yyyy"),
+                        (dtPrintDateTo.SelectedDate ?? DateTime.Now.Date)
+                            .ToString("dd MMM yyyy"))));
+
+            title.FontFamily = new FontFamily("Arial");
+            title.FontSize = 24;
+            title.FontWeight = FontWeights.Normal;
+            title.TextAlignment = TextAlignment.Center;
+            title.Margin = new Thickness(0, 0, 0, 65);
+
+            document.Blocks.Add(title);
+
+            // Create table
+            Table table = new Table();
+
+            table.CellSpacing = 0;
+            table.BorderBrush = Brushes.Black;
+            table.BorderThickness = new Thickness(0.5);
+
+            int columnCount = dgTotalReprintedCheque.Columns.Count;
+
+            if (columnCount == 0)
+                return;
+
+            // Equal column widths based on printable area
+            double totalWidth = printDialog.PrintableAreaWidth
+                - document.PagePadding.Left
+                - document.PagePadding.Right;
+
+            double columnWidth = totalWidth / columnCount;
+
+            foreach (DataGridColumn column in dgTotalReprintedCheque.Columns)
+            {
+                table.Columns.Add(new TableColumn
+                {
+                    Width = new GridLength(
+                        columnWidth,
+                        GridUnitType.Pixel)
+                });
+            }
+
+            // Table header
+            TableRowGroup headerGroup = new TableRowGroup();
+            TableRow headerRow = new TableRow();
+
+            headerRow.FontFamily = new FontFamily("Arial");
+            headerRow.FontSize = 11;
+            headerRow.FontWeight = FontWeights.Normal;
+            headerRow.Background = Brushes.White;
+
+            foreach (DataGridColumn column in dgTotalReprintedCheque.Columns)
+            {
+                TableCell cell = new TableCell(
+                    new System.Windows.Documents.Paragraph(
+                        new Run(column.Header == null
+                            ? string.Empty
+                            : column.Header.ToString())));
+
+                cell.FontFamily = new FontFamily("Arial");
+                cell.FontSize = 11;
+                cell.FontWeight = FontWeights.Normal;
+                cell.Padding = new Thickness(2);
+                cell.BorderBrush = Brushes.Black;
+                cell.BorderThickness = new Thickness(0.5);
+
+                headerRow.Cells.Add(cell);
+            }
+
+            headerGroup.Rows.Add(headerRow);
+            table.RowGroups.Add(headerGroup);
+
+            // Table data
+            TableRowGroup dataGroup = new TableRowGroup();
+
+            foreach (object item in dgTotalReprintedCheque.Items)
+            {
+                if (item == CollectionView.NewItemPlaceholder)
+                    continue;
+
+                TableRow row = new TableRow();
+
+                row.FontFamily = new FontFamily("Arial");
+                row.FontSize = 11;
+                row.FontWeight = FontWeights.Normal;
+
+                foreach (DataGridColumn column in dgTotalReprintedCheque.Columns)
+                {
+                    string cellText = string.Empty;
+
+                    DataGridBoundColumn boundColumn =
+                        column as DataGridBoundColumn;
+
+                    if (boundColumn != null)
+                    {
+                        Binding binding = boundColumn.Binding as Binding;
+
+                        if (binding != null && binding.Path != null)
+                        {
+                            cellText = GetPropertyValue(
+                                item,
+                                binding.Path.Path);
+                        }
+                    }
+
+                    TableCell cell = new TableCell(
+                        new System.Windows.Documents.Paragraph(
+                            new Run(cellText)));
+
+                    cell.FontFamily = new FontFamily("Arial");
+                    cell.FontSize = 11;
+                    cell.FontWeight = FontWeights.Normal;
+                    cell.Padding = new Thickness(2);
+                    cell.BorderBrush = Brushes.Black;
+                    cell.BorderThickness = new Thickness(0.5);
+
+                    // Bold Sub Total and Grand Total rows
+                    if (cellText == "Sub Total" ||
+                        cellText == "Grand Total")
+                    {
+                        row.FontWeight = FontWeights.Bold;
+                    }
+
+                    row.Cells.Add(cell);
+                }
+
+                dataGroup.Rows.Add(row);
+            }
+
+            table.RowGroups.Add(dataGroup);
+            document.Blocks.Add(table);
+
+            // Configure page size for selected printer
+            IDocumentPaginatorSource paginator = document;
+
+            printDialog.PrintDocument(
+                paginator.DocumentPaginator,
+                "Total Re-Printed Cheque Report");
+
+            MessageBox.Show(
+                "Total re-printed cheque report has been sent to the printer successfully!",
+                "Total Re-Printed Cheque - Print Successful",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
+
+        private string GetPropertyValue(object obj, string propertyPath)
+        {
+            if (obj == null || string.IsNullOrWhiteSpace(propertyPath))
+                return string.Empty;
+
+            object current = obj;
+
+            string[] properties = propertyPath.Split('.');
+
+            foreach (string propertyName in properties)
+            {
+                if (current == null)
+                    return string.Empty;
+
+                PropertyInfo property =
+                    current.GetType().GetProperty(propertyName);
+
+                if (property == null)
+                    return string.Empty;
+
+                current = property.GetValue(current, null);
+            }
+
+            return current == null
+                ? string.Empty
+                : current.ToString();
         }
     }
 }

@@ -1,19 +1,18 @@
-﻿using CPS.Business;
+﻿
+using CPS.Business;
 using CPS.Common;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace CPS.Views.Reports
 {
-    /// <summary>
-    /// Interaction logic for DayWiseChequePrint.xaml
-    /// </summary>
     public partial class DaywiseChequePrint : UserControl
     {
         public DaywiseChequePrint()
@@ -21,7 +20,9 @@ namespace CPS.Views.Reports
             InitializeComponent();
             BindComboBox();
             btnPrint.IsEnabled = false;
-            var permission = ((mainWindow)App.Current.Windows[0]).LoggedInUserPermission;
+
+            var permission = ((mainWindow)App.Current.Windows[0])
+                .LoggedInUserPermission;
         }
 
         private void BindComboBox()
@@ -39,54 +40,270 @@ namespace CPS.Views.Reports
         {
             using (var context = new CPSDbContext())
             {
-                var repositoryRequest = new PersistenceBase<RequestDTO>(context);
-                var repositoryBranch = new PersistenceBase<BranchMasterDTO>(context);
-                var repositoryAccountType = new PersistenceBase<AccountTypeDTO>(context);
-                var repositoryPrintHistory = new PersistenceBase<PrintHistoryDTO>(context);
+                var repositoryRequest =
+                    new PersistenceBase<RequestDTO>(context);
 
-                var branchId = cbBrach.SelectedValue == null ? 0 : (int)cbBrach.SelectedValue;
-                var accountType = cbAccountType.SelectedValue == null ? 0 : (int)cbAccountType.SelectedValue;
-                var transactionDate = string.IsNullOrWhiteSpace(dtTransactionDate.Text) ? System.DateTime.Now.Date : System.Convert.ToDateTime(dtTransactionDate.Text);
+                var repositoryBranch =
+                    new PersistenceBase<BranchMasterDTO>(context);
 
-                var query = (from r in repositoryRequest.GetAll()
-                             join b in repositoryBranch.GetAll() on r.BranchId equals b.Id
-                             join at in repositoryAccountType.GetAll() on r.TransactionCode equals at.Code
-                             join ph in repositoryPrintHistory.GetAll() on r.Id equals ph.RequestId
-                             where (branchId == 0 || (branchId != 0 && r.BranchId == branchId))
-                             && (accountType == 0 || (accountType != 0 && r.TransactionCode == accountType))
-                             && DbFunctions.TruncateTime(ph.CreatedOn) == transactionDate.Date
-                             && ph.PrintType == PrintType.ChequeBook
-                             select new { Request = r, AccountType = at, Branch = b, PrintHistory = ph });
+                var repositoryAccountType =
+                    new PersistenceBase<AccountTypeDTO>(context);
+
+                var repositoryPrintHistory =
+                    new PersistenceBase<PrintHistoryDTO>(context);
+
+                var branchId = cbBrach.SelectedValue == null
+                    ? 0 : (int)cbBrach.SelectedValue;
+
+                var accountType = cbAccountType.SelectedValue == null
+                    ? 0 : (int)cbAccountType.SelectedValue;
+
+                var transactionDate =
+                    string.IsNullOrWhiteSpace(dtTransactionDate.Text)
+                    ? DateTime.Now.Date
+                    : Convert.ToDateTime(dtTransactionDate.Text);
+
+                var query =
+                    from r in repositoryRequest.GetAll()
+                    join b in repositoryBranch.GetAll()
+                        on r.BranchId equals b.Id
+                    join at in repositoryAccountType.GetAll()
+                        on r.TransactionCode equals at.Code
+                    join ph in repositoryPrintHistory.GetAll()
+                        on r.Id equals ph.RequestId
+                    where
+                        (branchId == 0 ||
+                         (branchId != 0 && r.BranchId == branchId))
+                        &&
+                        (accountType == 0 ||
+                         (accountType != 0 &&
+                          r.TransactionCode == accountType))
+                        &&
+                        DbFunctions.TruncateTime(ph.CreatedOn)
+                            == transactionDate.Date
+                        &&
+                        ph.PrintType == PrintType.ChequeBook
+                    select new
+                    {
+                        Request = r,
+                        AccountType = at,
+                        Branch = b,
+                        PrintHistory = ph
+                    };
 
                 var response = query.ToList();
+
                 dgDaywiseChequePrint.ItemsSource = response;
-                btnPrint.IsEnabled = true;
+                btnPrint.IsEnabled = response.Count > 0;
+
                 if (response.Count == 0)
                 {
-                    btnPrint.IsEnabled = false;
-                    MessageBox.Show("No records found!", "Message", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    MessageBox.Show(
+                        "No records found!",
+                        "Message",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Exclamation);
                 }
             }
         }
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            Paragraph title = new Paragraph(string.Format("Daywise Cheque Print:- Transaction Date: {0}", (dtTransactionDate.SelectedDate ?? DateTime.Now.Date).ToString("dd MMM yyyy")), new Font(Font.FontFamily.HELVETICA, 15));
-            title.Alignment = Element.ALIGN_CENTER;
+            int totalRecords = dgDaywiseChequePrint.Items
+                .Cast<object>()
+                .Count(item =>
+                    item != CollectionView.NewItemPlaceholder);
 
-            Paragraph footer = null;
-            if (dgDaywiseChequePrint.Items.Count > 0)
+            if (totalRecords == 0)
             {
-                BaseFont fontVerdana = BaseFont.CreateFont("fonts/VERDANA.ttf", BaseFont.CP1252, BaseFont.EMBEDDED);
-                Font fontNormal = new Font(fontVerdana, 8, Font.NORMAL);
-                footer = new Paragraph(string.Format("Total Cheque Books :- {0}", dgDaywiseChequePrint.Items.Count), fontNormal);
-                footer.PaddingTop = 50F;                
-                footer.Alignment = Element.ALIGN_CENTER;
+                MessageBox.Show(
+                    "No records found!",
+                    "Message",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+
+                return;
             }
 
-            ReportPDF report = new ReportPDF(dgDaywiseChequePrint, new float[] { 60, 60, 90, 180, 55, 50, 30, 110, 50, 95 });
-            report.Generate("DaywiseChequePrint", title, footer);
-        }
+            PrintDialog printDialog = new PrintDialog();
 
+            if (printDialog.ShowDialog() != true)
+                return;
+
+            FlowDocument document = new FlowDocument();
+
+            // Page settings
+            document.PageWidth = printDialog.PrintableAreaWidth;
+            document.PageHeight = printDialog.PrintableAreaHeight;
+            document.PagePadding = new Thickness(5);
+            document.ColumnGap = 0;
+            document.ColumnWidth = double.PositiveInfinity;
+
+            // Font settings - First image style
+            document.FontFamily = new FontFamily("Arial");
+            document.FontSize = 11;
+            document.FontWeight = FontWeights.Normal;
+
+            // Title
+            System.Windows.Documents.Paragraph title =
+                new System.Windows.Documents.Paragraph(
+                    new Run(
+                        "Daywise Cheque Print:- Transaction Date: " +
+                        (dtTransactionDate.SelectedDate
+                            ?? DateTime.Now.Date).ToString("dd MMM yyyy")));
+
+            title.FontFamily = new FontFamily("Arial");
+            title.FontSize = 24;
+            title.FontWeight = FontWeights.Normal;
+            title.TextAlignment = TextAlignment.Center;
+            title.Margin = new Thickness(0, 0, 0, 65);
+
+            document.Blocks.Add(title);
+
+            // Create table
+            Table table = new Table();
+
+            table.CellSpacing = 0;
+            table.BorderBrush = Brushes.Black;
+            table.BorderThickness = new Thickness(0.5);
+
+            // Set equal column widths according to printable page width
+            int columnCount = dgDaywiseChequePrint.Columns.Count;
+
+            if (columnCount == 0)
+                return;
+
+            double totalWidth =
+                printDialog.PrintableAreaWidth
+                - document.PagePadding.Left
+                - document.PagePadding.Right;
+
+            double columnWidth = totalWidth / columnCount;
+
+            foreach (var column in dgDaywiseChequePrint.Columns)
+            {
+                table.Columns.Add(
+                    new TableColumn
+                    {
+                        Width = new GridLength(
+                            columnWidth,
+                            GridUnitType.Pixel)
+                    });
+            }
+
+            // Header
+            TableRowGroup headerGroup = new TableRowGroup();
+            TableRow headerRow = new TableRow();
+
+            headerRow.FontFamily = new FontFamily("Arial");
+            headerRow.FontSize = 11;
+            headerRow.FontWeight = FontWeights.Normal;
+            headerRow.Background = Brushes.White;
+
+            foreach (var column in dgDaywiseChequePrint.Columns)
+            {
+                TableCell cell = new TableCell(
+                    new System.Windows.Documents.Paragraph(
+                        new Run(column.Header?.ToString() ?? "")));
+
+                cell.FontFamily = new FontFamily("Arial");
+                cell.FontSize = 11;
+                cell.FontWeight = FontWeights.Normal;
+                cell.BorderBrush = Brushes.Black;
+                cell.BorderThickness = new Thickness(0.5);
+                cell.Padding = new Thickness(2);
+
+                headerRow.Cells.Add(cell);
+            }
+
+            headerGroup.Rows.Add(headerRow);
+            table.RowGroups.Add(headerGroup);
+
+            // Data rows
+            TableRowGroup dataGroup = new TableRowGroup();
+
+            foreach (var item in dgDaywiseChequePrint.Items)
+            {
+                if (item == CollectionView.NewItemPlaceholder)
+                    continue;
+
+                TableRow row = new TableRow();
+
+                row.FontFamily = new FontFamily("Arial");
+                row.FontSize = 11;
+                row.FontWeight = FontWeights.Normal;
+
+                foreach (var column in dgDaywiseChequePrint.Columns)
+                {
+                    string value = "";
+
+                    if (column is DataGridBoundColumn boundColumn
+                        && boundColumn.Binding is Binding binding)
+                    {
+                        string path = binding.Path.Path;
+                        object current = item;
+
+                        foreach (string propertyName in path.Split('.'))
+                        {
+                            if (current == null)
+                                break;
+
+                            PropertyInfo property =
+                                current.GetType().GetProperty(propertyName);
+
+                            current = property != null
+                                ? property.GetValue(current, null)
+                                : null;
+                        }
+
+                        value = current?.ToString() ?? "";
+                    }
+
+                    TableCell cell = new TableCell(
+                        new System.Windows.Documents.Paragraph(
+                            new Run(value)));
+
+                    cell.FontFamily = new FontFamily("Arial");
+                    cell.FontSize = 11;
+                    cell.FontWeight = FontWeights.Normal;
+                    cell.BorderBrush = Brushes.Black;
+                    cell.BorderThickness = new Thickness(0.5);
+                    cell.Padding = new Thickness(2);
+
+                    row.Cells.Add(cell);
+                }
+
+                dataGroup.Rows.Add(row);
+            }
+
+            table.RowGroups.Add(dataGroup);
+            document.Blocks.Add(table);
+
+            // Footer
+            System.Windows.Documents.Paragraph footer =
+                new System.Windows.Documents.Paragraph(
+                    new Run(
+                        "Total Cheque Books: " + totalRecords));
+
+            footer.FontFamily = new FontFamily("Arial");
+            footer.FontSize = 12;
+            footer.FontWeight = FontWeights.Bold;
+            footer.TextAlignment = TextAlignment.Center;
+            footer.Margin = new Thickness(0, 15, 0, 0);
+
+            document.Blocks.Add(footer);
+
+            // Send print job
+            printDialog.PrintDocument(
+                ((IDocumentPaginatorSource)document).DocumentPaginator,
+                "Daywise Cheque Print");
+
+            // Success message
+            MessageBox.Show(
+                "Daywise cheque print report has been sent to the printer successfully!",
+                "Daywise Cheque Print - Successful",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
     }
 }
