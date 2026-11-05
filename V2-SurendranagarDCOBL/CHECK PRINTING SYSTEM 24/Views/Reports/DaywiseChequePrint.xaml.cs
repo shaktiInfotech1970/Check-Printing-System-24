@@ -140,16 +140,16 @@ namespace CPS.Views.Reports
 
             FlowDocument document = new FlowDocument();
 
-            // Page settings
+            // A4 page margin fix
             document.PageWidth = printDialog.PrintableAreaWidth;
             document.PageHeight = printDialog.PrintableAreaHeight;
-            document.PagePadding = new Thickness(5);
+            document.PagePadding = new Thickness(40, 40, 40, 40);
             document.ColumnGap = 0;
             document.ColumnWidth = double.PositiveInfinity;
 
             // Font settings - First image style
             document.FontFamily = new FontFamily("Arial");
-            document.FontSize = 11;
+            document.FontSize = 23;
             document.FontWeight = FontWeights.Normal;
 
             // Title
@@ -161,10 +161,10 @@ namespace CPS.Views.Reports
                             ?? DateTime.Now.Date).ToString("dd MMM yyyy")));
 
             title.FontFamily = new FontFamily("Arial");
-            title.FontSize = 24;
+            title.FontSize = 28;
             title.FontWeight = FontWeights.Normal;
             title.TextAlignment = TextAlignment.Center;
-            title.Margin = new Thickness(0, 0, 0, 65);
+            title.Margin = new Thickness(0, 0, 0, 25);
 
             document.Blocks.Add(title);
 
@@ -188,6 +188,8 @@ namespace CPS.Views.Reports
 
             double columnWidth = totalWidth / columnCount;
 
+            table.TextAlignment = TextAlignment.Center;
+
             foreach (var column in dgDaywiseChequePrint.Columns)
             {
                 table.Columns.Add(
@@ -204,18 +206,23 @@ namespace CPS.Views.Reports
             TableRow headerRow = new TableRow();
 
             headerRow.FontFamily = new FontFamily("Arial");
-            headerRow.FontSize = 11;
+            headerRow.FontSize = 12;
             headerRow.FontWeight = FontWeights.Normal;
             headerRow.Background = Brushes.White;
 
             foreach (var column in dgDaywiseChequePrint.Columns)
             {
-                TableCell cell = new TableCell(
-                    new System.Windows.Documents.Paragraph(
-                        new Run(column.Header?.ToString() ?? "")));
+                Paragraph paragraph = new Paragraph(
+                    new Run(column.Header?.ToString() ?? ""));
+
+                paragraph.TextAlignment = TextAlignment.Center;
+                paragraph.Margin = new Thickness(0);
+                paragraph.Padding = new Thickness(0);
+
+                TableCell cell = new TableCell(paragraph);
 
                 cell.FontFamily = new FontFamily("Arial");
-                cell.FontSize = 11;
+                cell.FontSize = 12;
                 cell.FontWeight = FontWeights.Normal;
                 cell.BorderBrush = Brushes.Black;
                 cell.BorderThickness = new Thickness(0.5);
@@ -238,7 +245,7 @@ namespace CPS.Views.Reports
                 TableRow row = new TableRow();
 
                 row.FontFamily = new FontFamily("Arial");
-                row.FontSize = 11;
+                row.FontSize = 12;
                 row.FontWeight = FontWeights.Normal;
 
                 foreach (var column in dgDaywiseChequePrint.Columns)
@@ -272,11 +279,11 @@ namespace CPS.Views.Reports
                             new Run(value)));
 
                     cell.FontFamily = new FontFamily("Arial");
-                    cell.FontSize = 11;
+                    cell.FontSize = 12;
                     cell.FontWeight = FontWeights.Normal;
                     cell.BorderBrush = Brushes.Black;
                     cell.BorderThickness = new Thickness(0.5);
-                    cell.Padding = new Thickness(2);
+                    cell.Padding = new Thickness(1);
 
                     row.Cells.Add(cell);
                 }

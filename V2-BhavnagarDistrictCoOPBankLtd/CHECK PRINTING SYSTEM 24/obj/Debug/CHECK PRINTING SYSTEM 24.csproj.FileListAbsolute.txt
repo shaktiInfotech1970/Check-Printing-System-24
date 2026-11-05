@@ -195,7 +195,6 @@ F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTE
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.BranchMaster_Change.resources
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.ChequeLayout_Change.resources
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.BankMaster_Change1.resources
-F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.chequeOptional.resources
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Properties.Resources.resources
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CHECK PRINTING SYSTEM 24.csproj.GenerateResource.cache
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\RdlCompile.cache
@@ -205,3 +204,4 @@ F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTE
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.exe
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.pdb
 F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CHECK PRINTING SYSTEM 24.csproj.AssemblyReference.cache
+F:\CHECK PRINTING SYSTEM 24\V2-BhavnagarDistrictCoOPBankLtd\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.Migrations.AddCustomerID.resources

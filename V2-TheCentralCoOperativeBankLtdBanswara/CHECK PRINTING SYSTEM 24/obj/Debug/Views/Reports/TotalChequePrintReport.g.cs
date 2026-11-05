@@ -9,7 +9,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Microsoft.Reporting.WinForms;
 using System;
 using System.Diagnostics;
 using System.Windows;

@@ -18,7 +18,7 @@ namespace CPS
                 {
                     userRepository.FindBy(o => o.Id == 1).FirstOrDefault();
                 }
-            }
+            } 
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -37,7 +37,7 @@ namespace CPS
                 {
                     var userRepository = new PersistenceBase<UserMasterDTO>(context);
                     {
-                        var user = userRepository.FindBy(f => f.UserId == txtUserId.Text && f.Password == txtPassword.Password).FirstOrDefault();
+                        var user = userRepository.FindBy(f => f.UserId == txtUserId.Text && f.Password == txtPa2 ord.Password).FirstOrDefault();
                         if (user != null)
                         {
                             var repository = new PersistenceBase<PermissionDTO>(context);
@@ -50,7 +50,7 @@ namespace CPS
                                                             user.Name,
                                                             "+91-9825605331",
                                                             "+91-6354802360");
-                            window.SubTitle.Text = "Technical Support:- Samarth Patil: +91 6354802360, Amit bane: +91-8200403694   Support:- Hemant Pawar: +91-9825605331";
+                            window.SubTitle.Text = "Technical Support:- Samarth Patil: +91 6354802360 , Amit bane: +91-8200403694   Support:- Hemant Pawar: +91-9825605331";
 
                             window.Show();
                             this.Close();

@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201610260638593_request-pij.Designer.cs">
       <DependentUpon>201610260638593_request-pij.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202609050830245_acnoupdated.cs" />
+    <Compile Include="Migrations\202609050830245_acnoupdated.Designer.cs">
+      <DependentUpon>202609050830245_acnoupdated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Views\Preferences\Backup.xaml.cs">
       <DependentUpon>Backup.xaml</DependentUpon>
@@ -348,6 +352,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610260638593_request-pij.resx">
       <DependentUpon>201610260638593_request-pij.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202609050830245_acnoupdated.resx">
+      <DependentUpon>202609050830245_acnoupdated.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

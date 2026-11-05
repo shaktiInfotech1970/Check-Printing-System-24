@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="CPS.Views.Process.RePrintSinglePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:common="clr-namespace:CPS.Common"
+             mc:Ignorable="d">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label Content="Enter Job No." Target="{Binding ElementName=txtPrintJobNo}" />
+            <ComboBox IsEditable="True" Name="cbPrintJobNo" Width="300" Margin="10,0,0,0" />
+            <Button Content="Search" Name="btnShowColumn"  Click="btnShowColumn_Click" Margin="10,0,0,0" />
+            <Button Content="Clear" Name="btnClear" Click="btnClear_Click" Margin="10,0,0,0" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Margin="10" Orientation="Horizontal">
+            <Label Content="From" Target="{Binding ElementName=txtChequeFrom}" />
+            <TextBox Name="txtChequeFrom" common:TextBoxMaskBehavior.Mask="Integer" Width="300" Margin="10,0,0,0" />
+            <Label Content="To" Target="{Binding ElementName=txtCheuqeTo}" Margin="20,0,0,0" />
+            <TextBox Name="txtCheuqeTo" common:TextBoxMaskBehavior.Mask="Integer" Width="300" Margin="10,0,0,0" />
+            <Button Content="Save and Print" Name="btnSave" Click="btnSave_Click" Margin="20,0,0,0" />
+        </StackPanel>
+        <DataGrid x:Name="dgRequestEntry" AutoGenerateColumns="False" Grid.Row="2" IsReadOnly="True" ScrollViewer.CanContentScroll="True" 
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"                           
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Request No" Binding="{Binding Request.RequestNo}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Serial No" Binding="{Binding Request.SerialNo}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Micr Code" Binding="{Binding Request.MICRCode}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Account No" Binding="{Binding Request.AccountNoFull}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Transaction Code" Binding="{Binding Request.TransactionCode}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Customer Name" Binding="{Binding Request.Name}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Joint Name 1" Binding="{Binding Request.JointName1}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Joint Name 2" Binding="{Binding Request.JointName2}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Sign Authority" Binding="{Binding Request.Signatory1}"  IsReadOnly="True"/>
+                <DataGridTextColumn Header="Sign Authority 1" Binding="{Binding Request.Signatory2}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Sign Authority 2" Binding="{Binding Request.Signatory3}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Address 1" Binding="{Binding Request.Address1}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Address 2" Binding="{Binding Request.Address2}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Address 3" Binding="{Binding Request.Address3}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="City" Binding="{Binding Request.City}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Pincode"  Binding="{Binding Request.PostalCode}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="No. of Cheque Book" Binding="{Binding Request.NoOfChequeBook}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Book Size" Binding="{Binding Request.NoOfCheque}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Bearer / Order" Binding="{Binding Request.BearerOrder}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Atpar" Binding="{Binding Request.AtPar}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cheque No From" Binding="{Binding Request.ChequeFrom}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Cheque No To" Binding="{Binding Request.ChequeTo}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

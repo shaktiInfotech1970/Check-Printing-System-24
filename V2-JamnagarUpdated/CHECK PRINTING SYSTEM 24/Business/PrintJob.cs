@@ -684,6 +684,7 @@ namespace CPS.Business
             Font font9Bold = new Font("Verdana", 9, FontStyle.Bold);
             Font font5 = new Font("Verdana", 5);
             Font font7 = new Font("Verdana", 7);
+            Font font8 = new Font("Verdana", 8);
             Font font7Bold = new Font("Verdana",7,FontStyle.Bold);
             var section = printPage.Sections.ToList()[sectionNo - 1];
             var x = (GetDPI(PageWidth) - GetDPI(SectionWidth));

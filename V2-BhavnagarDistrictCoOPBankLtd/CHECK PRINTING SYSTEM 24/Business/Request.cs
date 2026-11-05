@@ -52,9 +52,13 @@ namespace CPS.Business
         [Parse(4)]
         public int BranchCode { get; set; }
 
-        [Display(Name = "brsid", Order = 5)]
+        // [Display(Name = "brsid", Order = 5)]
+        // [Parse(5)]
+        // public string brsid { get; set; }
+
+        [Display(Name = "CustomerID", Order = 5)]
         [Parse(5)]
-        public string brsid { get; set; }
+        public string CustomerID { get; set; }
 
         [NotMapped]
         public string MICRCode { get { return string.Format("{0}{1}{2}", CityCode.ToString("000"), BankCode.ToString("000"), BranchCode.ToString("000")); } }
@@ -457,7 +461,7 @@ namespace CPS.Business
 
                 importData.SerialNo = Convert.ToInt64(token[0]);
 
-                importData.AccountNo = token[1].Trim();
+                importData.CustomerID = token[1].Trim();
                 importData.AccountNoFull = token[2].Trim();
                 importData.Name = token[3].Trim();
 
@@ -492,8 +496,8 @@ namespace CPS.Business
                     : Convert.ToInt32(token[24]);
                 importData.BearerOrder = (importData.TransactionCode == 12) ? "Order" : "Bearer";
 
-                importData.prcode = token[18].Trim();
-
+                importData.AccountNo = token[18].Trim();
+               // importData.prcode =  = string.Empty;
                 importData.JointName1 = token[19].Trim();
                 importData.JointName2 = token[20].Trim();
 
@@ -503,7 +507,7 @@ namespace CPS.Business
 
                 importData.TransactionCode = string.IsNullOrWhiteSpace(token[24]) ? 0 : Convert.ToInt32(token[24]);
 
-                importData.brsid = token[25].Trim();
+               // importData.brsid = token[25].Trim();
 
                 // MICR Code (CCCBBBXXX)
                 if (!string.IsNullOrWhiteSpace(token[26]) && token[26].Length >= 9)

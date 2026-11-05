@@ -1,3 +1,11 @@
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\CPS.exe
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.dll
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.SqlServer.dll
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.SqlServerCompact.dll
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\log4net.dll
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\System.Windows.Controls.Layout.Toolkit.dll
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\WPFToolkit.dll
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\App_Data\CPS.sdf
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\fonts\micrenc.ttf
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\fonts\VERDANA.TTF
@@ -6,24 +14,15 @@ F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 2
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\fonts\VERDANAZ.TTF
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\fonts\MICR65.ttf
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\CPS.exe.config
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\CPS.exe
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\CPS.pdb
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.dll
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.SqlServer.dll
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.SqlServerCompact.dll
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\itextsharp.dll
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\log4net.dll
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\System.Data.SqlServerCe.dll
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\System.Windows.Controls.Layout.Toolkit.dll
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\WPFToolkit.dll
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\Zen.Barcode.Core.dll
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.xml
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.SqlServer.xml
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\EntityFramework.SqlServerCompact.xml
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\itextsharp.xml
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\bin\Debug\log4net.xml
-F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\obj\Debug\CHECK PRINTING SYSTEM 24.csproj.AssemblyReference.cache
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\obj\Debug\Login.baml
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\obj\Debug\mainWindow.baml
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\obj\Debug\Themes\Metro\Metro.MSControls.Core.Implicit.baml
@@ -116,3 +115,4 @@ F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 2
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\obj\Debug\CHECK PRINTING SYSTEM 24.csproj.CopyComplete
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.exe
 F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\obj\Debug\CPS.pdb
+F:\CHECK PRINTING SYSTEM 24\SourceCode-BalasinorSahakari\CHECK PRINTING SYSTEM 24\obj\Debug\CHECK PRINTING SYSTEM 24.csproj.AssemblyReference.cache

@@ -39,9 +39,10 @@ namespace CPS.Views.Process
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
+
             // Set filter for file extension and default file extension
             dlg.DefaultExt = ".txt";
-            dlg.Filter = "Normal Text File (*.txt)|*.txt|ASCII text (*.asc)|*.asc|Commma Separated File(*.csv)|*.csv";
+            dlg.Filter = "ASCII text (*.asc)|*.asc|Normal Text File (*.txt)|*.txt|Commma Separated File(*.csv)|*.csv|Excel Files (*.xls)|*.xls;*.xlsx";
 
             // Display OpenFileDialog by calling ShowDialog method
             Nullable<bool> result = dlg.ShowDialog();
@@ -69,9 +70,13 @@ namespace CPS.Views.Process
 
                 dgImport.ItemsSource = import.Data;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Import error", "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    ex.ToString(),
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
 
         }

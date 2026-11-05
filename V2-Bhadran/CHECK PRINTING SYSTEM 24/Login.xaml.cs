@@ -49,8 +49,8 @@ namespace CPS
                                                             user.UserId,
                                                             user.Name,
                                                             "+91-9825605331",
-                                                            "+91-9727774204");
-                            window.SubTitle.Text = "Technical Support:- Kalpen Patel: +91-9727774204, Nikunj Patel: +91-9979700712   Support:- Hemant Pawar: +91-9825605331";
+                                                            "+91-6354802360");
+                            window.SubTitle.Text = "Technical Support:- Samarth Patil : +91-6354802360 , Amit Bane: +91-8200403694   Support:- Hemant Pawar: +91-9825605331";
 
                             window.Show();
                             this.Close();

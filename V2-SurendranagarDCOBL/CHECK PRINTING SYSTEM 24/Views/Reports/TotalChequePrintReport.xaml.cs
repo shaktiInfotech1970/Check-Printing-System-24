@@ -239,10 +239,10 @@ namespace CPS.Views.Reports
                             ?? DateTime.Now.Date).ToString("dd MMM yyyy"))));
 
             title.FontFamily = new FontFamily("Arial");
-            title.FontSize = 24;
+            title.FontSize = 26;
             title.FontWeight = FontWeights.Normal;
             title.TextAlignment = TextAlignment.Center;
-            title.Margin = new Thickness(0, 0, 0, 65);
+            title.Margin = new Thickness(0, 0, 0, 10);
 
             document.Blocks.Add(title);
 
@@ -266,7 +266,7 @@ namespace CPS.Views.Reports
                 - document.PagePadding.Right;
 
             double columnWidth =
-                totalWidth / columnCount;
+                  (totalWidth / columnCount);
 
             foreach (DataGridColumn column
                 in dgTotalChequePrint.Columns)
@@ -290,7 +290,7 @@ namespace CPS.Views.Reports
             headerRow.FontFamily =
                 new FontFamily("Arial");
 
-            headerRow.FontSize = 11;
+            headerRow.FontSize = 8;
             headerRow.FontWeight =
                 FontWeights.Normal;
 
@@ -309,12 +309,12 @@ namespace CPS.Views.Reports
                 cell.FontFamily =
                     new FontFamily("Arial");
 
-                cell.FontSize = 11;
+                cell.FontSize = 8;
+                cell.Padding = new Thickness(1);
                 cell.FontWeight =
                     FontWeights.Normal;
 
-                cell.Padding =
-                    new Thickness(2);
+                
 
                 cell.BorderBrush =
                     Brushes.Black;
@@ -385,8 +385,7 @@ namespace CPS.Views.Reports
                     cell.FontWeight =
                         FontWeights.Normal;
 
-                    cell.Padding =
-                        new Thickness(2);
+                    cell.Padding = new Thickness(1);
 
                     cell.BorderBrush =
                         Brushes.Black;

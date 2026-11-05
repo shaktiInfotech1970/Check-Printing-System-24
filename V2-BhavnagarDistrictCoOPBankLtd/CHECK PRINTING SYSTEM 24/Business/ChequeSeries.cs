@@ -30,11 +30,11 @@ namespace CPS.Business
                     .FirstOrDefault(x => x.SAN == SAN);
 
                 if (chequeSeries == null)
-                    return 400000;
+                    return 500000;
 
                 if (chequeSeries.LastChequePrint >= 0 &&
-                    chequeSeries.LastChequePrint < 400000)
-                    return 400000;
+                    chequeSeries.LastChequePrint < 500000)
+                    return 500000;
 
                 return chequeSeries.LastChequePrint;
             }
@@ -44,10 +44,10 @@ namespace CPS.Business
         {
             using (var context = new CPSDbContext())
             {
-                var value = context.Set<ChequeSeries>().Where(w => w.SAN ==  SAN).DefaultIfEmpty().Max(m => m == null ? 400000 : m.LastChequePrint);
+                var value = context.Set<ChequeSeries>().Where(w => w.SAN ==  SAN).DefaultIfEmpty().Max(m => m == null ? 500000 : m.LastChequePrint);
 
-                if (value >= 0 && value < 400000)
-                    value = 400000;
+                if (value >= 0 && value < 500000)
+                    value = 500000;
 
                 var chequeSeries = new ChequeSeries { SAN = SAN, LastChequePrint = value + (bookSize * noOfChequeBook) };
                 context.ChequeSeries.AddOrUpdate(k => k.SAN, chequeSeries);

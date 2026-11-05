@@ -78,6 +78,8 @@ namespace CPS.Views.Process
                         AccountNo = x.Request.AccountNo,
                         TransactionCode = x.Request.TransactionCode,
                         Name = x.Request.Name,
+                        CityCode = x.Request.CityCode,
+                        BankCode = x.Request.BankCode,
                         BranchCode = x.Request.BranchCode,
                         JointName1 = x.Request.JointName1,
                         JointName2 = x.Request.JointName2,

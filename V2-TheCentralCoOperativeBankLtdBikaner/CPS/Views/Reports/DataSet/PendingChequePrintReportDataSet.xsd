@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="PendingChequePrintReportDataSet" targetNamespace="http://tempuri.org/PendingChequePrintReportDataSet.xsd" xmlns:mstns="http://tempuri.org/PendingChequePrintReportDataSet.xsd" xmlns="http://tempuri.org/PendingChequePrintReportDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="PendingChequePrintReportDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PendingChequePrintReportDataSet" msprop:Generator_UserDSName="PendingChequePrintReportDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PendingChequePrintReportDataSet" msprop:Generator_TableClassName="PendingChequePrintReportDataSetDataTable" msprop:Generator_TableVarName="tablePendingChequePrintReportDataSet" msprop:Generator_RowChangedName="PendingChequePrintReportDataSetRowChanged" msprop:Generator_TablePropName="_PendingChequePrintReportDataSet" msprop:Generator_RowDeletingName="PendingChequePrintReportDataSetRowDeleting" msprop:Generator_RowChangingName="PendingChequePrintReportDataSetRowChanging" msprop:Generator_RowEvHandlerName="PendingChequePrintReportDataSetRowChangeEventHandler" msprop:Generator_RowDeletedName="PendingChequePrintReportDataSetRowDeleted" msprop:Generator_RowClassName="PendingChequePrintReportDataSetRow" msprop:Generator_UserTableName="PendingChequePrintReportDataSet" msprop:Generator_RowEvArgName="PendingChequePrintReportDataSetRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SerialNo" msprop:Generator_ColumnVarNameInTable="columnSerialNo" msprop:Generator_ColumnPropNameInRow="SerialNo" msprop:Generator_ColumnPropNameInTable="SerialNoColumn" msprop:Generator_UserColumnName="SerialNo" type="xs:long" minOccurs="0" />
+              <xs:element name="AccountNoFull" msprop:Generator_ColumnVarNameInTable="columnAccountNoFull" msprop:Generator_ColumnPropNameInRow="AccountNoFull" msprop:Generator_ColumnPropNameInTable="AccountNoFullColumn" msprop:Generator_UserColumnName="AccountNoFull" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="BranchCode" msprop:Generator_ColumnVarNameInTable="columnBranchCode" msprop:Generator_ColumnPropNameInRow="BranchCode" msprop:Generator_ColumnPropNameInTable="BranchCodeColumn" msprop:Generator_UserColumnName="BranchCode" type="xs:int" minOccurs="0" />
+              <xs:element name="TransactionCode" msprop:Generator_ColumnVarNameInTable="columnTransactionCode" msprop:Generator_ColumnPropNameInRow="TransactionCode" msprop:Generator_ColumnPropNameInTable="TransactionCodeColumn" msprop:Generator_UserColumnName="TransactionCode" type="xs:int" minOccurs="0" />
+              <xs:element name="ChequeNoFrom" msprop:Generator_ColumnVarNameInTable="columnChequeNoFrom" msprop:Generator_ColumnPropNameInRow="ChequeNoFrom" msprop:Generator_ColumnPropNameInTable="ChequeNoFromColumn" msprop:Generator_UserColumnName="ChequeNoFrom" type="xs:int" minOccurs="0" />
+              <xs:element name="ChequeNoTo" msprop:Generator_ColumnVarNameInTable="columnChequeNoTo" msprop:Generator_ColumnPropNameInRow="ChequeNoTo" msprop:Generator_ColumnPropNameInTable="ChequeNoToColumn" msprop:Generator_UserColumnName="ChequeNoTo" type="xs:int" minOccurs="0" />
+              <xs:element name="NoOfCheque" msprop:Generator_ColumnVarNameInTable="columnNoOfCheque" msprop:Generator_ColumnPropNameInRow="NoOfCheque" msprop:Generator_ColumnPropNameInTable="NoOfChequeColumn" msprop:Generator_UserColumnName="NoOfCheque" type="xs:int" minOccurs="0" />
+              <xs:element name="Sign" msprop:Generator_ColumnVarNameInTable="columnSign" msprop:Generator_ColumnPropNameInRow="Sign" msprop:Generator_ColumnPropNameInTable="SignColumn" msprop:Generator_UserColumnName="Sign" type="xs:string" minOccurs="0" />
+              <xs:element name="BranchName" msprop:Generator_ColumnVarNameInTable="columnBranchName" msprop:Generator_ColumnPropNameInRow="BranchName" msprop:Generator_ColumnPropNameInTable="BranchNameColumn" msprop:Generator_UserColumnName="BranchName" type="xs:string" minOccurs="0" />
+              <xs:element name="NoOfChequeBook" msprop:Generator_ColumnVarNameInTable="columnNoOfChequeBook" msprop:Generator_ColumnPropNameInRow="NoOfChequeBook" msprop:Generator_ColumnPropNameInTable="NoOfChequeBookColumn" msprop:Generator_UserColumnName="NoOfChequeBook" type="xs:unsignedInt" minOccurs="0" />
+              <xs:element name="BranchId" msprop:Generator_ColumnVarNameInTable="columnBranchId" msprop:Generator_ColumnPropNameInRow="BranchId" msprop:Generator_ColumnPropNameInTable="BranchIdColumn" msprop:Generator_UserColumnName="BranchId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

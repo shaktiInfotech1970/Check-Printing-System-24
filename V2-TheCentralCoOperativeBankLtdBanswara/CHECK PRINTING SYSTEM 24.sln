@@ -1,20 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.37301.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPS", "CPS\CPS.csproj", "{3113FAA9-C7B9-432F-B5EE-866CD73E249A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHECK PRINTING SYSTEM 24", "CHECK PRINTING SYSTEM 24\CHECK PRINTING SYSTEM 24.csproj", "{6CB2952A-7476-498D-BBD0-77408A1BEDEB}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://checkprintingsystem.visualstudio.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = CPS\\CPS.csproj
-		SccProjectName1 = CPS
-		SccLocalPath1 = CPS
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -24,8 +17,15 @@ Global
 		{3113FAA9-C7B9-432F-B5EE-866CD73E249A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3113FAA9-C7B9-432F-B5EE-866CD73E249A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3113FAA9-C7B9-432F-B5EE-866CD73E249A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CB2952A-7476-498D-BBD0-77408A1BEDEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CB2952A-7476-498D-BBD0-77408A1BEDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CB2952A-7476-498D-BBD0-77408A1BEDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB2952A-7476-498D-BBD0-77408A1BEDEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D2A7BE2-3BA5-47EB-A82C-FF28FC8C54B0}
 	EndGlobalSection
 EndGlobal

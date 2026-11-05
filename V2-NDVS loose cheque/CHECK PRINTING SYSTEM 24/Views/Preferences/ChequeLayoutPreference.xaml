@@ -1,0 +1,282 @@
+﻿<UserControl x:Class="CPS.Views.Preferences.ChequeLayoutPreference"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:common="clr-namespace:CPS.Common"
+             mc:Ignorable="d"   d:DesignHeight="600" d:DesignWidth="1020">
+    <ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="50*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid  Grid.Row="0" Grid.Column="0" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Branch Address" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkBranchAddress" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtBranchAddressX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtBranchAddressX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtBranchAddressY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtBranchAddressY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="0" Grid.Column="1" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="IFSC" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkIFSC" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtIFSCX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtIFSCX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtIFSCY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtIFSCY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="1" Grid.Column="0" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Order OR Bearer" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkOrderOrBearer" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtOrderOrBearerX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtOrderOrBearerX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtOrderOrBearerY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtOrderOrBearerY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="1" Grid.Column="1" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Account No" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkAccountNo" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtAccountNoX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtAccountNoX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtAccountNoY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtAccountNoY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="2" Grid.Column="0" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Signature Stamp" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkStamp" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtStampX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtStampX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtStampY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtStampY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="2" Grid.Column="1" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="MICR" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkMICR" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtMICRX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtMICRX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtMICRY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtMICRY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="3" Grid.Column="0" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Account Payee" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkAccountPayee" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtAccountPayeeX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtAccountPayeeX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtAccountPayeeY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtAccountPayeeY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="3" Grid.Column="1" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Barcode" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkBarcode" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtBarcodeX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtBarcodeX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtBarcodeY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtBarcodeY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="4" Grid.Column="0" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Audit Text" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkAuditText" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtAuditTextX}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtAuditTextX" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtAuditTextY}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtAuditTextY" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="4" Grid.Column="1" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Custom1" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkCustom1" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtCustom1X}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtCustom1X" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtCustom1Y}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtCustom1Y" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="3" Content="Custom1 Text" Target="{Binding ElementName=txtCustom1Text}" />
+                <TextBox Grid.Row="1" Grid.Column="3" Name="txtCustom1Text" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="5" Grid.Column="0" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Custom2" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkCustom2" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtCustom2X}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtCustom2X" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtCustom2Y}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtCustom2Y" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="3" Content="Custom2 Text" Target="{Binding ElementName=txtCustom2Text}" />
+                <TextBox Grid.Row="1" Grid.Column="3" Name="txtCustom2Text" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="5" Grid.Column="1" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Custom3" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkCustom3" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtCustom3X}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtCustom3X" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtCustom3Y}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtCustom3Y" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="3" Content="Custom3 Text" Target="{Binding ElementName=txtCustom3Text}" />
+                <TextBox Grid.Row="1" Grid.Column="3" Name="txtCustom3Text" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="6" Grid.Column="0" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Custom4" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkCustom4" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtCustom4X}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtCustom4X" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtCustom4Y}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtCustom4Y" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="3" Content="Custom4 Text" Target="{Binding ElementName=txtCustom4Text}" />
+                <TextBox Grid.Row="1" Grid.Column="3" Name="txtCustom4Text" Margin="0,0,10,0" />
+            </Grid>
+            <Grid  Grid.Row="6" Grid.Column="1" Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="40*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Custom5" Margin="0,0,10,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0" Name="chkCustom5" Margin="0,10,10,0"></CheckBox>
+                <Label Grid.Row="0" Grid.Column="1" Content="X" Target="{Binding ElementName=txtCustom5X}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtCustom5X" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Content="Y" Target="{Binding ElementName=txtCustom5Y}" />
+                <TextBox Grid.Row="2" Grid.Column="2" Name="txtCustom5Y" common:TextBoxMaskBehavior.Mask="Decimal" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="3" Content="Custom5 Text" Target="{Binding ElementName=txtCustom5Text}" />
+                <TextBox Grid.Row="1" Grid.Column="3" Name="txtCustom5Text" Margin="0,0,10,0" />
+            </Grid>
+            <Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
+                <Button Name="Save" Content="Save Preference" Click="Save_Click" HorizontalAlignment="Center" Width="200"></Button>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
