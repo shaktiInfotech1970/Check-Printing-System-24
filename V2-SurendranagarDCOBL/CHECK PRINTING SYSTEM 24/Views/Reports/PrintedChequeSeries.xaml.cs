@@ -157,10 +157,10 @@ namespace CPS.Views.Reports
 
             FlowDocument document = new FlowDocument();
 
-            // Page settings
+            // A4 page layout and margins
             document.PageWidth = printDialog.PrintableAreaWidth;
             document.PageHeight = printDialog.PrintableAreaHeight;
-            document.PagePadding = new Thickness(5);
+            document.PagePadding = new Thickness(40, 40, 40, 40);
             document.ColumnGap = 0;
             document.ColumnWidth = double.PositiveInfinity;
 
@@ -194,6 +194,8 @@ namespace CPS.Views.Reports
             table.CellSpacing = 0;
             table.BorderBrush = Brushes.Black;
             table.BorderThickness = new Thickness(0.5);
+
+            table.TextAlignment = TextAlignment.Center;
 
             int columnCount = dgPrintedChequeSeries.Columns.Count;
 

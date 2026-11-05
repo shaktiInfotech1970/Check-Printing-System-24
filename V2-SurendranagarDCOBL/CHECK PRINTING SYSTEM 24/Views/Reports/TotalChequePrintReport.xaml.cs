@@ -218,14 +218,15 @@ namespace CPS.Views.Reports
 
             FlowDocument document = new FlowDocument();
 
+            // A4 page layout and margins
             document.PageWidth = printDialog.PrintableAreaWidth;
             document.PageHeight = printDialog.PrintableAreaHeight;
-            document.PagePadding = new Thickness(5);
+            document.PagePadding = new Thickness(40, 40, 40, 40);
             document.ColumnGap = 0;
             document.ColumnWidth = double.PositiveInfinity;
 
             document.FontFamily = new FontFamily("Arial");
-            document.FontSize = 11;
+            document.FontSize = 15;
             document.FontWeight = FontWeights.Normal;
 
             // Report title
@@ -252,6 +253,8 @@ namespace CPS.Views.Reports
             table.CellSpacing = 0;
             table.BorderBrush = Brushes.Black;
             table.BorderThickness = new Thickness(0.5);
+
+            table.TextAlignment = TextAlignment.Center;
 
             int columnCount =
                 dgTotalChequePrint.Columns.Count;
@@ -290,7 +293,7 @@ namespace CPS.Views.Reports
             headerRow.FontFamily =
                 new FontFamily("Arial");
 
-            headerRow.FontSize = 8;
+            headerRow.FontSize = 12;
             headerRow.FontWeight =
                 FontWeights.Normal;
 
@@ -309,7 +312,7 @@ namespace CPS.Views.Reports
                 cell.FontFamily =
                     new FontFamily("Arial");
 
-                cell.FontSize = 8;
+                cell.FontSize = 12;
                 cell.Padding = new Thickness(1);
                 cell.FontWeight =
                     FontWeights.Normal;
@@ -347,7 +350,7 @@ namespace CPS.Views.Reports
                 row.FontFamily =
                     new FontFamily("Arial");
 
-                row.FontSize = 11;
+                row.FontSize = 14;
                 row.FontWeight =
                     FontWeights.Normal;
 
